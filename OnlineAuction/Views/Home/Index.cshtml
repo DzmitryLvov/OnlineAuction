@@ -1,0 +1,34 @@
+﻿@model OnlineAuction.Buisness.Models.Home.IndexModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+
+<h2>@ViewBag.Message</h2>
+<div>
+    @{
+       if (Context.User.IsInRole("admin"))
+       {
+           <h2>Hello, admin</h2>
+       }
+
+    }
+</div>
+@foreach (var lot in Model.Lots)
+{
+    <div style="border: 1px solid lightgreen">
+        <p>@lot.Lotname</p>
+        <p>@lot.Description</p>
+        <p> Remaining
+            @{
+                string days = (lot.ActualDate -DateTime.Now  ).Days.ToString();
+                <h4>@String.Format("{0} d {1} h {2} m",
+                (lot.ActualDate -DateTime.Now).Days.ToString(),
+                (lot.ActualDate -DateTime.Now).Hours.ToString(),
+                (lot.ActualDate -DateTime.Now).Minutes.ToString())</h4>
+            }
+        </p>
+        <p>@lot.Currency</p>
+    </div>
+}
+

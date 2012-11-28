@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProviderModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="ProviderModelStoreContainer">
+    <EntitySet Name="Roles" EntityType="ProviderModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="ProviderModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lots" EntityType="ProviderModel.Store.Lots" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK__Users__RoleID__1B0907CE" Association="ProviderModel.Store.FK__Users__RoleID__1B0907CE">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Rolename" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Comment" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="PasswordQuestion" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="PasswordAnswer" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="IsApproved" Type="bit" Nullable="false" />
+    <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
+    <Property Name="LastLoginDate" Type="datetime" Nullable="false" />
+    <Property Name="LastPasswordChangedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreationDate" Type="datetime" Nullable="false" />
+    <Property Name="IsOnLine" Type="bit" Nullable="true" />
+    <Property Name="IsLockedOut" Type="bit" Nullable="false" />
+    <Property Name="LastLockedOutDate" Type="datetime" Nullable="false" />
+    <Property Name="FailedPasswordAttemptCount" Type="int" Nullable="false" />
+    <Property Name="FailedPasswordAttemptWindowStart" Type="datetime" Nullable="false" />
+    <Property Name="FailedPasswordAnswerAttemptCount" Type="int" Nullable="false" />
+    <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="datetime" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="Role_ID" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Lots">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Lotname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Currency" Type="bigint" Nullable="false" />
+    <Property Name="ActualDate" Type="datetime" Nullable="false" />
+    <Property Name="LeaderID" Type="int" Nullable="true" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Users__RoleID__1B0907CE">
+    <End Role="Role" Type="ProviderModel.Store.Roles" Multiplicity="0..1" />
+    <End Role="User" Type="ProviderModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Role_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProviderModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MainDataBase" annotation:LazyLoadingEnabled="true" a:TypeAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+          <EntitySet Name="Roles" EntityType="ProviderModel.Role" />
+          <EntitySet Name="Users" EntityType="ProviderModel.User" />
+          <AssociationSet Name="FK__Users__RoleID__1B0907CE" Association="ProviderModel.FK__Users__RoleID__1B0907CE">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Lots" EntityType="ProviderModel.Lot" />
+        </EntityContainer>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Rolename" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="ProviderModel.FK__Users__RoleID__1B0907CE" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PasswordQuestion" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PasswordAnswer" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsApproved" Nullable="false" />
+          <Property Type="DateTime" Name="LastActivityDate" Nullable="false" />
+          <Property Type="DateTime" Name="LastLoginDate" Nullable="false" />
+          <Property Type="DateTime" Name="LastPasswordChangedDate" Nullable="false" />
+          <Property Type="DateTime" Name="CreationDate" Nullable="false" />
+          <Property Type="Boolean" Name="IsOnLine" Nullable="true" />
+          <Property Type="Boolean" Name="IsLockedOut" Nullable="false" />
+          <Property Type="DateTime" Name="LastLockedOutDate" Nullable="false" />
+          <Property Type="Int32" Name="FailedPasswordAttemptCount" Nullable="false" />
+          <Property Type="DateTime" Name="FailedPasswordAttemptWindowStart" Nullable="false" />
+          <Property Type="Int32" Name="FailedPasswordAnswerAttemptCount" Nullable="false" />
+          <Property Type="DateTime" Name="FailedPasswordAnswerAttemptWindowStart" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="ProviderModel.FK__Users__RoleID__1B0907CE" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK__Users__RoleID__1B0907CE">
+          <End Type="ProviderModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="ProviderModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Lot">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Lotname" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="Int64" Name="Currency" Nullable="false" />
+          <Property Type="DateTime" Name="ActualDate" Nullable="false" />
+          <Property Type="Int32" Name="LeaderID" Nullable="true" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ProviderModelStoreContainer" CdmEntityContainer="MainDataBase">
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="IsTypeOf(ProviderModel.Role)">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(ProviderModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+          <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+          <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+          <ScalarProperty Name="LastPasswordChangedDate" ColumnName="LastPasswordChangedDate" />
+          <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+          <ScalarProperty Name="IsOnLine" ColumnName="IsOnLine" />
+          <ScalarProperty Name="IsLockedOut" ColumnName="IsLockedOut" />
+          <ScalarProperty Name="LastLockedOutDate" ColumnName="LastLockedOutDate" />
+          <ScalarProperty Name="FailedPasswordAttemptCount" ColumnName="FailedPasswordAttemptCount" />
+          <ScalarProperty Name="FailedPasswordAttemptWindowStart" ColumnName="FailedPasswordAttemptWindowStart" />
+          <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
+          <ScalarProperty Name="FailedPasswordAnswerAttemptWindowStart" ColumnName="FailedPasswordAnswerAttemptWindowStart" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lots">
+      <EntityTypeMapping TypeName="IsTypeOf(ProviderModel.Lot)">
+        <MappingFragment StoreEntitySet="Lots">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Lotname" ColumnName="Lotname" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
+          <ScalarProperty Name="LeaderID" ColumnName="LeaderID" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="FK__Users__RoleID__1B0907CE" TypeName="ProviderModel.FK__Users__RoleID__1B0907CE" StoreEntitySet="Users">
+      <EndProperty Name="Role">
+        <ScalarProperty Name="ID" ColumnName="Role_ID" />
+      </EndProperty>
+      <EndProperty Name="User">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+      <Condition ColumnName="Role_ID" IsNull="false" />
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="DataBaseModel" ShowGrid="true" ZoomLevel="82">
+        <EntityTypeShape EntityType="ProviderModel.Role" Width="1.5" PointX="0.5" PointY="0.875" Height="1.7879850260416665" />
+        <EntityTypeShape EntityType="ProviderModel.User" Width="1.5" PointX="2.625" PointY="0.875" Height="5.057109375" />
+        <AssociationConnector Association="ProviderModel.FK__Users__RoleID__1B0907CE" >
+          <ConnectorPoint PointX="2" PointY="1.7689925130208333" />
+          <ConnectorPoint PointX="2.625" PointY="1.7689925130208333" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="ProviderModel.Lot" Width="1.5" PointX="4.75" PointY="0.875" Height="2.3648893229166665" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
