@@ -67,7 +67,7 @@
     <Compile Include="Buisness\Auction.cs" />
     <Compile Include="Buisness\Controllers\AccountController.cs" />
     <Compile Include="Buisness\Controllers\HomeController.cs" />
-    <Compile Include="Buisness\Controllers\LotsController.cs" />
+    <Compile Include="Buisness\Controllers\LotController.cs" />
     <Compile Include="Buisness\Data\DataAccess.cs" />
     <Compile Include="Buisness\Data\DataBaseModel.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -147,7 +147,10 @@
     <Content Include="Views\Shared\_lotPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Lot\" />
+    <Content Include="Views\Lot\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Lot\CreateLot.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

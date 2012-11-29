@@ -1,0 +1,55 @@
+﻿@model OnlineAuction.Buisness.Models.Item.LotModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+<script language="javascript" type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#Currency").blur(function () {
+
+            var params = new Object();
+            params.UserName = $("#Currency").val().trim();
+
+            $.ajax(
+            {
+                type: "POST",
+                url: "/Home/ValidateUserNameManually",
+                data: $.toJSON(params),
+                contentType: "application/json",
+                success: function (response) {
+
+                    if (response == false) {
+                        alert('s');
+                        $("#message").html("user name already exists");
+                    }
+                }
+            });
+        });
+
+    });
+</script>
+<div class="lot-container-main">
+    <div>
+        <p>
+            <h3>
+                      @Model.Name
+            </h3>
+        </p>
+        <p>
+            @Model.Description
+        </p>
+        <p> Remaining
+            @{
+                string days = (Model.ActualDate - DateTime.Now).Days.ToString();
+                <h4>@String.Format("{0} d {1} h {2} m",
+                (Model.ActualDate - DateTime.Now).Days.ToString(),
+                (Model.ActualDate - DateTime.Now).Hours.ToString(),
+                (Model.ActualDate - DateTime.Now).Minutes.ToString())</h4>
+            }
+        </p>
+        <p>@Model.Currency</p>
+        <input id="Currency" /> <button>Bet</button>
+    </div>
+</div>

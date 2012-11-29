@@ -1,6 +1,14 @@
 ﻿@model OnlineAuction.Buisness.Models.Item.LotModel
-<div>
-    <p><h2>@Model.Name</h2></p>
-    <p>description</p>
-    
-</div>
+<div class="lot-preview">
+        <p>@Html.ActionLink(Model.Name,"Index","Lot", new{ id = Model.ID}, null)</p>
+         Remaining:
+            @{
+                string days = (Model.ActualDate - DateTime.Now).Days.ToString();
+                <h4>@String.Format("{0} d {1} h {2} m",
+                (Model.ActualDate - DateTime.Now).Days.ToString(),
+                (Model.ActualDate - DateTime.Now).Hours.ToString(),
+                (Model.ActualDate - DateTime.Now).Minutes.ToString())</h4>
+            }
+        
+    <p>@Model.Currency</p>
+    </div>

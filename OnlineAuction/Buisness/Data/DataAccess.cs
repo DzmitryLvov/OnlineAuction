@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using OnlineAuction.Buisness.Data;
-using OnlineAuction.Buisness.Models.Home;
+using OnlineAuction.Buisness.Models.Item;
 
 namespace OnlineAuction.Buisness.Data
 {
@@ -21,6 +18,41 @@ namespace OnlineAuction.Buisness.Data
             get { return _dataBase.Lots; }
         }
 
+        public static IEnumerable<LotModel> ConvertedActualLotCollection
+        {
+            get
+            {
+                return from lot in LotDataBase where !lot.IsDeleted orderby lot.ActualDate select new LotModel
+                    {
+
+                        ID = lot.ID,
+                        ActualDate = lot.ActualDate,
+                        Currency = lot.Currency,
+                        Description = lot.Description,
+                        Name = lot.Lotname
+                    }; 
+                
+            }
+        }
+
+        public static LotModel ConvertModel(Lot lot)
+        {
+            return new LotModel
+                {
+
+                    ID = lot.ID,
+                    ActualDate = lot.ActualDate,
+                    Currency = lot.Currency,
+                    Description = lot.Description,
+                    Name = lot.Lotname
+                };
+        }
+
+        public static LotModel GetLotById(int? id)
+        {
+            var lot = _dataBase.Lots.FirstOrDefault(l => l.ID == id);
+            return lot != null ? ConvertModel(lot) : null;
+        }
 
         //internal  List<Lot> GetLastActualLots()
         //{

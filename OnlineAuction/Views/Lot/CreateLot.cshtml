@@ -1,0 +1,37 @@
+﻿@model OnlineAuction.Buisness.Models.Item.LotModel
+@{
+    ViewBag.Title = "CreateLot";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+
+<h2>CreateLot</h2>
+
+<div>
+    <div class="lot-container-create">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td>@Html.TextBoxFor(t => t.Name)
+                    @Html.ValidationMessageFor(t => t.Name)</td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td> @Html.TextBoxFor(t=> t.Description)
+                     @Html.ValidationMessageFor(t => t.Description)</td>
+            </tr>
+            <tr>
+                <td>ActualDate:</td>
+                <td>@Html.TextBoxFor(t => t.ActualDate)
+                    @Html.ValidationMessageFor(t => t.ActualDate)</td>
+            </tr>
+            <tr>
+                <td>Minimal currency:</td>
+                <td>@Html.TextBoxFor(t=> t.Currency)
+                    @Html.ValidationMessageFor(t=>t.Currency)</td>
+            </tr>
+        </table>
+       
+        
+        <button type="submit" value="CreateLot">Save</button>
+    </div>
+</div>

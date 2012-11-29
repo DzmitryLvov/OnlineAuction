@@ -13,7 +13,7 @@ namespace OnlineAuction.Buisness.Controllers
         {
             var model = new IndexModel
                 {
-                    Lots = DataAccess.LotDataBase
+                    Lots = DataAccess.ConvertedActualLotCollection
                 };
             return View(model);
         }
