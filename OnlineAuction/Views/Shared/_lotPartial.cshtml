@@ -1,4 +1,4 @@
-﻿@model OnlineAuction.Buisness.Models.Item.LotModel
+﻿@model OnlineAuction.Buisness.Models.Item.ViewLotModel
 <div class="lot-preview">
         <p>@Html.ActionLink(Model.Name,"Index","Lot", new{ id = Model.ID}, null)</p>
          Remaining:
@@ -10,5 +10,5 @@
                 (Model.ActualDate - DateTime.Now).Minutes.ToString())</h4>
             }
         
-    <p>@Model.Currency</p>
+    <p>@Model.Currency $</p>
     </div>

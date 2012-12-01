@@ -12,6 +12,7 @@ namespace OnlineAuction.Buisness.Models.Account
         [Required]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email address")]
+        [RegularExpression(@"[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-z0-9])?",ErrorMessage = "Invalid email")]
         public string Email { get; set; }
 
         [Required]
@@ -24,5 +25,13 @@ namespace OnlineAuction.Buisness.Models.Account
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Question")]
+        public string Question { get; set; }
+
+        [Required]
+        [Display(Name = "Answer")]
+        public string Answer { get; set; }
     }
 }

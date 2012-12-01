@@ -76,10 +76,13 @@
     </Compile>
     <Compile Include="Buisness\Models\Account\LogOnModel.cs" />
     <Compile Include="Buisness\Models\Account\RegisterModel.cs" />
-    <Compile Include="Buisness\Models\EmailSenderModel.cs" />
+    <Compile Include="Buisness\Models\Account\RestorePasswordModel.cs" />
+    <Compile Include="Buisness\EmailSender.cs" />
     <Compile Include="Buisness\Models\Home\IndexModel.cs" />
+    <Compile Include="Buisness\Models\Item\BetRangeValidator.cs" />
+    <Compile Include="Buisness\Models\Item\CreateLotModel.cs" />
     <Compile Include="Buisness\Models\Item\FeedBackModel.cs" />
-    <Compile Include="Buisness\Models\Item\LotModel.cs" />
+    <Compile Include="Buisness\Models\Item\ViewLotModel.cs" />
     <Compile Include="Buisness\Security\AuctionMembershipProvider.cs" />
     <Compile Include="Buisness\Security\AuctionRoleProvider.cs" />
     <Compile Include="Global.asax.cs">
@@ -151,6 +154,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Lot\CreateLot.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\RestorePassword.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -39,13 +39,14 @@
     <EntitySetMapping Name="Lots">
       <EntityTypeMapping TypeName="IsTypeOf(ProviderModel.Lot)">
         <MappingFragment StoreEntitySet="Lots">
+          <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Lotname" ColumnName="Lotname" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Currency" ColumnName="Currency" />
           <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
-          <ScalarProperty Name="LeaderID" ColumnName="LeaderID" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="LeaderName" ColumnName="LeaderName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

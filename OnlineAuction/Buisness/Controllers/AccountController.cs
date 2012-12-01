@@ -13,9 +13,9 @@ namespace OnlineAuction.Buisness.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult LogOn()
+        public ActionResult LogOn(string returnUrl)
         {
-            return View();
+            return View(returnUrl);
         }
 
         [HttpPost]
@@ -53,7 +53,7 @@ namespace OnlineAuction.Buisness.Controllers
             {
                 // Attempt to register the user
                 MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
+                Membership.CreateUser(model.UserName, model.Password, model.Email, model.Question, model.Answer, true, null, out createStatus);
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
@@ -64,7 +64,7 @@ namespace OnlineAuction.Buisness.Controllers
                 ModelState.AddModelError("", ErrorCodeToString(createStatus));
             }
 
-
+            
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -107,6 +107,21 @@ namespace OnlineAuction.Buisness.Controllers
                     return
                         "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
             }
+        }
+
+        public ActionResult RestorePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        ActionResult RestorePassword(RestorePasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //Auction.RestorePassword(model.Email);
+            }
+            return View(model);
         }
     }
 }

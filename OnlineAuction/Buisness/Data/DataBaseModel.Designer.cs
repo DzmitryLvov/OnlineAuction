@@ -172,7 +172,9 @@ namespace OnlineAuction.Buisness.Data
         /// <param name="currency">Исходное значение свойства Currency.</param>
         /// <param name="actualDate">Исходное значение свойства ActualDate.</param>
         /// <param name="isDeleted">Исходное значение свойства IsDeleted.</param>
-        public static Lot CreateLot(global::System.Int32 id, global::System.String lotname, global::System.String description, global::System.Int64 currency, global::System.DateTime actualDate, global::System.Boolean isDeleted)
+        /// <param name="leaderName">Исходное значение свойства LeaderName.</param>
+        /// <param name="ownerName">Исходное значение свойства OwnerName.</param>
+        public static Lot CreateLot(global::System.Int32 id, global::System.String lotname, global::System.String description, global::System.Int64 currency, global::System.DateTime actualDate, global::System.Boolean isDeleted, global::System.String leaderName, global::System.String ownerName)
         {
             Lot lot = new Lot();
             lot.ID = id;
@@ -181,6 +183,8 @@ namespace OnlineAuction.Buisness.Data
             lot.Currency = currency;
             lot.ActualDate = actualDate;
             lot.IsDeleted = isDeleted;
+            lot.LeaderName = leaderName;
+            lot.OwnerName = ownerName;
             return lot;
         }
 
@@ -313,30 +317,6 @@ namespace OnlineAuction.Buisness.Data
         /// <summary>
         /// Нет доступной документации по метаданным.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> LeaderID
-        {
-            get
-            {
-                return _LeaderID;
-            }
-            set
-            {
-                OnLeaderIDChanging(value);
-                ReportPropertyChanging("LeaderID");
-                _LeaderID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LeaderID");
-                OnLeaderIDChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _LeaderID;
-        partial void OnLeaderIDChanging(Nullable<global::System.Int32> value);
-        partial void OnLeaderIDChanged();
-    
-        /// <summary>
-        /// Нет доступной документации по метаданным.
-        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Boolean IsDeleted
@@ -357,6 +337,54 @@ namespace OnlineAuction.Buisness.Data
         private global::System.Boolean _IsDeleted;
         partial void OnIsDeletedChanging(global::System.Boolean value);
         partial void OnIsDeletedChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String LeaderName
+        {
+            get
+            {
+                return _LeaderName;
+            }
+            set
+            {
+                OnLeaderNameChanging(value);
+                ReportPropertyChanging("LeaderName");
+                _LeaderName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("LeaderName");
+                OnLeaderNameChanged();
+            }
+        }
+        private global::System.String _LeaderName;
+        partial void OnLeaderNameChanging(global::System.String value);
+        partial void OnLeaderNameChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String OwnerName
+        {
+            get
+            {
+                return _OwnerName;
+            }
+            set
+            {
+                OnOwnerNameChanging(value);
+                ReportPropertyChanging("OwnerName");
+                _OwnerName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("OwnerName");
+                OnOwnerNameChanged();
+            }
+        }
+        private global::System.String _OwnerName;
+        partial void OnOwnerNameChanging(global::System.String value);
+        partial void OnOwnerNameChanged();
 
         #endregion
     

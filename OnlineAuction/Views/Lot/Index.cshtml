@@ -1,55 +1,78 @@
-﻿@model OnlineAuction.Buisness.Models.Item.LotModel
+﻿@model OnlineAuction.Buisness.Models.Item.ViewLotModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
 }
-<script language="javascript" type="text/javascript">
-
-    $(document).ready(function () {
-
-        $("#Currency").blur(function () {
-
-            var params = new Object();
-            params.UserName = $("#Currency").val().trim();
-
-            $.ajax(
-            {
-                type: "POST",
-                url: "/Home/ValidateUserNameManually",
-                data: $.toJSON(params),
-                contentType: "application/json",
-                success: function (response) {
-
-                    if (response == false) {
-                        alert('s');
-                        $("#message").html("user name already exists");
-                    }
-                }
-            });
-        });
-
-    });
-</script>
-<div class="lot-container-main">
-    <div>
-        <p>
-            <h3>
-                      @Model.Name
-            </h3>
-        </p>
-        <p>
-            @Model.Description
-        </p>
-        <p> Remaining
-            @{
-                string days = (Model.ActualDate - DateTime.Now).Days.ToString();
-                <h4>@String.Format("{0} d {1} h {2} m",
-                (Model.ActualDate - DateTime.Now).Days.ToString(),
-                (Model.ActualDate - DateTime.Now).Hours.ToString(),
-                (Model.ActualDate - DateTime.Now).Minutes.ToString())</h4>
+<script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $.validator.unobtrusive.adapters.add('betrange', ['minvalueproperty'],
+        function (options) {
+            options.rules['betrange'] = options.params;
+            if (options.message != null) {
+                $.validator.messages.betrange = options.message;
             }
-        </p>
-        <p>@Model.Currency</p>
-        <input id="Currency" /> <button>Bet</button>
-    </div>
-</div>
+        }
+    );
+
+    $.validator.addMethod('betrange', function (value, element, params) {
+        var minValue = parseInt($('input[name="' + params.minvalueproperty + '"]').val(), 10);
+        var currentValue = parseInt(value, 10);
+        if ( minValue > currentValue ) {
+            $.validator.messages.betrange = $.format($.validator.messages.betrange, minValue);
+            return false;
+        }
+        return true;
+    }, '');
+</script>
+@using (Html.BeginForm())
+{ 
+    <div class="lot-container-main">
+        <div>
+            <p>
+                <h3>
+                    @Model.Name
+                </h3>
+            </p>
+            <p>
+                @Model.Description
+            </p>
+            <p> Remaining
+                @{
+                    string days = (Model.ActualDate - DateTime.Now).Days.ToString();
+                    <h4>@String.Format("{0} d {1} h {2} m",
+                                       (Model.ActualDate - DateTime.Now).Days.ToString(),
+                                       (Model.ActualDate - DateTime.Now).Hours.ToString(),
+                                       (Model.ActualDate - DateTime.Now).Minutes.ToString())</h4>
+                }
+            </p>
+            
+            <p>@Model.Currency $
+               @if (Model.LeaderName != null)
+               {
+                   <text> By</text> @Model.LeaderName
+               }</p>
+            
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                if (Context.User.IsInRole("admin") || Context.User.Identity.Name == Model.OwnerName)
+                {
+                    <div>@Html.ActionLink("Delete this lot", "DeleteLot","Lot")</div>
+                }
+                else
+                {
+                    @Html.TextBoxFor(t => t.Currency) <text> $</text>
+                    <button type="submit">Bet</button>
+                    @Html.ValidationMessageFor(t => t.Currency)
+                }
+            }
+            else
+            {
+                <div>
+                    Unregistered users can not bet. Please, @Html.ActionLink("Log on","LogOn","Account"), or
+                        @Html.ActionLink("Register","Register","Account", new{leadername=Model.LeaderName},null) 
+                </div>
+            }
+        </div>
+    </div> 
+}

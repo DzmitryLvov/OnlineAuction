@@ -116,7 +116,7 @@ namespace OnlineAuction.Buisness.Security
 
             return msUser;
         }
-
+        
         private void UpdateFailureCount(string username, string failureType)
         {
             try
@@ -225,7 +225,19 @@ namespace OnlineAuction.Buisness.Security
 
             return pass1 == pass2;
         }
-
+        private string GeneratePassword(int size) 
+        {
+            var builder = new StringBuilder();
+            var random = new Random();
+            
+            for (var i = 0; i < size; i++)
+            {
+                var ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                builder.Append(ch);
+            }
+            return builder.ToString();
+        }
+       
         private string EncodePassword(string password)
         {
             if (password == null)
@@ -499,7 +511,7 @@ namespace OnlineAuction.Buisness.Security
                                        FailedPasswordAnswerAttemptCount = 0,
                                        FailedPasswordAnswerAttemptWindowStart = createDate,
                                        FailedPasswordAttemptCount = 0,
-                                       FailedPasswordAttemptWindowStart = createDate
+                                       FailedPasswordAttemptWindowStart = createDate, 
                                    };
 
                     _dataBase.Users.AddObject(user);

@@ -8,8 +8,12 @@ body
 
 header,
 footer,
-section {
+section 
+{
+    left: 0;
     display: block;
+    zoom: 1;
+    overflow:auto;
 }
 nav {
     display: block;
@@ -32,7 +36,6 @@ nav {
     
 }
 .page {
-    margin-left: 22px;
 }
 .lot-container-create 
 {

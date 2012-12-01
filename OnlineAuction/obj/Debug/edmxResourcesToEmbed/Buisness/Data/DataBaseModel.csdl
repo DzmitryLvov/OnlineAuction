@@ -57,7 +57,8 @@
     <Property Type="String" Name="Description" Nullable="false" />
     <Property Type="Int64" Name="Currency" Nullable="false" />
     <Property Type="DateTime" Name="ActualDate" Nullable="false" />
-    <Property Type="Int32" Name="LeaderID" Nullable="true" annotation:StoreGeneratedPattern="None" />
     <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <Property Type="String" Name="LeaderName" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Type="String" Name="OwnerName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

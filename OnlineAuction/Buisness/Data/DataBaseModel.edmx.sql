@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 11/29/2012 01:31:41
+-- Date Created: 12/01/2012 21:14:24
 -- Generated from EDMX file: E:\Prog\OnlineAuction\OnlineAuction\Buisness\Data\DataBaseModel.edmx
 -- --------------------------------------------------
 
@@ -16,29 +16,29 @@ GO
 -- --------------------------------------------------
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
-/*
+
 IF OBJECT_ID(N'[dbo].[FK__Users__RoleID__1B0907CE]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK__Users__RoleID__1B0907CE];
 GO
-*/
+
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-/*IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
+IF OBJECT_ID(N'[dbo].[Lots]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Lots];
+GO
+IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Roles];
 GO
 IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Users];
-GO*/
-IF OBJECT_ID(N'[dbo].[Lots]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Lots];
 GO
 
 -- --------------------------------------------------
 -- Creating all tables
 -- --------------------------------------------------
-/*
+
 -- Creating table 'Roles'
 CREATE TABLE [dbo].[Roles] (
     [ID] int IDENTITY(1,1) NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE [dbo].[Users] (
     [Role_ID] int  NULL
 );
 GO
-*/
+
 -- Creating table 'Lots'
 CREATE TABLE [dbo].[Lots] (
     [ID] int IDENTITY(1,1) NOT NULL,
@@ -80,15 +80,16 @@ CREATE TABLE [dbo].[Lots] (
     [Description] nvarchar(max)  NOT NULL,
     [Currency] bigint  NOT NULL,
     [ActualDate] datetime  NOT NULL,
-    [LeaderID] int  NULL,
-    [IsDeleted] bit  NOT NULL
+    [IsDeleted] bit  NOT NULL,
+    [LeaderName] nchar(50)  NOT NULL,
+    [UserID] int  NOT NULL
 );
 GO
 
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
-/*
+
 -- Creating primary key on [ID] in table 'Roles'
 ALTER TABLE [dbo].[Roles]
 ADD CONSTRAINT [PK_Roles]
@@ -100,7 +101,7 @@ ALTER TABLE [dbo].[Users]
 ADD CONSTRAINT [PK_Users]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
-*/
+
 -- Creating primary key on [ID] in table 'Lots'
 ALTER TABLE [dbo].[Lots]
 ADD CONSTRAINT [PK_Lots]
@@ -110,7 +111,7 @@ GO
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
-/*
+
 -- Creating foreign key on [Role_ID] in table 'Users'
 ALTER TABLE [dbo].[Users]
 ADD CONSTRAINT [FK__Users__RoleID__1B0907CE]
@@ -125,6 +126,20 @@ ON [dbo].[Users]
     ([Role_ID]);
 GO
 
+-- Creating foreign key on [UserID] in table 'Lots'
+ALTER TABLE [dbo].[Lots]
+ADD CONSTRAINT [FK_UserLot]
+    FOREIGN KEY ([UserID])
+    REFERENCES [dbo].[Users]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserLot'
+CREATE INDEX [IX_FK_UserLot]
+ON [dbo].[Lots]
+    ([UserID]);
+GO
+
 -- --------------------------------------------------
 -- Script has ended
--- --------------------------------------------------*/
+-- --------------------------------------------------
