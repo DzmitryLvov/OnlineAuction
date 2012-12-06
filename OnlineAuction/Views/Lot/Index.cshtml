@@ -1,4 +1,5 @@
-﻿@model OnlineAuction.Buisness.Models.Item.ViewLotModel
+﻿@using OnlineAuction.Buisness.Models.Item
+@model OnlineAuction.Buisness.Models.Item.ViewLotModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
@@ -50,14 +51,20 @@
             <p>@Model.Currency $
                @if (Model.LeaderName != null)
                {
-                   <text> By</text> @Model.LeaderName
-               }</p>
+                   <text> By</text> <input type="text" style="border: none; outline: none" readonly="readonly" value=@Model.LeaderName />
+               }
+            </p>
             
             @if (Context.User.Identity.IsAuthenticated)
             {
                 if (Context.User.IsInRole("admin") || Context.User.Identity.Name == Model.OwnerName)
                 {
-                    <div>@Html.ActionLink("Delete this lot", "DeleteLot","Lot")</div>
+                    <div>@Html.ActionLink("Delete this lot", "DeleteLot", "Lot", new ViewLotModel
+                             {
+                                 OwnerName = Model.OwnerName,
+                                 ID = Model.ID,
+                                 LeaderName = Model.LeaderName,
+                             },null )</div>
                 }
                 else
                 {
@@ -69,8 +76,12 @@
             else
             {
                 <div>
-                    Unregistered users can not bet. Please, @Html.ActionLink("Log on","LogOn","Account"), or
-                        @Html.ActionLink("Register","Register","Account", new{leadername=Model.LeaderName},null) 
+                    @{
+                        
+                    }
+                    Unregistered users can not bet. Please, @Html.ActionLink("Log on", "LogOn", "Account"), or
+                    @Html.ActionLink("Register", "Register", "Account") 
+                    
                 </div>
             }
         </div>

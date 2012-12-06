@@ -74,10 +74,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataBaseModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Models\Account\ChangePasswordModel.cs" />
     <Compile Include="Buisness\Models\Account\LogOnModel.cs" />
     <Compile Include="Buisness\Models\Account\RegisterModel.cs" />
     <Compile Include="Buisness\Models\Account\RestorePasswordModel.cs" />
     <Compile Include="Buisness\EmailSender.cs" />
+    <Compile Include="Buisness\Models\Account\UserProfileViewModel.cs" />
     <Compile Include="Buisness\Models\Home\IndexModel.cs" />
     <Compile Include="Buisness\Models\Item\BetRangeValidator.cs" />
     <Compile Include="Buisness\Models\Item\CreateLotModel.cs" />
@@ -157,6 +159,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\RestorePassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Profile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\EditProfile.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

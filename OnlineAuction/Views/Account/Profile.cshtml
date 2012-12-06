@@ -1,0 +1,22 @@
+﻿@model OnlineAuction.Buisness.Models.Account.UserProfileViewModel
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+
+<h2>Profile</h2>
+@using (Html.BeginForm())
+{
+    <div>
+        @if (User.Identity.Name == Model.Name)
+        {
+            <div>
+                @Html.ActionLink("Edit profile","EditProfile","Account")
+            </div>
+        }
+        <div>
+            @Model.Name
+        </div>
+    </div>
+}

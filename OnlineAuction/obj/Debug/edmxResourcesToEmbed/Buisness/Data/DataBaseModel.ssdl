@@ -34,7 +34,7 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="255" />
     <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
     <Property Name="Comment" Type="nvarchar" Nullable="false" MaxLength="255" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using OnlineAuction.Buisness.Models.Account;
 using OnlineAuction.Buisness.Models.Item;
 
 namespace OnlineAuction.Buisness.Data
@@ -56,16 +57,6 @@ namespace OnlineAuction.Buisness.Data
             return lot != null ? ConvertToViewModel(lot) : null;
         }
 
-        //internal  List<Lot> GetLastActualLots()
-        //{
-        //    return LotDataBase;
-        //}
-
-
-        //internal static object GetMinVal(int p)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
 
 
         public static int[] GetMinVal(int id)
@@ -111,7 +102,7 @@ namespace OnlineAuction.Buisness.Data
            
        }
 
-       internal static bool DeleteLot(int? id)
+       internal static bool DeleteLot(int id)
        {
            try
            {
@@ -126,5 +117,38 @@ namespace OnlineAuction.Buisness.Data
                return false;
            }
        }
+
+        public static string RestorePassword(RestorePasswordModel model)
+        {
+            var result = "";
+            var etalon = _dataBase.Users.FirstOrDefault(u => u.Username == model.UserName);
+            if (etalon != null && etalon.Email == model.Email)
+            {
+                result = GenerateRandomPass();
+                etalon.Password = result;
+                _dataBase.SaveChanges();
+            }
+            return result;
+        }
+
+        private static string GenerateRandomPass()
+        {
+            var etalon = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
+            var rnd = new Random();
+
+            var size = rnd.Next(8, 16);
+
+            var result = "";
+
+            for (var i = 0; i < size; i++)
+            {
+                result += etalon[rnd.Next(61)];
+            }
+            return result;
+        }
+        public static DateTime GetDateOfCloserDeleteon()
+        {
+            return _dataBase.Lots.OrderBy(m => m.ActualDate).First().ActualDate;
+        }
     }
 }

@@ -58,15 +58,14 @@ namespace OnlineAuction.Buisness.Controllers
             }
             return CreateLot(model);
         }
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult DeleteLot(string leadername)
+        
+        public ActionResult DeleteLot( ViewLotModel Model)
         {
-            /*if (Auction.DeleteLot(id, leadername))
+            if (Auction.DeleteLot(Model))
             {
                 RedirectToAction("Index", "Home");
-            }*/
+            }
                 return Index();
-            
         }
     }
 }

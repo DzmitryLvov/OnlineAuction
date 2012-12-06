@@ -15,6 +15,7 @@ namespace OnlineAuction.Buisness.Controllers
                 {
                     Lots = DataAccess.ConvertedActualLotCollection
                 };
+            Auction.Start();
             return View(model);
         }
 

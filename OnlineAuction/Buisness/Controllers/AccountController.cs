@@ -13,25 +13,27 @@ namespace OnlineAuction.Buisness.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult LogOn(string returnUrl)
+        public ActionResult LogOn()
         {
-            return View(returnUrl);
+            //Session.Add("ToRedirect", );
+            return View();
         }
 
         [HttpPost]
-        public ActionResult LogOn(LogOnModel model, string returnUrl)
+        public ActionResult LogOn(LogOnModel model)
         {
             if (ModelState.IsValid)
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
+                    //var returnUrl = Session["ToRedirect"].ToString();
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                    /*if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
                         return Redirect(returnUrl);
                     }
-
+                    */
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -111,17 +113,52 @@ namespace OnlineAuction.Buisness.Controllers
 
         public ActionResult RestorePassword()
         {
+            Session["Success"] = false;
             return View();
         }
 
         [HttpPost]
-        ActionResult RestorePassword(RestorePasswordModel model)
+        public ActionResult RestorePassword(RestorePasswordModel model)
         {
             if (ModelState.IsValid)
             {
-                //Auction.RestorePassword(model.Email);
+               if (Auction.RestorePassword(model))
+               {
+                   Session.Add("Success","true");
+                   return View(model);
+               }
             }
+            ModelState.AddModelError("", "The username or email is incorrect.");
             return View(model);
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Membership.ValidateUser(User.Identity.Name, model.OldPassword))
+                {
+                    
+                }
+            }
+            ModelState.AddModelError("", "Password updating fail.");
+            return View(model);
+        }
+
+        public ActionResult Profile(UserProfileViewModel model)
+        {
+            return View(model);
+        }
+
+        public ActionResult EditProfile()
+        {
+            return View();
         }
     }
 }

@@ -172,9 +172,8 @@ namespace OnlineAuction.Buisness.Data
         /// <param name="currency">Исходное значение свойства Currency.</param>
         /// <param name="actualDate">Исходное значение свойства ActualDate.</param>
         /// <param name="isDeleted">Исходное значение свойства IsDeleted.</param>
-        /// <param name="leaderName">Исходное значение свойства LeaderName.</param>
         /// <param name="ownerName">Исходное значение свойства OwnerName.</param>
-        public static Lot CreateLot(global::System.Int32 id, global::System.String lotname, global::System.String description, global::System.Int64 currency, global::System.DateTime actualDate, global::System.Boolean isDeleted, global::System.String leaderName, global::System.String ownerName)
+        public static Lot CreateLot(global::System.Int32 id, global::System.String lotname, global::System.String description, global::System.Int64 currency, global::System.DateTime actualDate, global::System.Boolean isDeleted, global::System.String ownerName)
         {
             Lot lot = new Lot();
             lot.ID = id;
@@ -183,7 +182,6 @@ namespace OnlineAuction.Buisness.Data
             lot.Currency = currency;
             lot.ActualDate = actualDate;
             lot.IsDeleted = isDeleted;
-            lot.LeaderName = leaderName;
             lot.OwnerName = ownerName;
             return lot;
         }
@@ -341,7 +339,7 @@ namespace OnlineAuction.Buisness.Data
         /// <summary>
         /// Нет доступной документации по метаданным.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String LeaderName
         {
@@ -353,7 +351,7 @@ namespace OnlineAuction.Buisness.Data
             {
                 OnLeaderNameChanging(value);
                 ReportPropertyChanging("LeaderName");
-                _LeaderName = StructuralObject.SetValidValue(value, false);
+                _LeaderName = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("LeaderName");
                 OnLeaderNameChanged();
             }

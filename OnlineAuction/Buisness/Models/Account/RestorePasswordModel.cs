@@ -9,20 +9,10 @@ namespace OnlineAuction.Buisness.Models.Account
         [Display(Name = "Name")]
         public string UserName { get; set; }
 
-        public void ResetPassword(string username)
-        {
-            var currentUser = Membership.GetUser(username);
-            if (currentUser != null)
-            {
-                var password = currentUser.ResetPassword();
-                EmailSender.SendResetEmail(currentUser);
-            }
-            else
-            {
-                
-            }
-            
-        }
+        [Required]
+        [Display(Name = "Email")]
+        [RegularExpression(@"[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-z0-9])?", ErrorMessage = "Invalid email")]
+        public string Email { get; set; }
 
     }
 }

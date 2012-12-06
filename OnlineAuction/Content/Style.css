@@ -19,7 +19,6 @@ nav {
     display: block;
 }
 
-
 /* Styles for basic forms
 -----------------------------------------------------------*/
 .toolbar 
@@ -46,13 +45,13 @@ nav {
 }
 .lot-preview 
 {
-    margin-left: 22px;
-    margin-top: 22px;
+    margin-left: 25px;
+    margin-top: 25px;
     border-radius: 4px 4px 4px 4px;
     padding-left: 10px;
     font-size: 0.80em;
-    height: 150px;
-    width: 150px;
+    height: 220px;
+    width: 220px;
     border: 1px solid #cccccc;
     background: #f8f9f3;
     display: inline-block;
@@ -184,6 +183,12 @@ ul#menu li.selected a {
     background-color: #fff;
     color: #000;
 }
+.logon-fieldset {
+    width: 350px;
+    height: 220px;
+    margin: 0 auto;
+}
+
 #title {
     position: absolute;
     float: left;

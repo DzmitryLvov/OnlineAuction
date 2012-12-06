@@ -39,7 +39,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="255" />
           <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="Comment" Type="nvarchar" Nullable="false" MaxLength="255" />
@@ -135,7 +135,7 @@
           <Property Type="Int64" Name="Currency" Nullable="false" />
           <Property Type="DateTime" Name="ActualDate" Nullable="false" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="String" Name="LeaderName" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Type="String" Name="LeaderName" MaxLength="50" FixedLength="true" Unicode="true" Nullable="true" />
           <Property Type="String" Name="OwnerName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
@@ -228,7 +228,7 @@
           <ConnectorPoint PointX="2" PointY="1.7689925130208333" />
           <ConnectorPoint PointX="2.625" PointY="1.7689925130208333" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="ProviderModel.Lot" Width="1.5" PointX="5.125" PointY="1" Height="2.7494921874999996" />
+        <EntityTypeShape EntityType="ProviderModel.Lot" Width="1.5" PointX="5" PointY="0.875" Height="2.5571907552083331" />
       </Diagram>
     </Diagrams>
   </Designer>

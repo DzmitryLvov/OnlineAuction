@@ -1,10 +1,11 @@
-﻿
+﻿@using OnlineAuction.Buisness.Models.Account
+
 <div>
 @if(Request.IsAuthenticated) {
-    <text>Welcome <strong>@User.Identity.Name</strong>!
+    <text>Welcome <strong>@Html.ActionLink(User.Identity.Name,"Profile","Account",new UserProfileViewModel{Name = User.Identity.Name},null)</strong>!
     [ @Html.ActionLink("Log Off", "LogOff", "Account") ]</text>
 }
 else {
-    @:[ @Html.ActionLink("Log On", "LogOn", "Account") ]
+    @:[ @Html.ActionLink("Log On", "LogOn", "Account",Request.Url, null) ]
 }
 </div>
