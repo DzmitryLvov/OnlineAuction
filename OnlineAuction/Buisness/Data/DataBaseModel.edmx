@@ -129,14 +129,14 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Lotname" Nullable="false" />
-          <Property Type="String" Name="Description" Nullable="false" />
-          <Property Type="Int64" Name="Currency" Nullable="false" />
-          <Property Type="DateTime" Name="ActualDate" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="String" Name="LeaderName" MaxLength="50" FixedLength="true" Unicode="true" Nullable="true" />
-          <Property Type="String" Name="OwnerName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" ConcurrencyMode="None" />
+          <Property Type="String" Name="Lotname" Nullable="false" ConcurrencyMode="None" />
+          <Property Type="String" Name="Description" Nullable="false" ConcurrencyMode="None" />
+          <Property Type="Int64" Name="Currency" Nullable="false" ConcurrencyMode="None" />
+          <Property Type="DateTime" Name="ActualDate" Nullable="false" ConcurrencyMode="None" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" ConcurrencyMode="None" />
+          <Property Type="String" Name="LeaderName" MaxLength="50" FixedLength="true" Unicode="true" Nullable="true" ConcurrencyMode="None" />
+          <Property Type="String" Name="OwnerName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" ConcurrencyMode="None" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -228,7 +228,7 @@
           <ConnectorPoint PointX="2" PointY="1.7689925130208333" />
           <ConnectorPoint PointX="2.625" PointY="1.7689925130208333" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="ProviderModel.Lot" Width="1.5" PointX="5" PointY="0.875" Height="2.5571907552083331" />
+        <EntityTypeShape EntityType="ProviderModel.Lot" Width="1.5" PointX="4.75" PointY="0.875" Height="2.5571907552083331" />
       </Diagram>
     </Diagrams>
   </Designer>

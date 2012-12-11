@@ -8,8 +8,6 @@ namespace OnlineAuction.Buisness.Models.Item
 {
     public class CreateLotModel
     {
-         public int ID { get; set; }
-      
         [Required]
         [StringLength(1000,ErrorMessage = "Name must have more then 2 letters",MinimumLength = 2) ]
         [DataType(DataType.Text)]

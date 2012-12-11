@@ -52,13 +52,13 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Type="String" Name="Lotname" Nullable="false" />
-    <Property Type="String" Name="Description" Nullable="false" />
-    <Property Type="Int64" Name="Currency" Nullable="false" />
-    <Property Type="DateTime" Name="ActualDate" Nullable="false" />
-    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-    <Property Type="String" Name="LeaderName" MaxLength="50" FixedLength="true" Unicode="true" Nullable="true" />
-    <Property Type="String" Name="OwnerName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" ConcurrencyMode="None" />
+    <Property Type="String" Name="Lotname" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="String" Name="Description" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="Int64" Name="Currency" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="DateTime" Name="ActualDate" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="String" Name="LeaderName" MaxLength="50" FixedLength="true" Unicode="true" Nullable="true" ConcurrencyMode="None" />
+    <Property Type="String" Name="OwnerName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" ConcurrencyMode="None" />
   </EntityType>
 </Schema>

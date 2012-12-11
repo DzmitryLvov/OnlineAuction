@@ -17,18 +17,18 @@ namespace OnlineAuction.Buisness.Controllers
         {
             throw new System.NotImplementedException();
         }
-        
-        public ActionResult Index(int? id = null)
-        {
-            var model = id != null ? DataAccess.GetViewModelById(id) : null;
+
+        public ActionResult Index([Bind(Include = "Description")] int id)
+        { var model = DataAccess.GetViewModelById(id);
             if (model != null)
             {
-                return View(model);
+                return View( model);
             }
             return RedirectToAction("Index", "Home");
         }
+
         [HttpPost]
-        public ActionResult Index(ViewLotModel model )
+        public ActionResult Index(LotModel model )
         {
             if (ModelState.IsValid)
             {
@@ -40,12 +40,12 @@ namespace OnlineAuction.Buisness.Controllers
             return View(restoreModel);
         }
 
-
+         [Authorize]
         public ActionResult CreateLot()
         {
             return View();
         }
-
+         [Authorize]
         [HttpPost]
         public ActionResult CreateLot(CreateLotModel model)
         {
@@ -56,16 +56,17 @@ namespace OnlineAuction.Buisness.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
-            return CreateLot(model);
+            return View(model);
         }
-        
-        public ActionResult DeleteLot( ViewLotModel Model)
+        [Authorize]
+        public ActionResult DeleteLot( LotModel Model)
         {
             if (Auction.DeleteLot(Model))
             {
-                RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
-                return Index();
+            ModelState.AddModelError("","Fail while model deleting.");
+            return Index(Model);
         }
     }
 }

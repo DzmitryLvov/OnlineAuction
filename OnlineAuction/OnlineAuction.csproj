@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Buisness\Auction.cs" />
     <Compile Include="Buisness\Controllers\AccountController.cs" />
+    <Compile Include="Buisness\Controllers\ErrorController.cs" />
     <Compile Include="Buisness\Controllers\HomeController.cs" />
     <Compile Include="Buisness\Controllers\LotController.cs" />
     <Compile Include="Buisness\Data\DataAccess.cs" />
@@ -81,10 +82,11 @@
     <Compile Include="Buisness\EmailSender.cs" />
     <Compile Include="Buisness\Models\Account\UserProfileViewModel.cs" />
     <Compile Include="Buisness\Models\Home\IndexModel.cs" />
-    <Compile Include="Buisness\Models\Item\BetRangeValidator.cs" />
-    <Compile Include="Buisness\Models\Item\CreateLotModel.cs" />
-    <Compile Include="Buisness\Models\Item\FeedBackModel.cs" />
-    <Compile Include="Buisness\Models\Item\ViewLotModel.cs" />
+    <Compile Include="Buisness\Models\Lot\BetRangeValidator.cs" />
+    <Compile Include="Buisness\Models\Lot\CreateLotModel.cs" />
+    <Compile Include="Buisness\Models\Lot\FeedBackModel.cs" />
+    <Compile Include="Buisness\Models\Lot\ILotModel.cs" />
+    <Compile Include="Buisness\Models\Lot\LotModel.cs" />
     <Compile Include="Buisness\Security\AuctionMembershipProvider.cs" />
     <Compile Include="Buisness\Security\AuctionRoleProvider.cs" />
     <Compile Include="Global.asax.cs">
@@ -169,6 +171,24 @@
   <ItemGroup>
     <Content Include="Views\Account\EditProfile.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Error\Error404.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Buisness\Models\Error\" />
+    <Folder Include="Content\Image\Lots\" />
+    <Folder Include="Content\Image\Site\" />
+    <Folder Include="Content\Image\Users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\RestorePasswordConfirmation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\EmailIsSent.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -187,7 +207,7 @@
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50441</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <DevelopmentServerVPath>/localhost/OnlineAuction</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

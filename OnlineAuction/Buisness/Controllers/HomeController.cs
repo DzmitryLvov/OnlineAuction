@@ -11,10 +11,7 @@ namespace OnlineAuction.Buisness.Controllers
 
         public ActionResult Index()
         {
-            var model = new IndexModel
-                {
-                    Lots = DataAccess.ConvertedActualLotCollection
-                };
+            var model = new IndexModel();// TODO: add same initializer
             Auction.Start();
             return View(model);
         }

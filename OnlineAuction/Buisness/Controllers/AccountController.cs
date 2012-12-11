@@ -20,20 +20,18 @@ namespace OnlineAuction.Buisness.Controllers
         }
 
         [HttpPost]
-        public ActionResult LogOn(LogOnModel model)
+        public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
-                    //var returnUrl = Session["ToRedirect"].ToString();
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    /*if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
                         return Redirect(returnUrl);
                     }
-                    */
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -66,7 +64,7 @@ namespace OnlineAuction.Buisness.Controllers
                 ModelState.AddModelError("", ErrorCodeToString(createStatus));
             }
 
-            
+
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -113,7 +111,6 @@ namespace OnlineAuction.Buisness.Controllers
 
         public ActionResult RestorePassword()
         {
-            Session["Success"] = false;
             return View();
         }
 
@@ -122,21 +119,38 @@ namespace OnlineAuction.Buisness.Controllers
         {
             if (ModelState.IsValid)
             {
-               if (Auction.RestorePassword(model))
-               {
-                   Session.Add("Success","true");
-                   return View(model);
-               }
+                if (Auction.RestorePassword(model))
+                {
+                    return RedirectToAction("EmailIsSent");
+                }
             }
             ModelState.AddModelError("", "The username or email is incorrect.");
             return View(model);
         }
 
+        public ActionResult RestorePasswordConfirmation(string username, string hash)
+        {
+            return Membership.Provider.ValidateUser(username, hash)
+                       ? View(new ChangePasswordModel { OldPassword = hash, UserName = username })
+                       : null;
+        }
+        [HttpPost]
+        public ActionResult RestorePasswordConfirmation(ChangePasswordModel model, string hash)
+        {
+            var membershipUser = Membership.Provider.GetUser(model.UserName, false);
+            if (membershipUser != null && membershipUser.ChangePassword(hash, model.NewPassword))
+            {
+                return RedirectToAction("ChangePasswordSuccess");
+            }
+            ModelState.AddModelError("", "Error while password changing.");
+            return View(model);
+        }
+        [Authorize]
         public ActionResult ChangePassword()
         {
             return View();
         }
-
+        [Authorize]
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
@@ -144,18 +158,28 @@ namespace OnlineAuction.Buisness.Controllers
             {
                 if (Membership.ValidateUser(User.Identity.Name, model.OldPassword))
                 {
-                    
+                    Membership.Provider.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
+                    RedirectToAction("Index", "Home");
                 }
             }
             ModelState.AddModelError("", "Password updating fail.");
+
             return View(model);
         }
-
+        public ActionResult ChangePasswordSuccess()
+        {
+            return View();
+        }
+        public ActionResult EmailIsSent()
+        {
+            return View();
+        }
+        [Authorize]
         public ActionResult Profile(UserProfileViewModel model)
         {
             return View(model);
         }
-
+        [Authorize]
         public ActionResult EditProfile()
         {
             return View();

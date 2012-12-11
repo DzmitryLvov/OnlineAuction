@@ -1,47 +1,100 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Security;
+using OnlineAuction.Buisness.Data;
 using OnlineAuction.Buisness.Models.Item;
 
 namespace OnlineAuction.Buisness.Models
 {
     public class EmailSender
     {
-        private const string CURRENT_PATH = @"localhost:50441/";
+        private const string EMAIL_ADDRESS = @"newt0ne@mail.ru";
+        private const string LOCAL = @"http://localhost:50441";
 
-        public static void SendResetEmail(MembershipUser currentUser)
+        static bool SendEamil(string email,string subject, string body)
         {
-            /*var email = new MailMessage {From = new MailAddress("noreply@example.com")};
-
-            email.To.Add(new MailAddress(currentUser.Email));
-
-            email.Subject = "Password Reset";
-            email.IsBodyHtml = true;
-            var link = CURRENT_PATH + "Account/ResetPassword/?username=" + currentUser.UserName + "&reset=" + HashResetParams(currentUser.UserName, currentUser.ProviderUserKey.ToString());
-            email.Body = "<p>" + currentUser.UserName + " please click the following link to reset your password: <a href='" + link + "'>" + link + "</a></p>";
-            email.Body += "<p>If you did not request a password reset you do not need to take any action.</p>";
-
-            var smtpClient = new SmtpClient();
-
-            smtpClient.Send(email);*/
+            var smtp = new SmtpClient("smtp.mail.ru", 25)
+                {
+                    Credentials = new NetworkCredential(EMAIL_ADDRESS, "222377a")
+                };
+            var message = new MailMessage {From = new MailAddress(EMAIL_ADDRESS)};
+            message.To.Add(new MailAddress(email));
+            message.Subject = subject;
+            message.Body = body;
+            try
+            {
+                smtp.Send(message);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-       /* private static string HashResetParams(string userName, string toString)
+        public static bool SendResetEmail(string email, string username, string newpass)
         {
+            return SendEamil(email, "Password restoring",
+                             String.Format("Hello, {0}! \r\n Here is your confirmation URL: \r\n {1}/localhost/OnlineAuction/Account/RestorePasswordConfirmation?username={0}&hash={2} ", username,LOCAL, newpass));
+        }
 
-            byte[] bytesofLink = System.Text.Encoding.UTF8.GetBytes(username + guid);
-            System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
-            var hashParams = BitConverter.ToString(md5.ComputeHash(bytesofLink));
-
-            return hashParams;
-        }*/
-
-        public static void SendEmailToLeader(ViewLotModel model)
+        public static void ToLeaderOnDelete(string leaderName)
         {
-            throw new NotImplementedException();
+            return;
+        }
+        public static bool ToLeaderOnChangedRate(LotModel model, string newLeader)
+        {
+            var membershipUser = Membership.GetUser(model.LeaderName);
+            return membershipUser != null && SendEamil(membershipUser.Email, model.Name,
+                                                                             String.Format(
+                                                                                 "Hello, {0} \r\n Your bid on lot <a href=\"{1}/localhost/OnlineAuction/Lot/Index/{2}\"> {3} </a>, was broken by <a href=\"{1}/localhost/OnlineAuction/Account/Profile?name={4}\"> {4} </a>",
+                                                                                 model.LeaderName, LOCAL, model.ID, model.Name, newLeader));
+        }
+
+        public static void ToOwnerOnDelete(string ownerName)
+        {
+            return;
+        }
+        public static void ToLeaderOnComplete()
+        {
+        }
+
+
+
+        public static bool  ToOwnerOnComplete(LotModel model, string leadername)
+        {
+            var membershipUser = Membership.GetUser(model.OwnerName);
+            return membershipUser != null && SendEamil(membershipUser.Email, model.Name,
+                                                                             String.Format(
+                                                                                 "Hello, {0} \r\n Your  lot {1}, was won by the user {2} by $ {4}. \r\n " +
+                                                                                 "Contact them for contacts listed in the user's profile:" +
+                                                                                 " {3}/localhost/OnlineAuction/Account/Profile?name={2}",
+                                                                                 model.OwnerName, model.Name,leadername,LOCAL,model.Currency));
+        
+        }
+
+        public static bool ToLeaderOnComplete(LotModel model)
+        {
+            var membershipUser = Membership.GetUser(model.LeaderName);
+            return membershipUser != null && SendEamil(membershipUser.Email, model.Name,
+                                                                             String.Format(
+                                                                                 "Hello, {0} \r\n Congratulations? you won lot {1} by $ {2}! \r\n " +
+                                                                                 "Wait until you contact the seller",
+                                                                                 model.LeaderName, model.Name, model.Currency));
+        }
+
+        public static bool ToOwnerOnComplete(LotModel model) 
+        {
+            var membershipUser = Membership.GetUser(model.OwnerName);
+            return membershipUser != null && SendEamil(membershipUser.Email, model.Name,
+                                                                             String.Format(
+                                                                                 "Hello, {0} \r\n Sorry, but your  lot {1}, was removed from the auction. \r\n " ,
+                                                                                 model.OwnerName, model.Name));
+        
         }
     }
 }

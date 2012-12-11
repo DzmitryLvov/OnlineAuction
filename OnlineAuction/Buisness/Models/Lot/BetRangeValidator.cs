@@ -17,7 +17,7 @@ public class BetRangeValidator : ValidationAttribute, IClientValidatable
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
         
-        var model = (ViewLotModel)validationContext.ObjectInstance;
+        var model = (LotModel)validationContext.ObjectInstance;
         if (model.ID > 0)
         {
             var minValue = DataAccess.GetViewModelById(model.ID).Currency;

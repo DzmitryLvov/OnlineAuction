@@ -7,7 +7,7 @@ using OnlineAuction.Buisness.Data;
 namespace OnlineAuction.Buisness.Models.Item
 {
     
-    public class ViewLotModel
+    public class LotModel
     {
         public int ID { get; set; }
 
@@ -18,7 +18,7 @@ namespace OnlineAuction.Buisness.Models.Item
         public string Description { get; set; }
 
         public DateTime ActualDate { get; set; }
-
+   
         public string LeaderName { get; set; }
 
         [BetRangeValidator("MinValue",ErrorMessage = "your bet can not be less than current currency")]

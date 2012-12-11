@@ -367,7 +367,7 @@ namespace OnlineAuction.Buisness.Security
                 default:
                     throw new ProviderException("Password format not supported.");
             }
-            this._dataBase = new MainDataBase();
+            this._dataBase = DataAccess.DataBase as MainDataBase;
         }
 
         public override bool ChangePassword(string username, string oldPwd, string newPwd)

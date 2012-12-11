@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading;
 using OnlineAuction.Buisness.Data;
+using OnlineAuction.Buisness.Models;
 using OnlineAuction.Buisness.Models.Account;
 using OnlineAuction.Buisness.Models.Item;
 
@@ -9,10 +11,21 @@ namespace OnlineAuction.Buisness
     {
         public static void Start()
         {
-            bool isAlive = true;
+            /*var t = new Thread(LotTimeOutChecker) {IsBackground = true};
+            t.Priority = ThreadPriority.Lowest;
+            t.Start();*/
+        }
 
+        static void LotTimeOutChecker()
+        {
+            var isAlive = true;
             while (isAlive)
             {
+                Thread.Sleep(5000);
+                foreach (var currentLot in DataAccess.GetCollectionToDelete())
+                {
+                    DeleteLot(DataAccess.ConvertToViewModel(currentLot));
+                }
                 
             }
         }
@@ -22,39 +35,45 @@ namespace OnlineAuction.Buisness
             var newpass = "";
             if (!String.IsNullOrEmpty( newpass = DataAccess.RestorePassword(model)))
             {
-                //sendEmail
+                EmailSender.SendResetEmail(model.Email, model.UserName, newpass);
                 return true;
             }
             return false;
         }
-        static int CalculateNextInterval()
-        {
-            var s = DataAccess.GetDateOfCloserDeleteon();
-            var r = (DateTime.Now - s).Milliseconds;
-            return r;
-        }
+        
         public static bool CreateLot(CreateLotModel model, string ownername)
         {
-
            return DataAccess.CreateLot(ownername,model.Name, model.Description, model.ActualDate, model.Currency);
+           
         }
 
-        public static void MakeBet(ViewLotModel model, string username)
+        public static void MakeBet(LotModel model, string username)
         {
+            if (model.LeaderName != null && username != model.LeaderName)
+            {
+                EmailSender.ToLeaderOnChangedRate(model, username);
+            }
             DataAccess.MakeBet(model.ID, username, model.Currency);
         }
 
-        public static bool DeleteLot(ViewLotModel model)
+        public static bool DeleteLot(LotModel currentLot)
         {
             try
             {
-                DataAccess.DeleteLot(model.ID);
-                
-                //EmailSender.SendEmailToLeader(model);
+                if (currentLot.LeaderName != null)
+                {
+                    EmailSender.ToOwnerOnComplete(currentLot, currentLot.LeaderName);
+                    EmailSender.ToLeaderOnComplete(currentLot);
+                }
+                else
+                {
+                    EmailSender.ToOwnerOnComplete(currentLot);
+                }
+                DataAccess.DeleteLot(currentLot.ID);
                 
                 return true;
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 return false;
             }

@@ -5,7 +5,11 @@ namespace OnlineAuction.Buisness.Models.Home
 {
     public class IndexModel
     {
-        public IEnumerable<ViewLotModel> Lots { get; set; }
+        public IEnumerable<LotModel> Lots { get;set;}
 
+        public IndexModel()
+        {
+            Lots =  Data.DataAccess.ConvertedActualLotCollection;
+        }
     }
 }

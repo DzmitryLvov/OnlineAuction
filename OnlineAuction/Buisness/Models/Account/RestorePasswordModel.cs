@@ -13,6 +13,5 @@ namespace OnlineAuction.Buisness.Models.Account
         [Display(Name = "Email")]
         [RegularExpression(@"[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-z0-9])?", ErrorMessage = "Invalid email")]
         public string Email { get; set; }
-
     }
 }

@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.Objects;
+using System.IO;
 using System.Linq;
+using System.Net;
 using OnlineAuction.Buisness.Models.Account;
 using OnlineAuction.Buisness.Models.Item;
 
@@ -8,37 +12,56 @@ namespace OnlineAuction.Buisness.Data
 {
     public class DataAccess
     {
-        private static MainDataBase _dataBase = new MainDataBase();
+        private static readonly MainDataBase _dataBase = new MainDataBase();
+        private const string INITIAL_CATALOG = @"E:\Prog\OnlineAuction\OnlineAuction\Content";
 
+        static DataAccess()
+        {
+            _dataBase.CommandTimeout = 5;
+        }
         public static object DataBase
-        {
-            get { return _dataBase; }
-        }
-
-        public static IQueryable<Lot> LotDataBase
-        {
-            get { return _dataBase.Lots; }
-        }
-
-        public static IEnumerable<ViewLotModel> ConvertedActualLotCollection
         {
             get
             {
-                return from lot in LotDataBase where !lot.IsDeleted orderby lot.ActualDate select new ViewLotModel
-                    {
-                        ID = lot.ID,
-                        ActualDate = lot.ActualDate,
-                        Currency = lot.Currency,
-                        Description = lot.Description,
-                        Name = lot.Lotname
-                    }; 
-                
+                    return _dataBase;
+            }
+        }
+        private static MainDataBase GetDataBase()
+        {
+            return _dataBase;
+        }
+        public static ObjectSet<Lot> LotDataBase
+        {
+            get
+            {
+                //lock (_dataBase)
+                //{
+                    return _dataBase.Lots; 
+                //}
             }
         }
 
-        public static ViewLotModel ConvertToViewModel(Lot lot)
+        public static IEnumerable<LotModel> ConvertedActualLotCollection
         {
-            var model = new ViewLotModel
+            get
+            {
+                    return from lot in LotDataBase
+                           where !lot.IsDeleted
+                           orderby lot.ActualDate
+                           select new LotModel
+                           {
+                               ID = lot.ID,
+                               ActualDate = lot.ActualDate,
+                               Currency = lot.Currency,
+                               Description = lot.Description,
+                               Name = lot.Lotname
+                           }; 
+            }
+        }
+
+        public static LotModel ConvertToViewModel(Lot lot)
+        {
+            var model = new LotModel
                 {
                     ID = lot.ID,
                     ActualDate = lot.ActualDate,
@@ -51,23 +74,17 @@ namespace OnlineAuction.Buisness.Data
             return model;
         }
 
-        public static ViewLotModel GetViewModelById(int? id)
+        public static LotModel GetViewModelById(int id)
         {
-            var lot = _dataBase.Lots.FirstOrDefault(l => l.ID == id);
+            var lot = LotDataBase.FirstOrDefault(l => l.ID == id);
             return lot != null ? ConvertToViewModel(lot) : null;
         }
 
-
-
-        public static int[] GetMinVal(int id)
-        {
-            throw new System.NotImplementedException();
-        }
         public static bool MakeBet(int lotid, string leadername, Int64 newcurrency)
         {
             try
             {
-                var lot = _dataBase.Lots.First(t => t.ID == lotid);
+                var lot = LotDataBase.First(t => t.ID == lotid);
                 lot.Currency = newcurrency;
                 lot.LeaderName = leadername;
 
@@ -83,7 +100,7 @@ namespace OnlineAuction.Buisness.Data
        {
            try
            {
-               _dataBase.Lots.AddObject(new Lot
+               LotDataBase.AddObject(new Lot
                {
                    Lotname = name,
                    ActualDate = date,
@@ -93,6 +110,23 @@ namespace OnlineAuction.Buisness.Data
                    OwnerName = ownername
                });
                _dataBase.SaveChanges();
+               var path = String.Format("{0}\\Lots\\{1}",INITIAL_CATALOG,
+                                        LotDataBase.FirstOrDefault(
+                                            t => t.OwnerName == ownername &&
+                                                t.Lotname == name
+                                                && t.LeaderName == null)
+                                                  .ID);
+               if (!Directory.Exists(path))
+               {
+                   Directory.CreateDirectory(path);
+               }
+               else
+               {
+                   foreach (var filePath in Directory.GetFiles(path))
+                   {
+                       File.Delete(filePath);
+                   }
+               }
                return true;
            }
            catch (Exception)
@@ -106,7 +140,7 @@ namespace OnlineAuction.Buisness.Data
        {
            try
            {
-               var dbmodel = _dataBase.Lots.FirstOrDefault(m => m.ID == id);
+               var dbmodel = LotDataBase.FirstOrDefault(m => m.ID == id);
                if (dbmodel != null)
                    dbmodel.IsDeleted = true;
                _dataBase.SaveChanges();
@@ -136,7 +170,7 @@ namespace OnlineAuction.Buisness.Data
             var etalon = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
             var rnd = new Random();
 
-            var size = rnd.Next(8, 16);
+            var size = rnd.Next(32, 36);
 
             var result = "";
 
@@ -146,9 +180,15 @@ namespace OnlineAuction.Buisness.Data
             }
             return result;
         }
-        public static DateTime GetDateOfCloserDeleteon()
+
+        public static ParallelQuery<Lot> GetCollectionToDelete()
         {
-            return _dataBase.Lots.OrderBy(m => m.ActualDate).First().ActualDate;
+            var s = from lot in LotDataBase.AsParallel() where !lot.IsDeleted && lot.ActualDate < DateTime.Now select lot;
+            
+            return s;
+
+
+            //return result;
         }
     }
 }

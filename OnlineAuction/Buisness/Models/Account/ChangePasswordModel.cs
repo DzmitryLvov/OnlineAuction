@@ -6,6 +6,8 @@ namespace OnlineAuction.Buisness.Models.Account
 {
     public class ChangePasswordModel
     {
+        public string UserName { get; set; }
+        
         [Required]
         [Display(Name = "Old password")]
         public string OldPassword { get; set; }

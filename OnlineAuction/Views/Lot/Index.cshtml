@@ -1,5 +1,5 @@
 ﻿@using OnlineAuction.Buisness.Models.Item
-@model OnlineAuction.Buisness.Models.Item.ViewLotModel
+@model OnlineAuction.Buisness.Models.Item.LotModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
@@ -32,7 +32,7 @@
         <div>
             <p>
                 <h3>
-                    @Model.Name
+                    <input type="text" name="Name" style="border: none; outline: none" readonly="readonly" value=@Model.Name />
                 </h3>
             </p>
             <p>
@@ -51,7 +51,7 @@
             <p>@Model.Currency $
                @if (Model.LeaderName != null)
                {
-                   <text> By</text> <input type="text" style="border: none; outline: none" readonly="readonly" value=@Model.LeaderName />
+                   <text> By</text> <input type="text" name="LeaderName" style="border: none; outline: none" readonly="readonly" value=@Model.LeaderName />
                }
             </p>
             
@@ -59,7 +59,7 @@
             {
                 if (Context.User.IsInRole("admin") || Context.User.Identity.Name == Model.OwnerName)
                 {
-                    <div>@Html.ActionLink("Delete this lot", "DeleteLot", "Lot", new ViewLotModel
+                    <div>@Html.ActionLink("Delete this lot", "DeleteLot", "Lot", new LotModel
                              {
                                  OwnerName = Model.OwnerName,
                                  ID = Model.ID,

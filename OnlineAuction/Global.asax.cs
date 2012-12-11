@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using OnlineAuction.Buisness;
 
 namespace OnlineAuction
 {
@@ -31,6 +32,7 @@ namespace OnlineAuction
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+            //Auction.Start();
         }
     }
 }
