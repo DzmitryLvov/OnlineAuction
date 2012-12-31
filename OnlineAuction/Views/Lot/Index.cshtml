@@ -1,5 +1,5 @@
-﻿@using OnlineAuction.Buisness.Models.Item
-@model OnlineAuction.Buisness.Models.Item.LotModel
+﻿@using OnlineAuction.Buisness.Models.Lot
+@model LotModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
@@ -19,7 +19,7 @@
     $.validator.addMethod('betrange', function (value, element, params) {
         var minValue = parseInt($('input[name="' + params.minvalueproperty + '"]').val(), 10);
         var currentValue = parseInt(value, 10);
-        if ( minValue > currentValue ) {
+        if (minValue > currentValue) {
             $.validator.messages.betrange = $.format($.validator.messages.betrange, minValue);
             return false;
         }
@@ -29,61 +29,79 @@
 @using (Html.BeginForm())
 { 
     <div class="lot-container-main">
-        <div>
-            <p>
-                <h3>
-                    <input type="text" name="Name" style="border: none; outline: none" readonly="readonly" value=@Model.Name />
-                </h3>
-            </p>
-            <p>
-                @Model.Description
-            </p>
-            <p> Remaining
-                @{
-                    string days = (Model.ActualDate - DateTime.Now).Days.ToString();
-                    <h4>@String.Format("{0} d {1} h {2} m",
-                                       (Model.ActualDate - DateTime.Now).Days.ToString(),
-                                       (Model.ActualDate - DateTime.Now).Hours.ToString(),
-                                       (Model.ActualDate - DateTime.Now).Minutes.ToString())</h4>
+        <div class="title-container">
+                                <strong class="title" >@Model.Name</strong></div>
+        <table class="lot-table">
+            <tr >
+                <td>
+                    <div class="img-index">
+                        <img  src="../../@Model.ImageUrl"  width="350"  alt="img"/>
+                    </div>
+                </td>
+                <td style="padding: 0 0 0 0; vertical-align: top; left: 10px;">
+                    <table class="lot-info-table">
+                        <tr>
+                            <td style="height: 20px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" padding-top:30px;">
+                                @Model.Description
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" padding-top:20px;">
+                                Remaining
+                                @{
+                                    <h4>@String.Format("{0} d {1} h {2} m",
+                                                       (Model.ActualDate - DateTime.Now).Days.ToString(),
+                                                       (Model.ActualDate - DateTime.Now).Hours.ToString(),
+                                                       (Model.ActualDate - DateTime.Now).Minutes.ToString())</h4>
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div class="betinfo-container">
+            <div class="currency">
+               <strong >@Model.Currency $</strong> by
+                @if (Model.LeaderName != null)
+                {
+                    <input type="text" name="LeaderName" class="leader-textbox" readonly="readonly" value=@Model.LeaderName />
                 }
-            </p>
-            
-            <p>@Model.Currency $
-               @if (Model.LeaderName != null)
-               {
-                   <text> By</text> <input type="text" name="LeaderName" style="border: none; outline: none" readonly="readonly" value=@Model.LeaderName />
-               }
-            </p>
-            
+            </div>
             @if (Context.User.Identity.IsAuthenticated)
             {
                 if (Context.User.IsInRole("admin") || Context.User.Identity.Name == Model.OwnerName)
                 {
-                    <div>@Html.ActionLink("Delete this lot", "DeleteLot", "Lot", new LotModel
+                    @Html.ActionLink("Delete this lot", "DeleteLot", "Lot", new LotModel
                              {
                                  OwnerName = Model.OwnerName,
                                  ID = Model.ID,
                                  LeaderName = Model.LeaderName,
-                             },null )</div>
+                             }, new { @class = "btn btn-info" })
                 }
                 else
                 {
-                    @Html.TextBoxFor(t => t.Currency) <text> $</text>
-                    <button type="submit">Bet</button>
-                    @Html.ValidationMessageFor(t => t.Currency)
+                    @Html.TextBoxFor(t => t.Currency,new {@class="textbox-currency"}) 
+                <span style="position: relative; display: inline-block;"> $</span>
+                    <button type="submit" style="padding: 2px 20px; display: inline-block; position: relative; left: 20px;"
+                            class="btn-success">
+                        Bet</button>
+                    @Html.ValidationMessageFor(t => t.Currency,null, new { @class="val-currency"})
                 }
             }
             else
             {
-                <div>
-                    @{
-                        
-                    }
-                    Unregistered users can not bet. Please, @Html.ActionLink("Log on", "LogOn", "Account"), or
-                    @Html.ActionLink("Register", "Register", "Account") 
-                    
+                <div class="logon-warning-message">
+                    <span>Unregistered users can not bet. Please, @Html.ActionLink("Log on", "LogOn", "Account",null, new { @class = "btn btn-info" })
+                        or
+                        @Html.ActionLink("Register", "Register", "Account", null,new { @class = "btn btn-info" })
+                    </span>
                 </div>
             }
         </div>
-    </div> 
+    </div>
 }

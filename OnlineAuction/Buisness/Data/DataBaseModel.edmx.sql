@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 12/01/2012 21:14:24
+-- Date Created: 12/31/2012 16:27:45
 -- Generated from EDMX file: E:\Prog\OnlineAuction\OnlineAuction\Buisness\Data\DataBaseModel.edmx
 -- --------------------------------------------------
 
@@ -20,19 +20,25 @@ GO
 IF OBJECT_ID(N'[dbo].[FK__Users__RoleID__1B0907CE]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK__Users__RoleID__1B0907CE];
 GO
+IF OBJECT_ID(N'[dbo].[FK_LotTypeLot]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Lots] DROP CONSTRAINT [FK_LotTypeLot];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Lots]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Lots];
-GO
 IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Roles];
 GO
 IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Users];
+GO
+IF OBJECT_ID(N'[dbo].[Lots]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Lots];
+GO
+IF OBJECT_ID(N'[dbo].[LotTypes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[LotTypes];
 GO
 
 -- --------------------------------------------------
@@ -57,18 +63,22 @@ CREATE TABLE [dbo].[Users] (
     [PasswordQuestion] nvarchar(255)  NULL,
     [PasswordAnswer] nvarchar(255)  NULL,
     [IsApproved] bit  NOT NULL,
-    [LastActivityDate] datetime  NOT NULL,
-    [LastLoginDate] datetime  NOT NULL,
-    [LastPasswordChangedDate] datetime  NOT NULL,
-    [CreationDate] datetime  NOT NULL,
+    [LastActivityDate] datetime2(7)  NOT NULL,
+    [LastLoginDate] datetime2(7)  NOT NULL,
+    [LastPasswordChangedDate] datetime2(7)  NOT NULL,
+    [CreationDate] datetime2(7)  NOT NULL,
     [IsOnLine] bit  NULL,
     [IsLockedOut] bit  NOT NULL,
-    [LastLockedOutDate] datetime  NOT NULL,
+    [LastLockedOutDate] datetime2(7)  NOT NULL,
     [FailedPasswordAttemptCount] int  NOT NULL,
-    [FailedPasswordAttemptWindowStart] datetime  NOT NULL,
+    [FailedPasswordAttemptWindowStart] datetime2(7)  NOT NULL,
     [FailedPasswordAnswerAttemptCount] int  NOT NULL,
-    [FailedPasswordAnswerAttemptWindowStart] datetime  NOT NULL,
+    [FailedPasswordAnswerAttemptWindowStart] datetime2(7)  NOT NULL,
     [IsDeleted] bit  NOT NULL,
+    [Location] nvarchar(max)  NULL,
+    [FirstName] nvarchar(max)  NULL,
+    [LastName] nvarchar(max)  NULL,
+    [Phone] nvarchar(max)  NULL,
     [Role_ID] int  NULL
 );
 GO
@@ -79,10 +89,18 @@ CREATE TABLE [dbo].[Lots] (
     [Lotname] nvarchar(max)  NOT NULL,
     [Description] nvarchar(max)  NOT NULL,
     [Currency] bigint  NOT NULL,
-    [ActualDate] datetime  NOT NULL,
+    [ActualDate] datetime2(7)  NOT NULL,
     [IsDeleted] bit  NOT NULL,
-    [LeaderName] nchar(50)  NOT NULL,
-    [UserID] int  NOT NULL
+    [LeaderName] nchar(50)  NULL,
+    [OwnerName] nvarchar(50)  NOT NULL,
+    [TypeId] int  NOT NULL
+);
+GO
+
+-- Creating table 'LotTypes'
+CREATE TABLE [dbo].[LotTypes] (
+    [TypeID] int IDENTITY(1,1) NOT NULL,
+    [TypeName] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -108,6 +126,12 @@ ADD CONSTRAINT [PK_Lots]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
+-- Creating primary key on [TypeID] in table 'LotTypes'
+ALTER TABLE [dbo].[LotTypes]
+ADD CONSTRAINT [PK_LotTypes]
+    PRIMARY KEY CLUSTERED ([TypeID] ASC);
+GO
+
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
@@ -126,20 +150,28 @@ ON [dbo].[Users]
     ([Role_ID]);
 GO
 
--- Creating foreign key on [UserID] in table 'Lots'
+-- Creating foreign key on [TypeId] in table 'Lots'
 ALTER TABLE [dbo].[Lots]
-ADD CONSTRAINT [FK_UserLot]
-    FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
-        ([ID])
+ADD CONSTRAINT [FK_LotTypeLot]
+    FOREIGN KEY ([TypeId])
+    REFERENCES [dbo].[LotTypes]
+        ([TypeID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- Creating non-clustered index for FOREIGN KEY 'FK_UserLot'
-CREATE INDEX [IX_FK_UserLot]
+-- Creating non-clustered index for FOREIGN KEY 'FK_LotTypeLot'
+CREATE INDEX [IX_FK_LotTypeLot]
 ON [dbo].[Lots]
-    ([UserID]);
+    ([TypeId]);
 GO
 
+INSERT INTO Roles (Rolename, IsDeleted) VALUES ("admin","false")
+INSERT INTO Roles (Rolename, IsDeleted) VALUES ("user","false")
+
+INSERT INTO LotTypes (TypeName) VALUES ("Cars")
+INSERT INTO LotTypes (TypeName) VALUES ("Computers")
+INSERT INTO LotTypes (TypeName) VALUES ("Mobile phones")
+INSERT INTO LotTypes (TypeName) VALUES ("Pets")
+INSERT INTO LotTypes (TypeName) VALUES ("Other")
 -- --------------------------------------------------
 -- Script has ended
 -- --------------------------------------------------

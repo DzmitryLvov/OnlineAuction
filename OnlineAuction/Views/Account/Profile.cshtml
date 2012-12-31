@@ -1,22 +1,105 @@
-﻿@model OnlineAuction.Buisness.Models.Account.UserProfileViewModel
-
+﻿@using OnlineAuction.Buisness.Data
+@model OnlineAuction.Buisness.Models.Account.UserProfileViewModel
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
 }
-
-<h2>Profile</h2>
+<h2 style="margin: 0 auto; width: 200px;margin-bottom: 25px; position: relative;color: #808080">
+    Profile</h2>
 @using (Html.BeginForm())
 {
-    <div>
+    <div class="user-info-container">
+        <table>
+            <tr>
+                <td rowspan="5" style="width: 250px;">
+                    <img src=../@Model.ImageUrl width="200px">
+                </td>
+                <td>
+                </td>
+                <td>
+                    User name:
+                    @if (Model.Name != null)
+                    {
+                        @Model.Name
+                    }
+                    else
+                    {
+                        <span>No Data</span>
+                    }
+                </td>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        First name:
+                        @if (Model.Firstname != null)
+                        {
+                            @Model.Firstname
+                        }
+                        else
+                        {
+                            <span>No Data</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        Last name:
+                        @if (Model.LastName != null)
+                        {
+                            @Model.LastName
+                        }
+                        else
+                        {
+                            <span>No Data</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        Phone:
+                        @if (Model.Phone != null)
+                        {
+                            @Model.Phone
+                        }
+                        else
+                        {
+                            <span>No Data</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        Location:
+                        @if (Model.Location != null)
+                        {
+                            @Model.Location
+                        }
+                        else
+                        {
+                            <span>No Data</span>
+                        }
+                    </td>
+                </tr>
+        </table>
         @if (User.Identity.Name == Model.Name)
         {
-            <div>
-                @Html.ActionLink("Edit profile","EditProfile","Account")
+            <div style="margin-top: 25px;">
+                @Html.ActionLink("Edit profile", "EditProfile", "Account", null, new { @class = "btn btn-info" })
             </div>
         }
-        <div>
-            @Model.Name
-        </div>
+        @if (User.IsInRole("admin"))
+        {
+            if(!(new DataAccess().UserIsAdmin(Model.Name)))
+            {
+                @Html.ActionLink("Set as asministrator", "SetAsAdministrator", "Account", new {username = @Model.Name}, new { @class = "btn btn-info" })
+            }
+        }
     </div>
 }

@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 #region Метаданные связи EDM
 
 [assembly: EdmRelationshipAttribute("ProviderModel", "FK__Users__RoleID__1B0907CE", "Role", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(OnlineAuction.Buisness.Data.Role), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(OnlineAuction.Buisness.Data.User))]
+[assembly: EdmRelationshipAttribute("ProviderModel", "LotTypeLot", "LotType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(OnlineAuction.Buisness.Data.LotType), "Lot", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(OnlineAuction.Buisness.Data.Lot), true)]
 
 #endregion
 
@@ -117,6 +118,22 @@ namespace OnlineAuction.Buisness.Data
             }
         }
         private ObjectSet<Lot> _Lots;
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        public ObjectSet<LotType> LotTypes
+        {
+            get
+            {
+                if ((_LotTypes == null))
+                {
+                    _LotTypes = base.CreateObjectSet<LotType>("LotTypes");
+                }
+                return _LotTypes;
+            }
+        }
+        private ObjectSet<LotType> _LotTypes;
 
         #endregion
         #region Методы AddTo
@@ -143,6 +160,14 @@ namespace OnlineAuction.Buisness.Data
         public void AddToLots(Lot lot)
         {
             base.AddObject("Lots", lot);
+        }
+    
+        /// <summary>
+        /// Устаревший метод для добавления новых объектов в набор EntitySet LotTypes. Взамен можно использовать метод .Add связанного свойства ObjectSet&lt;T&gt;.
+        /// </summary>
+        public void AddToLotTypes(LotType lotType)
+        {
+            base.AddObject("LotTypes", lotType);
         }
 
         #endregion
@@ -173,7 +198,8 @@ namespace OnlineAuction.Buisness.Data
         /// <param name="actualDate">Исходное значение свойства ActualDate.</param>
         /// <param name="isDeleted">Исходное значение свойства IsDeleted.</param>
         /// <param name="ownerName">Исходное значение свойства OwnerName.</param>
-        public static Lot CreateLot(global::System.Int32 id, global::System.String lotname, global::System.String description, global::System.Int64 currency, global::System.DateTime actualDate, global::System.Boolean isDeleted, global::System.String ownerName)
+        /// <param name="typeId">Исходное значение свойства TypeId.</param>
+        public static Lot CreateLot(global::System.Int32 id, global::System.String lotname, global::System.String description, global::System.Int64 currency, global::System.DateTime actualDate, global::System.Boolean isDeleted, global::System.String ownerName, global::System.Int32 typeId)
         {
             Lot lot = new Lot();
             lot.ID = id;
@@ -183,6 +209,7 @@ namespace OnlineAuction.Buisness.Data
             lot.ActualDate = actualDate;
             lot.IsDeleted = isDeleted;
             lot.OwnerName = ownerName;
+            lot.TypeId = typeId;
             return lot;
         }
 
@@ -383,9 +410,180 @@ namespace OnlineAuction.Buisness.Data
         private global::System.String _OwnerName;
         partial void OnOwnerNameChanging(global::System.String value);
         partial void OnOwnerNameChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TypeId
+        {
+            get
+            {
+                return _TypeId;
+            }
+            set
+            {
+                OnTypeIdChanging(value);
+                ReportPropertyChanging("TypeId");
+                _TypeId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TypeId");
+                OnTypeIdChanged();
+            }
+        }
+        private global::System.Int32 _TypeId;
+        partial void OnTypeIdChanging(global::System.Int32 value);
+        partial void OnTypeIdChanged();
 
         #endregion
     
+        #region Свойства навигации
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ProviderModel", "LotTypeLot", "LotType")]
+        public LotType LotType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<LotType>("ProviderModel.LotTypeLot", "LotType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<LotType>("ProviderModel.LotTypeLot", "LotType").Value = value;
+            }
+        }
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<LotType> LotTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<LotType>("ProviderModel.LotTypeLot", "LotType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<LotType>("ProviderModel.LotTypeLot", "LotType", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// Нет доступной документации по метаданным.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ProviderModel", Name="LotType")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class LotType : EntityObject
+    {
+        #region Фабричный метод
+    
+        /// <summary>
+        /// Создание нового объекта LotType.
+        /// </summary>
+        /// <param name="typeID">Исходное значение свойства TypeID.</param>
+        /// <param name="typeName">Исходное значение свойства TypeName.</param>
+        public static LotType CreateLotType(global::System.Int32 typeID, global::System.String typeName)
+        {
+            LotType lotType = new LotType();
+            lotType.TypeID = typeID;
+            lotType.TypeName = typeName;
+            return lotType;
+        }
+
+        #endregion
+        #region Свойства-примитивы
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TypeID
+        {
+            get
+            {
+                return _TypeID;
+            }
+            set
+            {
+                if (_TypeID != value)
+                {
+                    OnTypeIDChanging(value);
+                    ReportPropertyChanging("TypeID");
+                    _TypeID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TypeID");
+                    OnTypeIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _TypeID;
+        partial void OnTypeIDChanging(global::System.Int32 value);
+        partial void OnTypeIDChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String TypeName
+        {
+            get
+            {
+                return _TypeName;
+            }
+            set
+            {
+                OnTypeNameChanging(value);
+                ReportPropertyChanging("TypeName");
+                _TypeName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("TypeName");
+                OnTypeNameChanged();
+            }
+        }
+        private global::System.String _TypeName;
+        partial void OnTypeNameChanging(global::System.String value);
+        partial void OnTypeNameChanged();
+
+        #endregion
+    
+        #region Свойства навигации
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ProviderModel", "LotTypeLot", "Lot")]
+        public EntityCollection<Lot> Lots
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Lot>("ProviderModel.LotTypeLot", "Lot");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Lot>("ProviderModel.LotTypeLot", "Lot", value);
+                }
+            }
+        }
+
+        #endregion
     }
     
     /// <summary>
@@ -550,7 +748,11 @@ namespace OnlineAuction.Buisness.Data
         /// <param name="failedPasswordAnswerAttemptCount">Исходное значение свойства FailedPasswordAnswerAttemptCount.</param>
         /// <param name="failedPasswordAnswerAttemptWindowStart">Исходное значение свойства FailedPasswordAnswerAttemptWindowStart.</param>
         /// <param name="isDeleted">Исходное значение свойства IsDeleted.</param>
-        public static User CreateUser(global::System.Int32 id, global::System.String username, global::System.String email, global::System.String comment, global::System.String password, global::System.Boolean isApproved, global::System.DateTime lastActivityDate, global::System.DateTime lastLoginDate, global::System.DateTime lastPasswordChangedDate, global::System.DateTime creationDate, global::System.Boolean isLockedOut, global::System.DateTime lastLockedOutDate, global::System.Int32 failedPasswordAttemptCount, global::System.DateTime failedPasswordAttemptWindowStart, global::System.Int32 failedPasswordAnswerAttemptCount, global::System.DateTime failedPasswordAnswerAttemptWindowStart, global::System.Boolean isDeleted)
+        /// <param name="location">Исходное значение свойства Location.</param>
+        /// <param name="firstName">Исходное значение свойства FirstName.</param>
+        /// <param name="lastName">Исходное значение свойства LastName.</param>
+        /// <param name="phone">Исходное значение свойства Phone.</param>
+        public static User CreateUser(global::System.Int32 id, global::System.String username, global::System.String email, global::System.String comment, global::System.String password, global::System.Boolean isApproved, global::System.DateTime lastActivityDate, global::System.DateTime lastLoginDate, global::System.DateTime lastPasswordChangedDate, global::System.DateTime creationDate, global::System.Boolean isLockedOut, global::System.DateTime lastLockedOutDate, global::System.Int32 failedPasswordAttemptCount, global::System.DateTime failedPasswordAttemptWindowStart, global::System.Int32 failedPasswordAnswerAttemptCount, global::System.DateTime failedPasswordAnswerAttemptWindowStart, global::System.Boolean isDeleted, global::System.String location, global::System.String firstName, global::System.String lastName, global::System.String phone)
         {
             User user = new User();
             user.ID = id;
@@ -570,6 +772,10 @@ namespace OnlineAuction.Buisness.Data
             user.FailedPasswordAnswerAttemptCount = failedPasswordAnswerAttemptCount;
             user.FailedPasswordAnswerAttemptWindowStart = failedPasswordAnswerAttemptWindowStart;
             user.IsDeleted = isDeleted;
+            user.Location = location;
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            user.Phone = phone;
             return user;
         }
 
@@ -1058,6 +1264,102 @@ namespace OnlineAuction.Buisness.Data
         private global::System.Boolean _IsDeleted;
         partial void OnIsDeletedChanging(global::System.Boolean value);
         partial void OnIsDeletedChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Location
+        {
+            get
+            {
+                return _Location;
+            }
+            set
+            {
+                OnLocationChanging(value);
+                ReportPropertyChanging("Location");
+                _Location = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Location");
+                OnLocationChanged();
+            }
+        }
+        private global::System.String _Location;
+        partial void OnLocationChanging(global::System.String value);
+        partial void OnLocationChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FirstName
+        {
+            get
+            {
+                return _FirstName;
+            }
+            set
+            {
+                OnFirstNameChanging(value);
+                ReportPropertyChanging("FirstName");
+                _FirstName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("FirstName");
+                OnFirstNameChanged();
+            }
+        }
+        private global::System.String _FirstName;
+        partial void OnFirstNameChanging(global::System.String value);
+        partial void OnFirstNameChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String LastName
+        {
+            get
+            {
+                return _LastName;
+            }
+            set
+            {
+                OnLastNameChanging(value);
+                ReportPropertyChanging("LastName");
+                _LastName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("LastName");
+                OnLastNameChanged();
+            }
+        }
+        private global::System.String _LastName;
+        partial void OnLastNameChanging(global::System.String value);
+        partial void OnLastNameChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Phone
+        {
+            get
+            {
+                return _Phone;
+            }
+            set
+            {
+                OnPhoneChanging(value);
+                ReportPropertyChanging("Phone");
+                _Phone = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Phone");
+                OnPhoneChanged();
+            }
+        }
+        private global::System.String _Phone;
+        partial void OnPhoneChanging(global::System.String value);
+        partial void OnPhoneChanged();
 
         #endregion
     

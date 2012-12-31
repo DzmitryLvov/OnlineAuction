@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProviderModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="MainDataBase" annotation:LazyLoadingEnabled="true" a:TypeAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+    <EntitySet Name="Roles" EntityType="ProviderModel.Role" />
+    <EntitySet Name="Users" EntityType="ProviderModel.User" />
+    <AssociationSet Name="FK__Users__RoleID__1B0907CE" Association="ProviderModel.FK__Users__RoleID__1B0907CE">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <EntitySet Name="Lots" EntityType="ProviderModel.Lot" />
+    <EntitySet Name="LotTypes" EntityType="ProviderModel.LotType" />
+    <AssociationSet Name="LotTypeLot" Association="ProviderModel.LotTypeLot">
+      <End Role="LotType" EntitySet="LotTypes" />
+      <End Role="Lot" EntitySet="Lots" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Rolename" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="ProviderModel.FK__Users__RoleID__1B0907CE" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Username" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Type="String" Name="Password" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="PasswordQuestion" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="PasswordAnswer" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="IsApproved" Nullable="false" />
+    <Property Type="DateTime" Name="LastActivityDate" Nullable="false" />
+    <Property Type="DateTime" Name="LastLoginDate" Nullable="false" />
+    <Property Type="DateTime" Name="LastPasswordChangedDate" Nullable="false" />
+    <Property Type="DateTime" Name="CreationDate" Nullable="false" />
+    <Property Type="Boolean" Name="IsOnLine" Nullable="true" />
+    <Property Type="Boolean" Name="IsLockedOut" Nullable="false" />
+    <Property Type="DateTime" Name="LastLockedOutDate" Nullable="false" />
+    <Property Type="Int32" Name="FailedPasswordAttemptCount" Nullable="false" />
+    <Property Type="DateTime" Name="FailedPasswordAttemptWindowStart" Nullable="false" />
+    <Property Type="Int32" Name="FailedPasswordAnswerAttemptCount" Nullable="false" />
+    <Property Type="DateTime" Name="FailedPasswordAnswerAttemptWindowStart" Nullable="false" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <NavigationProperty Name="Role" Relationship="ProviderModel.FK__Users__RoleID__1B0907CE" FromRole="User" ToRole="Role" />
+    <Property Type="String" Name="Location" Nullable="false" />
+    <Property Type="String" Name="FirstName" Nullable="false" />
+    <Property Type="String" Name="LastName" Nullable="false" />
+    <Property Type="String" Name="Phone" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Users__RoleID__1B0907CE">
+    <End Type="ProviderModel.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="ProviderModel.User" Role="User" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Lot">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" ConcurrencyMode="None" />
+    <Property Type="String" Name="Lotname" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="String" Name="Description" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="Int64" Name="Currency" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="DateTime" Name="ActualDate" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" ConcurrencyMode="None" />
+    <Property Name="LeaderName" Nullable="true" ConcurrencyMode="None" MaxLength="50" FixedLength="true" Unicode="true" Type="String" />
+    <Property Type="String" Name="OwnerName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" ConcurrencyMode="None" />
+    <NavigationProperty Name="LotType" Relationship="ProviderModel.LotTypeLot" FromRole="Lot" ToRole="LotType" />
+    <Property Type="Int32" Name="TypeId" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LotType">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Type="Int32" Name="TypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="TypeName" Nullable="false" />
+    <NavigationProperty Name="Lots" Relationship="ProviderModel.LotTypeLot" FromRole="LotType" ToRole="Lot" />
+  </EntityType>
+  <Association Name="LotTypeLot">
+    <End Type="ProviderModel.LotType" Role="LotType" Multiplicity="1" />
+    <End Type="ProviderModel.Lot" Role="Lot" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LotType">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="Lot">
+        <PropertyRef Name="TypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

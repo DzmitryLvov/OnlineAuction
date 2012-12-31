@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Web.Security;
+using OnlineAuction.Buisness.Data;
 using OnlineAuction.Buisness.Models.Account;
 namespace OnlineAuction.Buisness.Controllers
 {
@@ -54,9 +55,10 @@ namespace OnlineAuction.Buisness.Controllers
                 // Attempt to register the user
                 MembershipCreateStatus createStatus;
                 Membership.CreateUser(model.UserName, model.Password, model.Email, model.Question, model.Answer, true, null, out createStatus);
-
                 if (createStatus == MembershipCreateStatus.Success)
                 {
+
+                    new DataAccess().CreateUserData(model.Location, model.Phone, model.FirstName, model.LastName, model.UserName);
                     FormsAuthentication.SetAuthCookie(model.UserName, false);
                     return RedirectToAction("Index", "Home");
                 }
@@ -183,6 +185,13 @@ namespace OnlineAuction.Buisness.Controllers
         public ActionResult EditProfile()
         {
             return View();
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult SetAsAdministrator( string username)
+        {
+            new DataAccess().SetAdmin(username);
+            return Profile(new UserProfileViewModel() {Name = username});
         }
     }
 }

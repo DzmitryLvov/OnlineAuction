@@ -1,47 +1,49 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data.Objects;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Web;
 using OnlineAuction.Buisness.Models.Account;
-using OnlineAuction.Buisness.Models.Item;
+using OnlineAuction.Buisness.Models.Lot;
 
 namespace OnlineAuction.Buisness.Data
 {
     public class DataAccess
     {
-        private static readonly MainDataBase _dataBase = new MainDataBase();
-        private const string INITIAL_CATALOG = @"E:\Prog\OnlineAuction\OnlineAuction\Content";
+        private  readonly MainDataBase _dataBase = new MainDataBase();
+        private readonly string INITIAL_CATALOG = AppDomain.CurrentDomain.BaseDirectory;
 
-        static DataAccess()
+        const string ETALON = @"qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
+
+        public DataAccess()
         {
             _dataBase.CommandTimeout = 5;
         }
-        public static object DataBase
+        public  object DataBase
         {
             get
             {
+                lock (_dataBase)
+                {
                     return _dataBase;
+                }   
             }
         }
-        private static MainDataBase GetDataBase()
+        private  MainDataBase GetDataBase()
         {
             return _dataBase;
         }
-        public static ObjectSet<Lot> LotDataBase
+        public  ObjectSet<Lot> LotDataBase
         {
             get
             {
-                //lock (_dataBase)
-                //{
                     return _dataBase.Lots; 
-                //}
+                
             }
         }
 
-        public static IEnumerable<LotModel> ConvertedActualLotCollection
+        public  IEnumerable<LotModel> ConvertedActualLotCollection
         {
             get
             {
@@ -59,7 +61,7 @@ namespace OnlineAuction.Buisness.Data
             }
         }
 
-        public static LotModel ConvertToViewModel(Lot lot)
+        public LotModel ConvertToViewModel(Lot lot)
         {
             var model = new LotModel
                 {
@@ -74,13 +76,13 @@ namespace OnlineAuction.Buisness.Data
             return model;
         }
 
-        public static LotModel GetViewModelById(int id)
+        public  LotModel GetViewModelById(int id)
         {
             var lot = LotDataBase.FirstOrDefault(l => l.ID == id);
             return lot != null ? ConvertToViewModel(lot) : null;
         }
 
-        public static bool MakeBet(int lotid, string leadername, Int64 newcurrency)
+        public bool MakeBet(int lotid, string leadername, Int64 newcurrency)
         {
             try
             {
@@ -96,7 +98,7 @@ namespace OnlineAuction.Buisness.Data
                 return false;
             }
         }
-       public static bool CreateLot(string ownername, string name, string description, DateTime date, Int64 currency)
+       public bool CreateLot(string ownername, string name, string description, DateTime date, Int64 currency, string typeName, object image)
        {
            try
            {
@@ -107,10 +109,11 @@ namespace OnlineAuction.Buisness.Data
                    Currency = currency,
                    Description = description,
                    IsDeleted = false,
-                   OwnerName = ownername
+                   OwnerName = ownername,
+                   LotType = _dataBase.LotTypes.FirstOrDefault(t => t.TypeName == typeName)
                });
                _dataBase.SaveChanges();
-               var path = String.Format("{0}\\Lots\\{1}",INITIAL_CATALOG,
+               var path = String.Format("{0}\\Image\\Lots\\{1}",INITIAL_CATALOG,
                                         LotDataBase.FirstOrDefault(
                                             t => t.OwnerName == ownername &&
                                                 t.Lotname == name
@@ -119,6 +122,9 @@ namespace OnlineAuction.Buisness.Data
                if (!Directory.Exists(path))
                {
                    Directory.CreateDirectory(path);
+                   var img = image as HttpPostedFileBase;
+                   if (img.ContentLength > 0)
+                       img.SaveAs(path + @"\index.jpg");
                }
                else
                {
@@ -136,23 +142,24 @@ namespace OnlineAuction.Buisness.Data
            
        }
 
-       internal static bool DeleteLot(int id)
+       internal bool DeleteLot(int id)
        {
            try
            {
-               var dbmodel = LotDataBase.FirstOrDefault(m => m.ID == id);
+               var db = new MainDataBase();
+               var dbmodel = db.Lots.FirstOrDefault(m => m.ID == id);
                if (dbmodel != null)
                    dbmodel.IsDeleted = true;
-               _dataBase.SaveChanges();
+               db.SaveChanges();
                return true;
            }
-           catch
+           catch(Exception e)
            {
-               return false;
+               throw;
            }
        }
 
-        public static string RestorePassword(RestorePasswordModel model)
+        public string RestorePassword(RestorePasswordModel model)
         {
             var result = "";
             var etalon = _dataBase.Users.FirstOrDefault(u => u.Username == model.UserName);
@@ -165,9 +172,8 @@ namespace OnlineAuction.Buisness.Data
             return result;
         }
 
-        private static string GenerateRandomPass()
+        private string GenerateRandomPass()
         {
-            var etalon = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
             var rnd = new Random();
 
             var size = rnd.Next(32, 36);
@@ -176,19 +182,86 @@ namespace OnlineAuction.Buisness.Data
 
             for (var i = 0; i < size; i++)
             {
-                result += etalon[rnd.Next(61)];
+                result += ETALON[rnd.Next(61)];
             }
             return result;
         }
 
-        public static ParallelQuery<Lot> GetCollectionToDelete()
+        public  IQueryable<Lot> GetCollectionToDelete()
         {
-            var s = from lot in LotDataBase.AsParallel() where !lot.IsDeleted && lot.ActualDate < DateTime.Now select lot;
+            var s = from lot in LotDataBase where !lot.IsDeleted && lot.ActualDate < DateTime.Now select lot;
             
-            return s;
+            return s.AsQueryable();
+        }
 
+        internal IEnumerable<LotModel> GetLotTypePreviewCollection(string typeName)
+        {
+            var rnd  = new Random();
+            int count;
+            if ((count = (LotDataBase.Count(t => !t.IsDeleted && t.LotType.TypeName == typeName ) >= 3)?3:LotDataBase.Count(t =>!t.IsDeleted && t.LotType.TypeName == typeName)) > 0)
+            {
+                for (var i = 0; i < count; i++)
+                {
+                    var index = rnd.Next(LotDataBase.Count(t => t.LotType.TypeName == typeName));
 
-            //return result;
+                    yield return
+                        ConvertToViewModel(LotDataBase.Where(t => t.LotType.TypeName == typeName).ToList()[index]);
+
+                    LotDataBase.DeleteObject(LotDataBase.Where(t => t.LotType.TypeName == typeName).ToList()[index]);
+                }
+            }
+        }
+
+        internal IEnumerable<string> GetLotTypeList()
+        {
+            return _dataBase.LotTypes.Select(type => type.TypeName );
+        }
+
+        internal bool IndexImageExits(int ID, string targetFolder)
+        {
+            return File.Exists(INITIAL_CATALOG +@"\Image\"+ targetFolder + @"\" + ID.ToString() + @"\index.jpg");
+        }
+
+        internal void CreateUserData(string location, string phone, string firstname, string lastname, string username)
+        {
+            var user = _dataBase.Users.FirstOrDefault(t => t.Username == username);
+            if (user != null)
+            {
+                user.Phone = phone;
+                user.LastName = lastname;
+                user.FirstName = firstname;
+                user.Location = location;
+            }
+
+            _dataBase.SaveChanges();
+        }
+
+        public object GetUserProfileViewModel(string userName)
+        {
+            return _dataBase.Users.FirstOrDefault(t => t.Username == userName);
+
+        }
+
+        internal IEnumerable<LotModel> GetHotLots()
+        {
+            //индусский код но что поделать
+            var tempdate = DateTime.Now - new TimeSpan(1,0,0,0);
+            foreach (var lot in _dataBase.Lots.Where(t => t.ActualDate > tempdate))
+            {
+                yield return new DataAccess().ConvertToViewModel(lot);
+            }
+
+        }
+
+        public bool UserIsAdmin(string username)
+        {
+           return _dataBase.Users.FirstOrDefault(t => t.Username == username).Role.Rolename == "admin";
+        }
+
+        internal void SetAdmin(string username)
+        {
+            _dataBase.Users.FirstOrDefault(t => t.Username == username).Role =
+                _dataBase.Roles.FirstOrDefault(t => t.Rolename == "amdin");
         }
     }
 }

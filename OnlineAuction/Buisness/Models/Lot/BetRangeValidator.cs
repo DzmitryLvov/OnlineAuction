@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using OnlineAuction.Buisness.Data;
-using OnlineAuction.Buisness.Models.Item;
+using OnlineAuction.Buisness.Models.Lot;
 
 public class BetRangeValidator : ValidationAttribute, IClientValidatable
 {
@@ -16,12 +16,12 @@ public class BetRangeValidator : ValidationAttribute, IClientValidatable
 
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-        
+        var dataAccess = new DataAccess();
         var model = (LotModel)validationContext.ObjectInstance;
         if (model.ID > 0)
         {
-            var minValue = DataAccess.GetViewModelById(model.ID).Currency;
-            var currentValue = (Int64) value;
+            var minValue = dataAccess.GetViewModelById(model.ID).Currency;
+            var currentValue = Int64.Parse(value.ToString());
             if (currentValue <= minValue)
             {
 

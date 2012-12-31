@@ -1,0 +1,12 @@
+﻿@model OnlineAuction.Buisness.Models.Lot.HotCatalogModel
+@{
+    ViewBag.Title = "Hot";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+
+<h2>@ViewBag.Message</h2>
+@foreach (var lot in Model.Lots)
+{
+    @Html.Partial("_lotPartial", lot)
+}
+

@@ -1,0 +1,7 @@
+E:\Prog\OnlineAuction\OnlineAuction\bin\OnlineAuction.dll
+E:\Prog\OnlineAuction\OnlineAuction\bin\OnlineAuction.pdb
+E:\Prog\OnlineAuction\OnlineAuction\bin\EntityFramework.dll
+E:\Prog\OnlineAuction\OnlineAuction\bin\EntityFramework.xml
+E:\Prog\OnlineAuction\OnlineAuction\obj\Release\ResolveAssemblyReference.cache
+E:\Prog\OnlineAuction\OnlineAuction\obj\Release\OnlineAuction.dll
+E:\Prog\OnlineAuction\OnlineAuction\obj\Release\OnlineAuction.pdb

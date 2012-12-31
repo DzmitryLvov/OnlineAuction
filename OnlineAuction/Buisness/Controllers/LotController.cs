@@ -1,25 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Web.Mvc;
-using System.Web.Security;
 using OnlineAuction.Buisness.Data;
-using OnlineAuction.Buisness.Models.Item;
+using OnlineAuction.Buisness.Models.Home;
+using OnlineAuction.Buisness.Models.Lot;
 
 namespace OnlineAuction.Buisness.Controllers
 {
     public class LotController : Controller
     {
+        DataAccess dataAccess = new DataAccess();
         public ActionResult Catalog()
         {
-            throw new System.NotImplementedException();
+            return View(new CatalogModel());
         }
 
-        public ActionResult GetLastLotsCollection()
-        {
-            throw new System.NotImplementedException();
-        }
 
-        public ActionResult Index([Bind(Include = "Description")] int id)
-        { var model = DataAccess.GetViewModelById(id);
+        public ActionResult Index( int id)
+        { var model = dataAccess.GetViewModelById(id);
             if (model != null)
             {
                 return View( model);
@@ -35,27 +32,29 @@ namespace OnlineAuction.Buisness.Controllers
                 Auction.MakeBet(model, HttpContext.User.Identity.Name);
                 return RedirectToAction("Index", "Lot",new {id = model.ID});
             }
-            var restoreModel = DataAccess.GetViewModelById(model.ID);
+            var restoreModel = dataAccess.GetViewModelById(model.ID);
 
             return View(restoreModel);
         }
 
-         [Authorize]
+        [Authorize]
         public ActionResult CreateLot()
         {
-            return View();
+            return View( new CreateLotModel());
         }
-         [Authorize]
+        [Authorize]
         [HttpPost]
         public ActionResult CreateLot(CreateLotModel model)
         {
+            object image = Request.Files[0];
             if (ModelState.IsValid)
             {
-                if (Auction.CreateLot(model,HttpContext.User.Identity.Name))
+                if (Auction.CreateLot(model,HttpContext.User.Identity.Name, image))
                 {
                     return RedirectToAction("Index", "Home");
                 }
             }
+            ModelState.AddModelError("","");
             return View(model);
         }
         [Authorize]
@@ -67,6 +66,11 @@ namespace OnlineAuction.Buisness.Controllers
             }
             ModelState.AddModelError("","Fail while model deleting.");
             return Index(Model);
+        }
+
+        public ActionResult Hot()
+        {
+            return View(new HotCatalogModel());
         }
     }
 }

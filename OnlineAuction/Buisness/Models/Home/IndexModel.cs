@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using OnlineAuction.Buisness.Models.Item;
+using OnlineAuction.Buisness.Data;
+using OnlineAuction.Buisness.Models.Lot;
 
 namespace OnlineAuction.Buisness.Models.Home
 {
@@ -9,7 +10,7 @@ namespace OnlineAuction.Buisness.Models.Home
 
         public IndexModel()
         {
-            Lots =  Data.DataAccess.ConvertedActualLotCollection;
+            Lots =  new DataAccess().ConvertedActualLotCollection;
         }
     }
 }

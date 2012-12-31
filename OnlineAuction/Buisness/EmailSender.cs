@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Web;
 using System.Web.Security;
-using OnlineAuction.Buisness.Data;
-using OnlineAuction.Buisness.Models.Item;
+using OnlineAuction.Buisness.Models.Lot;
 
 namespace OnlineAuction.Buisness.Models
 {
     public class EmailSender
     {
-        private const string EMAIL_ADDRESS = @"newt0ne@mail.ru";
-        private const string LOCAL = @"http://localhost:50441";
+        private const string EMAIL_ADDRESS = @"email";
+        private const string LOCAL = @"http://auction.com";
 
         static bool SendEamil(string email,string subject, string body)
         {
             var smtp = new SmtpClient("smtp.mail.ru", 25)
                 {
-                    Credentials = new NetworkCredential(EMAIL_ADDRESS, "222377a")
+                    Credentials = new NetworkCredential(EMAIL_ADDRESS, "password")
                 };
             var message = new MailMessage {From = new MailAddress(EMAIL_ADDRESS)};
             message.To.Add(new MailAddress(email));

@@ -7,5 +7,7 @@
 
 @using (Html.BeginForm())
 {
-    @Html.ActionLink("Change password","ChangePassword","Account")
+    <div style="margin-left: 25px">
+        @Html.ActionLink("Change password","ChangePassword","Account", null, new{ @class="btn btn-info"})
+    </div>
 }

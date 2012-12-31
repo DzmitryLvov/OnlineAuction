@@ -212,8 +212,7 @@ namespace OnlineAuction.Buisness.Security
             {
                 var user = this._dataBase.Users.First(u => string.Compare(u.Username, username, StringComparison.InvariantCultureIgnoreCase) == 0);
                 var role = user.Role;
-                //return new[] { role.Rolename };
-                string result = (role != null) ? "admin" : "user";
+                var result = (role != null) ? "admin" : "user";
                 return new string[ ]{result};
             }
             catch (SqlException e)

@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace OnlineAuction.Buisness.Controllers
 {
-    public class ErrorController : Controller
+    public class ErrorsController : Controller
     {
         public ActionResult Error404()
         {

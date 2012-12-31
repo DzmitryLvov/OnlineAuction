@@ -3,17 +3,18 @@ using System.Threading;
 using OnlineAuction.Buisness.Data;
 using OnlineAuction.Buisness.Models;
 using OnlineAuction.Buisness.Models.Account;
-using OnlineAuction.Buisness.Models.Item;
+using OnlineAuction.Buisness.Models.Lot;
 
 namespace OnlineAuction.Buisness
 {
     public class Auction
     {
+        private static DataAccess dataAccess = new DataAccess();
         public static void Start()
         {
-            /*var t = new Thread(LotTimeOutChecker) {IsBackground = true};
+            var t = new Thread(LotTimeOutChecker);
             t.Priority = ThreadPriority.Lowest;
-            t.Start();*/
+            t.Start();
         }
 
         static void LotTimeOutChecker()
@@ -22,9 +23,9 @@ namespace OnlineAuction.Buisness
             while (isAlive)
             {
                 Thread.Sleep(5000);
-                foreach (var currentLot in DataAccess.GetCollectionToDelete())
+                foreach (var currentLot in dataAccess.GetCollectionToDelete())
                 {
-                    DeleteLot(DataAccess.ConvertToViewModel(currentLot));
+                    DeleteLot(dataAccess.ConvertToViewModel(currentLot));
                 }
                 
             }
@@ -33,7 +34,7 @@ namespace OnlineAuction.Buisness
         internal static bool RestorePassword(RestorePasswordModel model)
         {
             var newpass = "";
-            if (!String.IsNullOrEmpty( newpass = DataAccess.RestorePassword(model)))
+            if (!String.IsNullOrEmpty( newpass = dataAccess.RestorePassword(model)))
             {
                 EmailSender.SendResetEmail(model.Email, model.UserName, newpass);
                 return true;
@@ -41,10 +42,9 @@ namespace OnlineAuction.Buisness
             return false;
         }
         
-        public static bool CreateLot(CreateLotModel model, string ownername)
+        public static bool CreateLot(CreateLotModel model, string ownername, object image)
         {
-           return DataAccess.CreateLot(ownername,model.Name, model.Description, model.ActualDate, model.Currency);
-           
+           return dataAccess.CreateLot(ownername,model.Name, model.Description, model.ActualDate, model.Currency,model.LotType, image);
         }
 
         public static void MakeBet(LotModel model, string username)
@@ -53,7 +53,7 @@ namespace OnlineAuction.Buisness
             {
                 EmailSender.ToLeaderOnChangedRate(model, username);
             }
-            DataAccess.MakeBet(model.ID, username, model.Currency);
+            dataAccess.MakeBet(model.ID, username, model.Currency);
         }
 
         public static bool DeleteLot(LotModel currentLot)
@@ -69,7 +69,7 @@ namespace OnlineAuction.Buisness
                 {
                     EmailSender.ToOwnerOnComplete(currentLot);
                 }
-                DataAccess.DeleteLot(currentLot.ID);
+                dataAccess.DeleteLot(currentLot.ID);
                 
                 return true;
             }

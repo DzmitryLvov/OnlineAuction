@@ -32,7 +32,7 @@ namespace OnlineAuction
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            //Auction.Start();
+            Auction.Start();
         }
     }
 }

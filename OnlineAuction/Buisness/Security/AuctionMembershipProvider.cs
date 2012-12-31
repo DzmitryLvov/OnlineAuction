@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Specialized;
 using System.Configuration.Provider;
+using System.Data.Objects.DataClasses;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
@@ -334,7 +335,7 @@ namespace OnlineAuction.Buisness.Security
             if (String.IsNullOrEmpty(config["description"]))
             {
                 config.Remove("description");
-                config.Add("description", "Sample SQLite Membership provider");
+                config.Add("description", "AuctionMembership provider");
             }
 
             base.Initialize(name, config);
@@ -351,9 +352,10 @@ namespace OnlineAuction.Buisness.Security
             _requiresUniqueEmail = Convert.ToBoolean(GetConfigValue(config["requiresUniqueEmail"], "true"));
             WriteExceptionsToEventLog = Convert.ToBoolean(GetConfigValue(config["writeExceptionsToEventLog"], "true"));
 
-            var tempFormat = config["passwordFormat"] ?? "Hashed";
+            _passwordFormat = MembershipPasswordFormat.Hashed;
+            //var tempFormat = config["passwordFormat"] ?? "Hashed";
 
-            switch (tempFormat)
+            /*switch (tempFormat)
             {
                 case "Hashed":
                     _passwordFormat = MembershipPasswordFormat.Hashed;
@@ -366,8 +368,8 @@ namespace OnlineAuction.Buisness.Security
                     break;
                 default:
                     throw new ProviderException("Password format not supported.");
-            }
-            this._dataBase = DataAccess.DataBase as MainDataBase;
+            }*/
+            this._dataBase = new MainDataBase();
         }
 
         public override bool ChangePassword(string username, string oldPwd, string newPwd)
@@ -511,7 +513,7 @@ namespace OnlineAuction.Buisness.Security
                                        FailedPasswordAnswerAttemptCount = 0,
                                        FailedPasswordAnswerAttemptWindowStart = createDate,
                                        FailedPasswordAttemptCount = 0,
-                                       FailedPasswordAttemptWindowStart = createDate, 
+                                       FailedPasswordAttemptWindowStart = createDate
                                    };
 
                     _dataBase.Users.AddObject(user);

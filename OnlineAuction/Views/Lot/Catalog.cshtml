@@ -1,0 +1,20 @@
+﻿@model OnlineAuction.Buisness.Models.Lot.CatalogModel
+@{
+    ViewBag.Title = "Catalog";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    if (Model.TypePreviewCollections != null)
+    {
+        foreach (var type in Model.TypePreviewCollections.Where(type => Model.TypePreviewCollections.Count > 0))
+        {
+            @Html.Partial("_TypePreviewPartial", type)
+        }
+    }
+    else
+    {
+        <span>There is no types yet.</span>
+    }
+
+}
