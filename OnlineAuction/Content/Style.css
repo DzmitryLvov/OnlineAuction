@@ -35,16 +35,22 @@ nav {
     top: 0;
     
 }
+.btn-accept {
+    margin-bottom: 10px;
+}
 .page 
 {
     z-index: -999;
 }
 .lot-container-create 
 {
+    
+    text-align: center;
+    width: 450px;
     margin-left: 22px;
     position: relative;
     margin: 0 auto;
-    border:solid #fff8dc
+    border:1px solid #cfcfcf
 }
 .btn-more {
 
@@ -159,7 +165,7 @@ textarea
     display: inline-block;
     width: 800px;
     margin: inherit;
-     -webkit-box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.15), inset 0 -1px 4px rgba(0, 0, 0, 0.05);
+     -webkit-box-shadow: 0 5px 10px 1px rgba(0, 0, 0, 0.15), inset 0 -1px 4px rgba(0, 0, 0, 0.05);
 }
 .description-container,.time-remaining-container {
     display: inline-block;
@@ -214,12 +220,17 @@ textarea
     color: #808080;
     background: #EDFFEE;
     border: 1px solid #c2efcf;
-    height: 40px;
+    height: 25px;
+     -webkit-box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.15), inset 0 -1px 4px rgba(0, 0, 0, 0.05);
     position:relative;
     margin-top: 30px;
 }
+.delete-button {
+    margin-top: 5px;
+}
 .betinfo-container 
 {
+    text-align: center;
     display: inline-block;
     position: relative;
     border-radius: 4px;

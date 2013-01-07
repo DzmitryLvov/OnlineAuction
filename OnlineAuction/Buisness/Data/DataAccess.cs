@@ -245,7 +245,7 @@ namespace OnlineAuction.Buisness.Data
         internal IEnumerable<LotModel> GetHotLots()
         {
             //индусский код но что поделать
-            var tempdate = DateTime.Now - new TimeSpan(1,0,0,0);
+            var tempdate = DateTime.Now + new TimeSpan(1,0,0,0);
             foreach (var lot in _dataBase.Lots.Where(t => t.ActualDate > tempdate))
             {
                 yield return new DataAccess().ConvertToViewModel(lot);

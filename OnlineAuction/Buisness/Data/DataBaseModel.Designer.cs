@@ -748,11 +748,7 @@ namespace OnlineAuction.Buisness.Data
         /// <param name="failedPasswordAnswerAttemptCount">Исходное значение свойства FailedPasswordAnswerAttemptCount.</param>
         /// <param name="failedPasswordAnswerAttemptWindowStart">Исходное значение свойства FailedPasswordAnswerAttemptWindowStart.</param>
         /// <param name="isDeleted">Исходное значение свойства IsDeleted.</param>
-        /// <param name="location">Исходное значение свойства Location.</param>
-        /// <param name="firstName">Исходное значение свойства FirstName.</param>
-        /// <param name="lastName">Исходное значение свойства LastName.</param>
-        /// <param name="phone">Исходное значение свойства Phone.</param>
-        public static User CreateUser(global::System.Int32 id, global::System.String username, global::System.String email, global::System.String comment, global::System.String password, global::System.Boolean isApproved, global::System.DateTime lastActivityDate, global::System.DateTime lastLoginDate, global::System.DateTime lastPasswordChangedDate, global::System.DateTime creationDate, global::System.Boolean isLockedOut, global::System.DateTime lastLockedOutDate, global::System.Int32 failedPasswordAttemptCount, global::System.DateTime failedPasswordAttemptWindowStart, global::System.Int32 failedPasswordAnswerAttemptCount, global::System.DateTime failedPasswordAnswerAttemptWindowStart, global::System.Boolean isDeleted, global::System.String location, global::System.String firstName, global::System.String lastName, global::System.String phone)
+        public static User CreateUser(global::System.Int32 id, global::System.String username, global::System.String email, global::System.String comment, global::System.String password, global::System.Boolean isApproved, global::System.DateTime lastActivityDate, global::System.DateTime lastLoginDate, global::System.DateTime lastPasswordChangedDate, global::System.DateTime creationDate, global::System.Boolean isLockedOut, global::System.DateTime lastLockedOutDate, global::System.Int32 failedPasswordAttemptCount, global::System.DateTime failedPasswordAttemptWindowStart, global::System.Int32 failedPasswordAnswerAttemptCount, global::System.DateTime failedPasswordAnswerAttemptWindowStart, global::System.Boolean isDeleted)
         {
             User user = new User();
             user.ID = id;
@@ -772,10 +768,6 @@ namespace OnlineAuction.Buisness.Data
             user.FailedPasswordAnswerAttemptCount = failedPasswordAnswerAttemptCount;
             user.FailedPasswordAnswerAttemptWindowStart = failedPasswordAnswerAttemptWindowStart;
             user.IsDeleted = isDeleted;
-            user.Location = location;
-            user.FirstName = firstName;
-            user.LastName = lastName;
-            user.Phone = phone;
             return user;
         }
 
@@ -1268,7 +1260,7 @@ namespace OnlineAuction.Buisness.Data
         /// <summary>
         /// Нет доступной документации по метаданным.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String Location
         {
@@ -1280,7 +1272,7 @@ namespace OnlineAuction.Buisness.Data
             {
                 OnLocationChanging(value);
                 ReportPropertyChanging("Location");
-                _Location = StructuralObject.SetValidValue(value, false);
+                _Location = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("Location");
                 OnLocationChanged();
             }
@@ -1292,7 +1284,7 @@ namespace OnlineAuction.Buisness.Data
         /// <summary>
         /// Нет доступной документации по метаданным.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String FirstName
         {
@@ -1304,7 +1296,7 @@ namespace OnlineAuction.Buisness.Data
             {
                 OnFirstNameChanging(value);
                 ReportPropertyChanging("FirstName");
-                _FirstName = StructuralObject.SetValidValue(value, false);
+                _FirstName = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("FirstName");
                 OnFirstNameChanged();
             }
@@ -1316,7 +1308,7 @@ namespace OnlineAuction.Buisness.Data
         /// <summary>
         /// Нет доступной документации по метаданным.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String LastName
         {
@@ -1328,7 +1320,7 @@ namespace OnlineAuction.Buisness.Data
             {
                 OnLastNameChanging(value);
                 ReportPropertyChanging("LastName");
-                _LastName = StructuralObject.SetValidValue(value, false);
+                _LastName = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("LastName");
                 OnLastNameChanged();
             }
@@ -1340,7 +1332,7 @@ namespace OnlineAuction.Buisness.Data
         /// <summary>
         /// Нет доступной документации по метаданным.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String Phone
         {
@@ -1352,7 +1344,7 @@ namespace OnlineAuction.Buisness.Data
             {
                 OnPhoneChanging(value);
                 ReportPropertyChanging("Phone");
-                _Phone = StructuralObject.SetValidValue(value, false);
+                _Phone = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("Phone");
                 OnPhoneChanged();
             }

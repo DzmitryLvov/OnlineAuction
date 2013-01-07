@@ -4,18 +4,18 @@ using System.Net.Mail;
 using System.Web.Security;
 using OnlineAuction.Buisness.Models.Lot;
 
-namespace OnlineAuction.Buisness.Models
+namespace OnlineAuction.Buisness
 {
     public class EmailSender
     {
-        private const string EMAIL_ADDRESS = @"email";
+        private const string EMAIL_ADDRESS = @"epamauction@gmail.com";
         private const string LOCAL = @"http://auction.com";
 
         static bool SendEamil(string email,string subject, string body)
         {
-            var smtp = new SmtpClient("smtp.mail.ru", 25)
+            var smtp = new SmtpClient("smtp.gmail.ru", 25)
                 {
-                    Credentials = new NetworkCredential(EMAIL_ADDRESS, "password")
+                    Credentials = new NetworkCredential(EMAIL_ADDRESS, "onlineauction123")
                 };
             var message = new MailMessage {From = new MailAddress(EMAIL_ADDRESS)};
             message.To.Add(new MailAddress(email));
@@ -35,7 +35,7 @@ namespace OnlineAuction.Buisness.Models
         public static bool SendResetEmail(string email, string username, string newpass)
         {
             return SendEamil(email, "Password restoring",
-                             String.Format("Hello, {0}! \r\n Here is your confirmation URL: \r\n {1}/localhost/OnlineAuction/Account/RestorePasswordConfirmation?username={0}&hash={2} ", username,LOCAL, newpass));
+                             String.Format("Hello, {0}! \r\n Here is your confirmation URL: \r\n {1}/Account/RestorePasswordConfirmation?username={0}&hash={2} ", username,LOCAL, newpass));
         }
 
         public static void ToLeaderOnDelete(string leaderName)
@@ -47,7 +47,7 @@ namespace OnlineAuction.Buisness.Models
             var membershipUser = Membership.GetUser(model.LeaderName);
             return membershipUser != null && SendEamil(membershipUser.Email, model.Name,
                                                                              String.Format(
-                                                                                 "Hello, {0} \r\n Your bid on lot <a href=\"{1}/localhost/OnlineAuction/Lot/Index/{2}\"> {3} </a>, was broken by <a href=\"{1}/localhost/OnlineAuction/Account/Profile?name={4}\"> {4} </a>",
+                                                                                 "Hello, {0} \r\n Your bid on lot <a href=\"{1}/Lot/Index/{2}\"> {3} </a>, was broken by <a href=\"{1}/localhost/OnlineAuction/Account/Profile?name={4}\"> {4} </a>",
                                                                                  model.LeaderName, LOCAL, model.ID, model.Name, newLeader));
         }
 
@@ -68,7 +68,7 @@ namespace OnlineAuction.Buisness.Models
                                                                              String.Format(
                                                                                  "Hello, {0} \r\n Your  lot {1}, was won by the user {2} by $ {4}. \r\n " +
                                                                                  "Contact them for contacts listed in the user's profile:" +
-                                                                                 " {3}/localhost/OnlineAuction/Account/Profile?name={2}",
+                                                                                 " {3}/OnlineAuction/Account/Profile?name={2}",
                                                                                  model.OwnerName, model.Name,leadername,LOCAL,model.Currency));
         
         }

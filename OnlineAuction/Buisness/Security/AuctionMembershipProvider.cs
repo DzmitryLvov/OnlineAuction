@@ -101,7 +101,7 @@ namespace OnlineAuction.Buisness.Security
 
         private MembershipUser ConverDataBaseUserToMemberShipUser(User user)
         {
-            var msUser = new MembershipUser( // creation params here
+            var msUser = new MembershipUser( 
                 base.Name,
                 user.Username,
                 user.ID,

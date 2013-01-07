@@ -46,10 +46,10 @@
     <Property Name="FailedPasswordAnswerAttemptCount" Type="int" Nullable="false" />
     <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="datetime" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
-    <Property Name="Location" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Location" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Role_ID" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="Lots">

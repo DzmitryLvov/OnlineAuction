@@ -48,10 +48,10 @@
     <Property Type="DateTime" Name="FailedPasswordAnswerAttemptWindowStart" Nullable="false" />
     <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
     <NavigationProperty Name="Role" Relationship="ProviderModel.FK__Users__RoleID__1B0907CE" FromRole="User" ToRole="Role" />
-    <Property Type="String" Name="Location" Nullable="false" />
-    <Property Type="String" Name="FirstName" Nullable="false" />
-    <Property Type="String" Name="LastName" Nullable="false" />
-    <Property Type="String" Name="Phone" Nullable="false" />
+    <Property Type="String" Name="Location" Nullable="true" />
+    <Property Type="String" Name="FirstName" Nullable="true" />
+    <Property Type="String" Name="LastName" Nullable="true" />
+    <Property Type="String" Name="Phone" Nullable="true" />
   </EntityType>
   <Association Name="FK__Users__RoleID__1B0907CE">
     <End Type="ProviderModel.Role" Role="Role" Multiplicity="0..1" />
