@@ -1,0 +1,14 @@
+﻿@model OnlineAuction.Buisness.Models.Lot.LotTypePreviewModel
+<div >
+    <div class="type-name"><span  style="font-weight: bold;
+                                      position: relative;
+                                      vertical-align:middle;
+    font-size: 12pt;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;">@Model.TypeName</span></div>
+        @foreach (var lot in Model.LotTypePreviewCollection)
+        {
+            lot.ImageUrl = "../" + lot.ImageUrl;
+            @Html.Partial("_lotPartial", lot)
+        }
+</div>
+

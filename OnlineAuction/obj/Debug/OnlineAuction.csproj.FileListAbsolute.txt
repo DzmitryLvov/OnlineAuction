@@ -5,3 +5,11 @@ E:\Prog\OnlineAuction\OnlineAuction\bin\EntityFramework.xml
 E:\Prog\OnlineAuction\OnlineAuction\obj\Debug\ResolveAssemblyReference.cache
 E:\Prog\OnlineAuction\OnlineAuction\obj\Debug\OnlineAuction.dll
 E:\Prog\OnlineAuction\OnlineAuction\obj\Debug\OnlineAuction.pdb
+E:\Prog\OnlineAuction\OnlineAuction\bin\System.Web.Entity.dll
+E:\Prog\OnlineAuction\OnlineAuction\bin\System.Web.Helpers.dll
+E:\Prog\OnlineAuction\OnlineAuction\bin\System.Web.Mvc.dll
+E:\Prog\OnlineAuction\OnlineAuction\bin\System.Web.Routing.dll
+E:\Prog\OnlineAuction\OnlineAuction\bin\System.Web.WebPages.dll
+E:\Prog\OnlineAuction\OnlineAuction\bin\System.Web.Mvc.xml
+E:\Prog\OnlineAuction\OnlineAuction\bin\System.Web.WebPages.xml
+E:\Prog\OnlineAuction\OnlineAuction\bin\System.Web.Helpers.xml

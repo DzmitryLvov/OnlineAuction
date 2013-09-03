@@ -5,104 +5,115 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ProviderModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-  <EntityContainer Name="ProviderModelStoreContainer">
-    <EntitySet Name="Roles" EntityType="ProviderModel.Store.Roles" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Users" EntityType="ProviderModel.Store.Users" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Lots" EntityType="ProviderModel.Store.Lots" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="LotTypes" EntityType="ProviderModel.Store.LotTypes" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK__Users__RoleID__1B0907CE" Association="ProviderModel.Store.FK__Users__RoleID__1B0907CE">
-      <End Role="Role" EntitySet="Roles" />
-      <End Role="User" EntitySet="Users" />
-    </AssociationSet>
-    <AssociationSet Name="LotTypeLot" Association="ProviderModel.Store.LotTypeLot">
-      <End Role="LotType" EntitySet="LotTypes" />
-      <End Role="Lot" EntitySet="Lots" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="Roles">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Rolename" Type="nvarchar" Nullable="false" MaxLength="255" />
-    <Property Name="IsDeleted" Type="bit" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Users">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="255" />
-    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="Comment" Type="nvarchar" Nullable="false" MaxLength="255" />
-    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="PasswordQuestion" Type="nvarchar" Nullable="true" MaxLength="255" />
-    <Property Name="PasswordAnswer" Type="nvarchar" Nullable="true" MaxLength="255" />
-    <Property Name="IsApproved" Type="bit" Nullable="false" />
-    <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
-    <Property Name="LastLoginDate" Type="datetime" Nullable="false" />
-    <Property Name="LastPasswordChangedDate" Type="datetime" Nullable="false" />
-    <Property Name="CreationDate" Type="datetime" Nullable="false" />
-    <Property Name="IsOnLine" Type="bit" Nullable="true" />
-    <Property Name="IsLockedOut" Type="bit" Nullable="false" />
-    <Property Name="LastLockedOutDate" Type="datetime" Nullable="false" />
-    <Property Name="FailedPasswordAttemptCount" Type="int" Nullable="false" />
-    <Property Name="FailedPasswordAttemptWindowStart" Type="datetime" Nullable="false" />
-    <Property Name="FailedPasswordAnswerAttemptCount" Type="int" Nullable="false" />
-    <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="datetime" Nullable="false" />
-    <Property Name="IsDeleted" Type="bit" Nullable="false" />
-    <Property Name="Location" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="FirstName" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="LastName" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="Phone" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="Role_ID" Type="int" Nullable="true" />
-  </EntityType>
-  <EntityType Name="Lots">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Lotname" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Currency" Type="bigint" Nullable="false" />
-    <Property Name="ActualDate" Type="datetime" Nullable="false" />
-    <Property Name="IsDeleted" Type="bit" Nullable="false" />
-    <Property Name="LeaderName" Type="nchar" Nullable="true" MaxLength="50" />
-    <Property Name="OwnerName" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="TypeId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="LotTypes">
-    <Key>
-      <PropertyRef Name="TypeID" />
-    </Key>
-    <Property Name="TypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TypeName" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <Association Name="FK__Users__RoleID__1B0907CE">
-    <End Role="Role" Type="ProviderModel.Store.Roles" Multiplicity="0..1" />
-    <End Role="User" Type="ProviderModel.Store.Users" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Role">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="User">
-        <PropertyRef Name="Role_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="LotTypeLot">
-    <End Role="LotType" Type="ProviderModel.Store.LotTypes" Multiplicity="1" />
-    <End Role="Lot" Type="ProviderModel.Store.Lots" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LotType">
-        <PropertyRef Name="TypeID" />
-      </Principal>
-      <Dependent Role="Lot">
-        <PropertyRef Name="TypeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-</Schema></edmx:StorageModels>
+        <EntityContainer Name="ProviderModelStoreContainer">
+          <EntitySet Name="Lots" EntityType="ProviderModel.Store.Lots" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LotTypes" EntityType="ProviderModel.Store.LotTypes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Roles" EntityType="ProviderModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserDatas" EntityType="ProviderModel.Store.UserDatas" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="ProviderModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__Users__RoleID__1B0907CE" Association="ProviderModel.Store.FK__Users__RoleID__1B0907CE">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotTypeLot" Association="ProviderModel.Store.FK_LotTypeLot">
+            <End Role="LotTypes" EntitySet="LotTypes" />
+            <End Role="Lots" EntitySet="Lots" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Lots">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Lotname" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Currency" Type="bigint" Nullable="false" />
+          <Property Name="ActualDate" Type="datetime2" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="LeaderName" Type="nchar" MaxLength="50" />
+          <Property Name="OwnerName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LotTypes">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Rolename" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDatas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Location" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="nvarchar(max)" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Comment" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="PasswordQuestion" Type="nvarchar" MaxLength="255" />
+          <Property Name="PasswordAnswer" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+          <Property Name="LastActivityDate" Type="datetime2" Nullable="false" />
+          <Property Name="LastLoginDate" Type="datetime2" Nullable="false" />
+          <Property Name="LastPasswordChangedDate" Type="datetime2" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime2" Nullable="false" />
+          <Property Name="IsOnLine" Type="bit" />
+          <Property Name="IsLockedOut" Type="bit" Nullable="false" />
+          <Property Name="LastLockedOutDate" Type="datetime2" Nullable="false" />
+          <Property Name="FailedPasswordAttemptCount" Type="int" Nullable="false" />
+          <Property Name="FailedPasswordAttemptWindowStart" Type="datetime2" Nullable="false" />
+          <Property Name="FailedPasswordAnswerAttemptCount" Type="int" Nullable="false" />
+          <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="datetime2" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="Location" Type="nvarchar(max)" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="nvarchar(max)" />
+          <Property Name="Role_ID" Type="int" />
+        </EntityType>
+        <Association Name="FK__Users__RoleID__1B0907CE">
+          <End Role="Roles" Type="ProviderModel.Store.Roles" Multiplicity="0..1" />
+          <End Role="Users" Type="ProviderModel.Store.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Role_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotTypeLot">
+          <End Role="LotTypes" Type="ProviderModel.Store.LotTypes" Multiplicity="1" />
+          <End Role="Lots" Type="ProviderModel.Store.Lots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LotTypes">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="Lots">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProviderModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -119,6 +130,7 @@
             <End Role="LotType" EntitySet="LotTypes" />
             <End Role="Lot" EntitySet="Lots" />
           </AssociationSet>
+          <EntitySet Name="UserDatas" EntityType="ProviderModel.UserData" />
         </EntityContainer>
         <EntityType Name="Role">
           <Key>
@@ -198,6 +210,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="UserData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="String" Name="Location" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Phone" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FirstName" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LastName" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -275,6 +297,17 @@
       </EndProperty>
       <Condition ColumnName="Role_ID" IsNull="false" />
     </AssociationSetMapping>
+          <EntitySetMapping Name="UserDatas">
+            <EntityTypeMapping TypeName="ProviderModel.UserData">
+              <MappingFragment StoreEntitySet="UserDatas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -307,6 +340,7 @@
           <ConnectorPoint PointX="9.625" PointY="1.735341796875" />
           <ConnectorPoint PointX="9" PointY="1.735341796875" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="ProviderModel.UserData" Width="1.5" PointX="5.375" PointY="5.75" Height="1.9802864583333317" />
       </Diagram>
     </Diagrams>
   </Designer>

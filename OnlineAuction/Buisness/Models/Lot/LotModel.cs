@@ -7,8 +7,8 @@ namespace OnlineAuction.Buisness.Models.Lot
     
     public class LotModel
     {
-        private string _imageUrl;
-
+        private string _imgUrl;
+        
         public int ID { get; set; }
 
         public string OwnerName { get; set; }
@@ -25,24 +25,20 @@ namespace OnlineAuction.Buisness.Models.Lot
         [Display(Name = "currency")]
         public Int64 Currency { get; set; }
 
-        public string ImageUrl
-        {
+        public string ImageUrl {
             get
             {
-                return _imageUrl;
+                if (String.IsNullOrEmpty(_imgUrl))
+                {
+                    _imgUrl = new DataAccess().IndexImageExits(ID, "Lots")
+                            ? @"Content/Image/Lots/" + ID.ToString() + @"/index.jpg"
+                            : @"Content/Image/Lots/Default/index.jpg";
+                }
+                return _imgUrl;
             }
-            set
-            {
-                _imageUrl = value;
-            }
+            set { _imgUrl = value; }
         }
 
-        public LotModel()
-        {
-            _imageUrl = new DataAccess().IndexImageExits(ID, "Lots")
-                            ? "Content/Image/Lots/" + ID.ToString() + "/index.jpg"
-                            : "Content/Image/Lots/Default/index.jpg";
-        }
 
     }
 

@@ -14,10 +14,6 @@
       <End Role="Lot" EntitySet="Lots" />
     </AssociationSet>
     <EntitySet Name="UserDatas" EntityType="ProviderModel.UserData" />
-    <AssociationSet Name="UserUserData" Association="ProviderModel.UserUserData">
-      <End Role="User" EntitySet="Users" />
-      <End Role="UserData" EntitySet="UserDatas" />
-    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Role">
     <Key>
@@ -53,7 +49,10 @@
     <Property Type="DateTime" Name="FailedPasswordAnswerAttemptWindowStart" Nullable="false" />
     <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
     <NavigationProperty Name="Role" Relationship="ProviderModel.FK__Users__RoleID__1B0907CE" FromRole="User" ToRole="Role" />
-    <NavigationProperty Name="UserData" Relationship="ProviderModel.UserUserData" FromRole="User" ToRole="UserData" />
+    <Property Type="String" Name="Location" Nullable="true" />
+    <Property Type="String" Name="FirstName" Nullable="true" />
+    <Property Type="String" Name="LastName" Nullable="true" />
+    <Property Type="String" Name="Phone" Nullable="true" />
   </EntityType>
   <Association Name="FK__Users__RoleID__1B0907CE">
     <End Type="ProviderModel.Role" Role="Role" Multiplicity="0..1" />
@@ -98,15 +97,10 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Type="String" Name="Location" Nullable="true" />
-    <Property Type="String" Name="Phone" Nullable="true" />
-    <Property Type="String" Name="FirstName" Nullable="true" />
-    <Property Type="String" Name="LastName" Nullable="true" />
-    <NavigationProperty Name="User" Relationship="ProviderModel.UserUserData" FromRole="UserData" ToRole="User" />
+    <Property Type="String" Name="Location" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Phone" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="FirstName" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="LastName" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Type="Int32" Name="Id" Nullable="false" />
   </EntityType>
-  <Association Name="UserUserData">
-    <End Type="ProviderModel.User" Role="User" Multiplicity="1" />
-    <End Type="ProviderModel.UserData" Role="UserData" Multiplicity="0..1" />
-  </Association>
 </Schema>

@@ -1,0 +1,16 @@
+﻿@using OnlineAuction.Buisness.Data
+@using OnlineAuction.Buisness.Models.Account
+
+<div class="logon-partial">
+    
+    @if(Request.IsAuthenticated) {
+        
+        <text>Welcome, </text> <strong style="margin-right: 20px;">
+                 @Html.ActionLink(User.Identity.Name, "Profile", "Account", new DataAccess().GetUserProfileViewModel (User.Identity.Name), null)</strong>
+                 @Html.ActionLink("Log Off", "LogOff", "Account", null, new { @class = "btn btn-info btn-small" })
+    }
+    else
+    {
+        @Html.ActionLink("Log On", "LogOn", "Account", null, new { @class = "btn btn-info" })
+    }
+</div>

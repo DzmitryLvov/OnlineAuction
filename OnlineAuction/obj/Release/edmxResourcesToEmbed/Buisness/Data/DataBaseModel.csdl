@@ -13,6 +13,7 @@
       <End Role="LotType" EntitySet="LotTypes" />
       <End Role="Lot" EntitySet="Lots" />
     </AssociationSet>
+    <EntitySet Name="UserDatas" EntityType="ProviderModel.UserData" />
   </EntityContainer>
   <EntityType Name="Role">
     <Key>
@@ -92,4 +93,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="UserData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="String" Name="Location" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Phone" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="FirstName" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="LastName" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Id" Nullable="false" />
+  </EntityType>
 </Schema>

@@ -72,5 +72,16 @@
       </EndProperty>
       <Condition ColumnName="Role_ID" IsNull="false" />
     </AssociationSetMapping>
+    <EntitySetMapping Name="UserDatas">
+      <EntityTypeMapping TypeName="ProviderModel.UserData">
+        <MappingFragment StoreEntitySet="UserDatas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

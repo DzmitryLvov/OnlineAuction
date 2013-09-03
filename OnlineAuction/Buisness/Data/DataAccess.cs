@@ -113,18 +113,17 @@ namespace OnlineAuction.Buisness.Data
                    LotType = _dataBase.LotTypes.FirstOrDefault(t => t.TypeName == typeName)
                });
                _dataBase.SaveChanges();
-               var path = String.Format("{0}\\Image\\Lots\\{1}",INITIAL_CATALOG,
+               var path = String.Format("{0}Content\\Image\\Lots\\{1}",INITIAL_CATALOG,
                                         LotDataBase.FirstOrDefault(
                                             t => t.OwnerName == ownername &&
                                                 t.Lotname == name
                                                 && t.LeaderName == null)
                                                   .ID);
-               if (!Directory.Exists(path))
+               var img = image as HttpPostedFileBase;
+               if (!Directory.Exists(path) && img.ContentLength > 0 )
                {
                    Directory.CreateDirectory(path);
-                   var img = image as HttpPostedFileBase;
-                   if (img.ContentLength > 0)
-                       img.SaveAs(path + @"\index.jpg");
+                   img.SaveAs(path + @"\index.jpg");
                }
                else
                {
@@ -202,12 +201,12 @@ namespace OnlineAuction.Buisness.Data
             {
                 for (var i = 0; i < count; i++)
                 {
-                    var index = rnd.Next(LotDataBase.Count(t => t.LotType.TypeName == typeName));
+                    var index = rnd.Next(LotDataBase.Count(t => !t.IsDeleted && t.LotType.TypeName == typeName));
 
                     yield return
-                        ConvertToViewModel(LotDataBase.Where(t => t.LotType.TypeName == typeName).ToList()[index]);
+                        ConvertToViewModel(LotDataBase.Where(t => !t.IsDeleted && t.LotType.TypeName == typeName).ToList()[index]);
 
-                    LotDataBase.DeleteObject(LotDataBase.Where(t => t.LotType.TypeName == typeName).ToList()[index]);
+                    LotDataBase.DeleteObject(LotDataBase.Where(t => !t.IsDeleted && t.LotType.TypeName == typeName).ToList()[index]);
                 }
             }
         }
@@ -219,7 +218,7 @@ namespace OnlineAuction.Buisness.Data
 
         internal bool IndexImageExits(int ID, string targetFolder)
         {
-            return File.Exists(INITIAL_CATALOG +@"\Image\"+ targetFolder + @"\" + ID.ToString() + @"\index.jpg");
+            return File.Exists(INITIAL_CATALOG +@"Content\Image\"+ targetFolder + @"\" + ID.ToString() + @"\index.jpg");
         }
 
         internal void CreateUserData(string location, string phone, string firstname, string lastname, string username)

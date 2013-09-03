@@ -19,7 +19,7 @@ namespace OnlineAuction.Buisness
 
         static void LotTimeOutChecker()
         {
-            var isAlive = true;
+            /*var isAlive = true;
             while (isAlive)
             {
                 Thread.Sleep(5000);
@@ -28,7 +28,7 @@ namespace OnlineAuction.Buisness
                     DeleteLot(dataAccess.ConvertToViewModel(currentLot));
                 }
                 
-            }
+            }*/
         }
 
         internal static bool RestorePassword(RestorePasswordModel model)

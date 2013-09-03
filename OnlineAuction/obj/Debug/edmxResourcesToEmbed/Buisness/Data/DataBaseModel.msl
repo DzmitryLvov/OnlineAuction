@@ -33,6 +33,10 @@
           <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
           <ScalarProperty Name="FailedPasswordAnswerAttemptWindowStart" ColumnName="FailedPasswordAnswerAttemptWindowStart" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -59,17 +63,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UserDatas">
-      <EntityTypeMapping TypeName="IsTypeOf(ProviderModel.UserData)">
-        <MappingFragment StoreEntitySet="UserDatas">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Location" ColumnName="Location" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <AssociationSetMapping Name="FK__Users__RoleID__1B0907CE" TypeName="ProviderModel.FK__Users__RoleID__1B0907CE" StoreEntitySet="Users">
       <EndProperty Name="Role">
         <ScalarProperty Name="ID" ColumnName="Role_ID" />
@@ -79,13 +72,16 @@
       </EndProperty>
       <Condition ColumnName="Role_ID" IsNull="false" />
     </AssociationSetMapping>
-    <AssociationSetMapping Name="UserUserData" TypeName="ProviderModel.UserUserData" StoreEntitySet="UserDatas">
-      <EndProperty Name="User">
-        <ScalarProperty Name="ID" ColumnName="User_ID" />
-      </EndProperty>
-      <EndProperty Name="UserData">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
+    <EntitySetMapping Name="UserDatas">
+      <EntityTypeMapping TypeName="ProviderModel.UserData">
+        <MappingFragment StoreEntitySet="UserDatas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
