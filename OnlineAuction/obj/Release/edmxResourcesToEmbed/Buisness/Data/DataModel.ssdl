@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OnlineAuctionDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="OnlineAuctionDBModelStoreContainer">
+    <EntitySet Name="Bets" EntityType="OnlineAuctionDBModel.Store.Bets" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Bookmarks" EntityType="OnlineAuctionDBModel.Store.Bookmarks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Categories" EntityType="OnlineAuctionDBModel.Store.Categories" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Comments" EntityType="OnlineAuctionDBModel.Store.Comments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Locations" EntityType="OnlineAuctionDBModel.Store.Locations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LotPhotos" EntityType="OnlineAuctionDBModel.Store.LotPhotos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lots" EntityType="OnlineAuctionDBModel.Store.Lots" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LotTypes" EntityType="OnlineAuctionDBModel.Store.LotTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="OnlineAuctionDBModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SubCategories" EntityType="OnlineAuctionDBModel.Store.SubCategories" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="OnlineAuctionDBModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserDatas" EntityType="OnlineAuctionDBModel.Store.UserDatas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="OnlineAuctionDBModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK__Users__RoleID__1B0907CE" Association="OnlineAuctionDBModel.Store.FK__Users__RoleID__1B0907CE">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CategorySubCategory" Association="OnlineAuctionDBModel.Store.FK_CategorySubCategory">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="SubCategories" EntitySet="SubCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LocationUserData" Association="OnlineAuctionDBModel.Store.FK_LocationUserData">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="UserDatas" EntitySet="UserDatas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LotBet" Association="OnlineAuctionDBModel.Store.FK_LotBet">
+      <End Role="Lots" EntitySet="Lots" />
+      <End Role="Bets" EntitySet="Bets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LotBookmark" Association="OnlineAuctionDBModel.Store.FK_LotBookmark">
+      <End Role="Lots" EntitySet="Lots" />
+      <End Role="Bookmarks" EntitySet="Bookmarks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LotComment" Association="OnlineAuctionDBModel.Store.FK_LotComment">
+      <End Role="Lots" EntitySet="Lots" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LotLotPhoto" Association="OnlineAuctionDBModel.Store.FK_LotLotPhoto">
+      <End Role="Lots" EntitySet="Lots" />
+      <End Role="LotPhotos" EntitySet="LotPhotos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LotTypeLot" Association="OnlineAuctionDBModel.Store.FK_LotTypeLot">
+      <End Role="LotTypes" EntitySet="LotTypes" />
+      <End Role="Lots" EntitySet="Lots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubCategoryLot" Association="OnlineAuctionDBModel.Store.FK_SubCategoryLot">
+      <End Role="SubCategories" EntitySet="SubCategories" />
+      <End Role="Lots" EntitySet="Lots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserBet" Association="OnlineAuctionDBModel.Store.FK_UserBet">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Bets" EntitySet="Bets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserBookmark" Association="OnlineAuctionDBModel.Store.FK_UserBookmark">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Bookmarks" EntitySet="Bookmarks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserComment" Association="OnlineAuctionDBModel.Store.FK_UserComment">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserLot" Association="OnlineAuctionDBModel.Store.FK_UserLot">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Lots" EntitySet="Lots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserUserData" Association="OnlineAuctionDBModel.Store.FK_UserUserData">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserDatas" EntitySet="UserDatas" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Bets">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="LotID" Type="int" Nullable="false" />
+    <Property Name="BetValue" Type="int" Nullable="false" />
+    <Property Name="BetDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Bookmarks">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="LotID" Type="int" Nullable="false" />
+    <Property Name="Note" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Comments">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="LotID" Type="int" Nullable="false" />
+    <Property Name="CommentText" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CommentDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Locations">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="LocationName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LotPhotos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="LotID" Type="int" Nullable="false" />
+    <Property Name="PhotoLink" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Lots">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="LotName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StartCurrency" Type="bigint" Nullable="false" />
+    <Property Name="ActualDate" Type="datetime" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="SubCategoryID" Type="int" Nullable="false" />
+    <Property Name="OwnerId" Type="int" Nullable="false" />
+    <Property Name="ViewCount" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LotTypeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LotTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TypeName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Rolename" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubCategories">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryID" Type="int" Nullable="false" />
+    <Property Name="SubCategoryName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="UserDatas">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Phone" Type="nvarchar(max)" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="LocationID" Type="int" Nullable="false" />
+    <Property Name="BrithDate" Type="datetime" />
+    <Property Name="PhotoLink" Type="nvarchar(max)" />
+    <Property Name="User_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="PasswordQuestion" Type="nvarchar" MaxLength="255" />
+    <Property Name="PasswordAnswer" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsApproved" Type="bit" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="Role_ID" Type="int" />
+  </EntityType>
+  <Association Name="FK__Users__RoleID__1B0907CE">
+    <End Role="Roles" Type="OnlineAuctionDBModel.Store.Roles" Multiplicity="0..1" />
+    <End Role="Users" Type="OnlineAuctionDBModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="Role_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CategorySubCategory">
+    <End Role="Categories" Type="OnlineAuctionDBModel.Store.Categories" Multiplicity="1" />
+    <End Role="SubCategories" Type="OnlineAuctionDBModel.Store.SubCategories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SubCategories">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LocationUserData">
+    <End Role="Locations" Type="OnlineAuctionDBModel.Store.Locations" Multiplicity="1" />
+    <End Role="UserDatas" Type="OnlineAuctionDBModel.Store.UserDatas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserDatas">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LotBet">
+    <End Role="Lots" Type="OnlineAuctionDBModel.Store.Lots" Multiplicity="1" />
+    <End Role="Bets" Type="OnlineAuctionDBModel.Store.Bets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lots">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bets">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LotBookmark">
+    <End Role="Lots" Type="OnlineAuctionDBModel.Store.Lots" Multiplicity="1" />
+    <End Role="Bookmarks" Type="OnlineAuctionDBModel.Store.Bookmarks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lots">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bookmarks">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LotComment">
+    <End Role="Lots" Type="OnlineAuctionDBModel.Store.Lots" Multiplicity="1" />
+    <End Role="Comments" Type="OnlineAuctionDBModel.Store.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lots">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LotLotPhoto">
+    <End Role="Lots" Type="OnlineAuctionDBModel.Store.Lots" Multiplicity="1" />
+    <End Role="LotPhotos" Type="OnlineAuctionDBModel.Store.LotPhotos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lots">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LotPhotos">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LotTypeLot">
+    <End Role="LotTypes" Type="OnlineAuctionDBModel.Store.LotTypes" Multiplicity="1" />
+    <End Role="Lots" Type="OnlineAuctionDBModel.Store.Lots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LotTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Lots">
+        <PropertyRef Name="LotTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubCategoryLot">
+    <End Role="SubCategories" Type="OnlineAuctionDBModel.Store.SubCategories" Multiplicity="1" />
+    <End Role="Lots" Type="OnlineAuctionDBModel.Store.Lots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Lots">
+        <PropertyRef Name="SubCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserBet">
+    <End Role="Users" Type="OnlineAuctionDBModel.Store.Users" Multiplicity="1" />
+    <End Role="Bets" Type="OnlineAuctionDBModel.Store.Bets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bets">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserBookmark">
+    <End Role="Users" Type="OnlineAuctionDBModel.Store.Users" Multiplicity="1" />
+    <End Role="Bookmarks" Type="OnlineAuctionDBModel.Store.Bookmarks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bookmarks">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserComment">
+    <End Role="Users" Type="OnlineAuctionDBModel.Store.Users" Multiplicity="1" />
+    <End Role="Comments" Type="OnlineAuctionDBModel.Store.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserLot">
+    <End Role="Users" Type="OnlineAuctionDBModel.Store.Users" Multiplicity="1" />
+    <End Role="Lots" Type="OnlineAuctionDBModel.Store.Lots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Lots">
+        <PropertyRef Name="OwnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserUserData">
+    <End Role="Users" Type="OnlineAuctionDBModel.Store.Users" Multiplicity="1" />
+    <End Role="UserDatas" Type="OnlineAuctionDBModel.Store.UserDatas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserDatas">
+        <PropertyRef Name="User_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

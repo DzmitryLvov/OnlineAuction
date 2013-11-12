@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bfc6701bd68c4de28b6387310197a744" Name="Diagram1" >
+        <EntityTypeShape EntityType="MainDataBase.Bet" Width="1.5" PointX="5.181193378372674" PointY="7.8482955283710245" />
+        <EntityTypeShape EntityType="MainDataBase.Bookmark" Width="1.5" PointX="7.4010599513543118" PointY="28.076590655407212" />
+        <EntityTypeShape EntityType="MainDataBase.Category" Width="1.5" PointX="7.1754558082555686" PointY="2.1937387148820511" />
+        <EntityTypeShape EntityType="MainDataBase.Comment" Width="1.5" PointX="9.6053516406590838" PointY="16.901001520874445" />
+        <EntityTypeShape EntityType="MainDataBase.Location" Width="1.5" PointX="5.9850910110329707" PointY="9.6877730384877765" />
+        <EntityTypeShape EntityType="MainDataBase.LotPhoto" Width="1.5" PointX="3.4187184159731112" PointY="20.618647480671594" />
+        <EntityTypeShape EntityType="MainDataBase.Lot" Width="1.5" PointX="2.4525283567852005" PointY="28.837664781528368" />
+        <EntityTypeShape EntityType="MainDataBase.LotType" Width="1.5" PointX="9.8783568767264285" PointY="6.445971834680984" />
+        <EntityTypeShape EntityType="MainDataBase.Role" Width="1.5" PointX="8.6108549333228055" PointY="16.052973620618214" />
+        <EntityTypeShape EntityType="MainDataBase.SubCategory" Width="1.5" PointX="3.9682014491260991" PointY="24.682617154290256" />
+        <EntityTypeShape EntityType="MainDataBase.sysdiagram" Width="1.5" PointX="4.7928640678491741" PointY="19.880624825079284" />
+        <EntityTypeShape EntityType="MainDataBase.UserData" Width="1.5" PointX="3.4573987030691464" PointY="28.53467367428107" />
+        <EntityTypeShape EntityType="MainDataBase.User" Width="1.5" PointX="2.0520733995605602" PointY="9.2496177448190835" />
+        <AssociationConnector Association="MainDataBase.FK_LotBet" />
+        <AssociationConnector Association="MainDataBase.FK_UserBet" />
+        <AssociationConnector Association="MainDataBase.FK_LotBookmark" />
+        <AssociationConnector Association="MainDataBase.FK_UserBookmark" />
+        <AssociationConnector Association="MainDataBase.FK_CategorySubCategory" />
+        <AssociationConnector Association="MainDataBase.FK_LotComment" />
+        <AssociationConnector Association="MainDataBase.FK_UserComment" />
+        <AssociationConnector Association="MainDataBase.FK_LocationUserData" />
+        <AssociationConnector Association="MainDataBase.FK_LotLotPhoto" />
+        <AssociationConnector Association="MainDataBase.FK_LotTypeLot" />
+        <AssociationConnector Association="MainDataBase.FK_SubCategoryLot" />
+        <AssociationConnector Association="MainDataBase.FK_UserLot" />
+        <AssociationConnector Association="MainDataBase.FK__Users__RoleID__1B0907CE" />
+        <AssociationConnector Association="MainDataBase.FK_UserUserData" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

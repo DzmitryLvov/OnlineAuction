@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.Security;
 using OnlineAuction.Buisness.Data;
+using System.Data.SqlClient;
 
 namespace OnlineAuction.Buisness.Security
 {
@@ -19,7 +20,7 @@ namespace OnlineAuction.Buisness.Security
         private const string EVENT_LOG = "Application";
         private const string EXCEPTION_MESSAGE = "An exception occurred. Please check the Event Log.";
         private const string ENCRYPTION_KEY = "AE09F72BA97CBBB5";
-        private MainDataBase _dataBase;
+        private MainDataBaseContainer _dataBase;
         private bool _enablePasswordReset;
         private bool _enablePasswordRetrieval;
         private int _maxInvalidPasswordAttempts;
@@ -101,20 +102,14 @@ namespace OnlineAuction.Buisness.Security
 
         private MembershipUser ConverDataBaseUserToMemberShipUser(User user)
         {
-            var msUser = new MembershipUser( 
+            var msUser = new MembershipUser(
                 base.Name,
                 user.Username,
                 user.ID,
                 user.Email,
-                user.PasswordQuestion,
-                user.Comment, user.IsApproved,
-                user.IsLockedOut,
-                user.CreationDate,
-                user.LastLoginDate,
-                user.LastActivityDate,
-                user.LastPasswordChangedDate,
-                user.LastLockedOutDate);
-
+                user.PasswordQuestion, null, true, false, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now);
+                // TODO: тут идут требования к полям стандартного мембершип провайдера, захардкодим стандартные значения
+                
             return msUser;
         }
         
@@ -126,17 +121,7 @@ namespace OnlineAuction.Buisness.Security
                 var windowStart = new DateTime();
                 var failureCount = 0;
 
-                switch (failureType)
-                {
-                    case "password":
-                        failureCount = user.FailedPasswordAttemptCount;
-                        windowStart = user.FailedPasswordAttemptWindowStart;
-                        break;
-                    case "passwordAnswer":
-                        failureCount = user.FailedPasswordAnswerAttemptCount;
-                        windowStart = user.FailedPasswordAnswerAttemptWindowStart;
-                        break;
-                }
+                
 
                 var windowEnd = windowStart.AddMinutes(PasswordAttemptWindow);
 
@@ -145,18 +130,8 @@ namespace OnlineAuction.Buisness.Security
                     // First password failure or outside of PasswordAttemptWindow. 
                     // Start a new password failure count from 1 and a new window starting now.
 
-                    switch (failureType)
-                    {
-                        case "password":
-                            user.FailedPasswordAttemptCount = 1;
-                            user.FailedPasswordAttemptWindowStart = DateTime.Now;
-                            break;
-                        case "passwordAnswer":
-                            user.FailedPasswordAnswerAttemptCount = 1;
-                            user.FailedPasswordAnswerAttemptWindowStart = DateTime.Now;
-                            break;
-                    }
-
+                   
+                    
                     // TODO: Throw the old exception.
                     //if (cmd.ExecuteNonQuery() < 0)
                     //    throw new ProviderException("Unable to update failure count and window start.");
@@ -168,8 +143,7 @@ namespace OnlineAuction.Buisness.Security
                         // Password attempts have exceeded the failure threshold. Lock out
                         // the user.
 
-                        user.IsLockedOut = true;
-                        user.LastLockedOutDate = DateTime.Now;
+                       
 
                         // TODO: Throw the old exception.
                         //if (cmd.ExecuteNonQuery() < 0)
@@ -180,16 +154,7 @@ namespace OnlineAuction.Buisness.Security
                         // Password attempts have not exceeded the failure threshold. Update
                         // the failure counts. Leave the window the same.
 
-                        switch (failureType)
-                        {
-                            case "password":
-                                user.FailedPasswordAttemptCount = failureCount;
-                                break;
-                            case "passwordAnswer":
-                                user.FailedPasswordAnswerAttemptCount = failureCount;
-                                break;
-                        }
-
+                       
                         // TODO: Throw the old exception.
                         //if (cmd.ExecuteNonQuery() < 0)
                         //    throw new ProviderException("Unable to update failure count.");
@@ -369,7 +334,7 @@ namespace OnlineAuction.Buisness.Security
                 default:
                     throw new ProviderException("Password format not supported.");
             }*/
-            this._dataBase = new MainDataBase();
+            this._dataBase = new MainDataBaseContainer();
         }
 
         public override bool ChangePassword(string username, string oldPwd, string newPwd)
@@ -400,7 +365,6 @@ namespace OnlineAuction.Buisness.Security
             {
                 var user = DataBaseUsers.First(u => u.Username == username);
                 user.Password = EncodePassword(newPwd);
-                user.LastPasswordChangedDate = DateTime.Now;
 
                 rowsAffected = _dataBase.SaveChanges();
             }
@@ -503,20 +467,10 @@ namespace OnlineAuction.Buisness.Security
                                        Email = email,
                                        PasswordQuestion = passwordQuestion,
                                        PasswordAnswer = this.EncodePassword(passwordAnswer),
-                                       IsApproved = isApproved,
-                                       Comment = string.Empty,
-                                       CreationDate = createDate,
-                                       LastPasswordChangedDate = createDate,
-                                       LastActivityDate = createDate,
-                                       IsLockedOut = false,
-                                       LastLockedOutDate = createDate,
-                                       FailedPasswordAnswerAttemptCount = 0,
-                                       FailedPasswordAnswerAttemptWindowStart = createDate,
-                                       FailedPasswordAttemptCount = 0,
-                                       FailedPasswordAttemptWindowStart = createDate
+                                       IsApproved = isApproved
                                    };
 
-                    _dataBase.Users.AddObject(user);
+                    _dataBase.Users.Add(user);
                     var recAdded = _dataBase.SaveChanges();
 
                     status = recAdded > 0 ? MembershipCreateStatus.Success : MembershipCreateStatus.UserRejected;
@@ -600,26 +554,7 @@ namespace OnlineAuction.Buisness.Security
             }
         }
 
-        public override int GetNumberOfUsersOnline()
-        {
-            try
-            {
-                var onlineSpan = new TimeSpan(0, Membership.UserIsOnlineTimeWindow, 0);
-                var compareTime = DateTime.Now.Subtract(onlineSpan);
-                return DataBaseUsers.Count(u => u.LastActivityDate > compareTime);
-            }
-            catch (Exception e)
-            {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "GetNumberOfUsersOnline");
-
-                    throw new ProviderException(EXCEPTION_MESSAGE);
-                }
-
-                throw;
-            }
-        }
+        
 
         public override string GetPassword(string username, string answer)
         {
@@ -642,10 +577,6 @@ namespace OnlineAuction.Buisness.Security
             {
                 if (user != null)
                 {
-                    if (user.IsLockedOut)
-                    {
-                        throw new MembershipPasswordException("The supplied user is locked out.");
-                    }
 
                     password = user.Password;
                     passwordAnswer = user.PasswordAnswer;
@@ -697,7 +628,6 @@ namespace OnlineAuction.Buisness.Security
                 var msUser = ConverDataBaseUserToMemberShipUser(user);
                 if (userIsOnline)
                 {
-                    user.LastActivityDate = DateTime.Now;
                     _dataBase.SaveChanges();
                 }
 
@@ -731,7 +661,6 @@ namespace OnlineAuction.Buisness.Security
 
                 if (userIsOnline)
                 {
-                    user.LastActivityDate = DateTime.Now;
                     _dataBase.SaveChanges();
                 }
 
@@ -755,8 +684,6 @@ namespace OnlineAuction.Buisness.Security
             try
             {
                 var user = DataBaseUsers.First(u => u.Username == username);
-                user.IsLockedOut = false;
-                user.LastLockedOutDate = DateTime.Now;
                 var rowsAffected = _dataBase.SaveChanges();
                 return rowsAffected > 0;
             }
@@ -830,10 +757,7 @@ namespace OnlineAuction.Buisness.Security
                 string passwordAnswer;
                 if (user != null)
                 {
-                    if (user.IsLockedOut)
-                    {
-                        throw new MembershipPasswordException("The supplied user is locked out.");
-                    }
+                    
 
                     passwordAnswer = user.PasswordAnswer;
                 }
@@ -850,7 +774,6 @@ namespace OnlineAuction.Buisness.Security
                 }
 
                 user.Password = EncodePassword(newPassword);
-                user.LastPasswordChangedDate = DateTime.Now;
 
                 var rowsAffected = _dataBase.SaveChanges();
 
@@ -878,7 +801,7 @@ namespace OnlineAuction.Buisness.Security
             try
             {
                 var isValid = false;
-                var user = DataBaseUsers.FirstOrDefault(u => u.Username == username && !u.IsLockedOut);
+                var user = DataBaseUsers.FirstOrDefault(u => u.Username == username );
 
                 bool isApproved;
                 string dbPassword;
@@ -898,7 +821,7 @@ namespace OnlineAuction.Buisness.Security
                     if (isApproved)
                     {
                         isValid = true;
-                        user.LastLoginDate = DateTime.Now;
+                       
                         _dataBase.SaveChanges();
                     }
                 }
@@ -928,7 +851,6 @@ namespace OnlineAuction.Buisness.Security
             {
                 var dbUser = DataBaseUsers.First(u => u.Username == user.UserName);
                 dbUser.Email = user.Email;
-                dbUser.Comment = user.Comment;
                 dbUser.IsApproved = user.IsApproved;
                 _dataBase.SaveChanges();
             }
@@ -1013,5 +935,10 @@ namespace OnlineAuction.Buisness.Security
         }
 
         #endregion
+
+        public override int GetNumberOfUsersOnline()
+        {
+            return 0;
+        }
     }
 }

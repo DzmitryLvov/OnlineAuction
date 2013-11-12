@@ -8,12 +8,68 @@
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
     <EntitySet Name="Lots" EntityType="ProviderModel.Lot" />
+    <EntitySet Name="UserDatas" EntityType="ProviderModel.UserData" />
+    <EntitySet Name="Categories" EntityType="ProviderModel.Category" />
+    <EntitySet Name="SubCategories" EntityType="ProviderModel.SubCategory" />
+    <AssociationSet Name="CategorySubCategory" Association="ProviderModel.CategorySubCategory">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="SubCategory" EntitySet="SubCategories" />
+    </AssociationSet>
+    <AssociationSet Name="SubCategoryLot" Association="ProviderModel.SubCategoryLot">
+      <End Role="SubCategory" EntitySet="SubCategories" />
+      <End Role="Lot" EntitySet="Lots" />
+    </AssociationSet>
+    <EntitySet Name="Bookmarks" EntityType="ProviderModel.Bookmark" />
+    <AssociationSet Name="UserBookmark" Association="ProviderModel.UserBookmark">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Bookmark" EntitySet="Bookmarks" />
+    </AssociationSet>
+    <AssociationSet Name="LotBookmark" Association="ProviderModel.LotBookmark">
+      <End Role="Lot" EntitySet="Lots" />
+      <End Role="Bookmark" EntitySet="Bookmarks" />
+    </AssociationSet>
+    <AssociationSet Name="UserLot" Association="ProviderModel.UserLot">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Lot" EntitySet="Lots" />
+    </AssociationSet>
+    <EntitySet Name="Bets" EntityType="ProviderModel.Bet" />
+    <AssociationSet Name="UserBet" Association="ProviderModel.UserBet">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Bet" EntitySet="Bets" />
+    </AssociationSet>
+    <AssociationSet Name="LotBet" Association="ProviderModel.LotBet">
+      <End Role="Lot" EntitySet="Lots" />
+      <End Role="Bet" EntitySet="Bets" />
+    </AssociationSet>
+    <EntitySet Name="LotPhotos" EntityType="ProviderModel.LotPhoto" />
+    <AssociationSet Name="LotLotPhoto" Association="ProviderModel.LotLotPhoto">
+      <End Role="Lot" EntitySet="Lots" />
+      <End Role="LotPhoto" EntitySet="LotPhotos" />
+    </AssociationSet>
+    <EntitySet Name="Comments" EntityType="ProviderModel.Comment" />
+    <AssociationSet Name="UserComment" Association="ProviderModel.UserComment">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="LotComment" Association="ProviderModel.LotComment">
+      <End Role="Lot" EntitySet="Lots" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <EntitySet Name="Locations" EntityType="ProviderModel.Location" />
+    <AssociationSet Name="LocationUserData" Association="ProviderModel.LocationUserData">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="UserData" EntitySet="UserDatas" />
+    </AssociationSet>
+    <AssociationSet Name="UserUserData" Association="ProviderModel.UserUserData">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserData" EntitySet="UserDatas" />
+    </AssociationSet>
     <EntitySet Name="LotTypes" EntityType="ProviderModel.LotType" />
     <AssociationSet Name="LotTypeLot" Association="ProviderModel.LotTypeLot">
       <End Role="LotType" EntitySet="LotTypes" />
       <End Role="Lot" EntitySet="Lots" />
     </AssociationSet>
-    <EntitySet Name="UserDatas" EntityType="ProviderModel.UserData" />
+    <EntitySet Name="sysdiagrams" EntityType="ProviderModel.sysdiagram" />
   </EntityContainer>
   <EntityType Name="Role">
     <Key>
@@ -49,10 +105,11 @@
     <Property Type="DateTime" Name="FailedPasswordAnswerAttemptWindowStart" Nullable="false" />
     <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
     <NavigationProperty Name="Role" Relationship="ProviderModel.FK__Users__RoleID__1B0907CE" FromRole="User" ToRole="Role" />
-    <Property Type="String" Name="Location" Nullable="true" />
-    <Property Type="String" Name="FirstName" Nullable="true" />
-    <Property Type="String" Name="LastName" Nullable="true" />
-    <Property Type="String" Name="Phone" Nullable="true" />
+    <NavigationProperty Name="Bookmarks" Relationship="ProviderModel.UserBookmark" FromRole="User" ToRole="Bookmark" />
+    <NavigationProperty Name="Lots" Relationship="ProviderModel.UserLot" FromRole="User" ToRole="Lot" />
+    <NavigationProperty Name="Bets" Relationship="ProviderModel.UserBet" FromRole="User" ToRole="Bet" />
+    <NavigationProperty Name="Comments" Relationship="ProviderModel.UserComment" FromRole="User" ToRole="Comment" />
+    <NavigationProperty Name="UserData" Relationship="ProviderModel.UserUserData" FromRole="User" ToRole="UserData" />
   </EntityType>
   <Association Name="FK__Users__RoleID__1B0907CE">
     <End Type="ProviderModel.Role" Role="Role" Multiplicity="0..1" />
@@ -63,44 +120,271 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" ConcurrencyMode="None" />
-    <Property Type="String" Name="Lotname" Nullable="false" ConcurrencyMode="None" />
-    <Property Type="String" Name="Description" Nullable="false" ConcurrencyMode="None" />
-    <Property Type="Int64" Name="Currency" Nullable="false" ConcurrencyMode="None" />
-    <Property Type="DateTime" Name="ActualDate" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="String" Name="LotName" Nullable="false" ConcurrencyMode="None" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Type="String" Name="Description" Nullable="false" ConcurrencyMode="None" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Type="Int64" Name="StartCurrency" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="DateTime" Name="ActualDate" Nullable="false" ConcurrencyMode="None" Precision="3" />
     <Property Type="Boolean" Name="IsDeleted" Nullable="false" ConcurrencyMode="None" />
-    <Property Name="LeaderName" Nullable="true" ConcurrencyMode="None" MaxLength="50" FixedLength="true" Unicode="true" Type="String" />
-    <Property Type="String" Name="OwnerName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" ConcurrencyMode="None" />
+    <NavigationProperty Name="SubCategory" Relationship="ProviderModel.SubCategoryLot" FromRole="Lot" ToRole="SubCategory" />
+    <Property Type="Int32" Name="SubCategoryID" Nullable="false" />
+    <NavigationProperty Name="Bookmarks" Relationship="ProviderModel.LotBookmark" FromRole="Lot" ToRole="Bookmark" />
+    <NavigationProperty Name="User" Relationship="ProviderModel.UserLot" FromRole="Lot" ToRole="User" />
+    <Property Type="Int32" Name="OwnerId" Nullable="false" />
+    <NavigationProperty Name="Bets" Relationship="ProviderModel.LotBet" FromRole="Lot" ToRole="Bet" />
+    <NavigationProperty Name="LotPhotoes" Relationship="ProviderModel.LotLotPhoto" FromRole="Lot" ToRole="LotPhoto" />
+    <NavigationProperty Name="Comments" Relationship="ProviderModel.LotComment" FromRole="Lot" ToRole="Comment" />
+    <Property Type="String" Name="ViewCount" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="LotType" Relationship="ProviderModel.LotTypeLot" FromRole="Lot" ToRole="LotType" />
-    <Property Type="Int32" Name="TypeId" Nullable="false" />
+    <Property Type="Int32" Name="LotTypeID" Nullable="false" />
   </EntityType>
+  <EntityType Name="UserData">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="String" Name="Phone" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="true" />
+    <Property Type="String" Name="FirstName" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="true" />
+    <Property Type="String" Name="LastName" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="true" />
+    <NavigationProperty Name="Location" Relationship="ProviderModel.LocationUserData" FromRole="UserData" ToRole="Location" />
+    <Property Type="Int32" Name="LocationID" Nullable="false" />
+    <Property Type="DateTime" Name="BrithDate" Nullable="true" Precision="3" />
+    <Property Type="String" Name="PhotoLink" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="User" Relationship="ProviderModel.UserUserData" FromRole="UserData" ToRole="User" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="SubCategories" Relationship="ProviderModel.CategorySubCategory" FromRole="Category" ToRole="SubCategory" />
+    <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="SubCategory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Category" Relationship="ProviderModel.CategorySubCategory" FromRole="SubCategory" ToRole="Category" />
+    <Property Type="Int32" Name="CategoryID" Nullable="false" />
+    <NavigationProperty Name="Lots" Relationship="ProviderModel.SubCategoryLot" FromRole="SubCategory" ToRole="Lot" />
+    <Property Type="String" Name="SubCategoryName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <Association Name="CategorySubCategory">
+    <End Type="ProviderModel.Category" Role="Category" Multiplicity="1" />
+    <End Type="ProviderModel.SubCategory" Role="SubCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SubCategory">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SubCategoryLot">
+    <End Type="ProviderModel.SubCategory" Role="SubCategory" Multiplicity="1" />
+    <End Type="ProviderModel.Lot" Role="Lot" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Lot">
+        <PropertyRef Name="SubCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Bookmark">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="User" Relationship="ProviderModel.UserBookmark" FromRole="Bookmark" ToRole="User" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <NavigationProperty Name="Lot" Relationship="ProviderModel.LotBookmark" FromRole="Bookmark" ToRole="Lot" />
+    <Property Type="Int32" Name="LotID" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="String" Name="Note" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <Association Name="UserBookmark">
+    <End Type="ProviderModel.User" Role="User" Multiplicity="1" />
+    <End Type="ProviderModel.Bookmark" Role="Bookmark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bookmark">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LotBookmark">
+    <End Type="ProviderModel.Lot" Role="Lot" Multiplicity="1" />
+    <End Type="ProviderModel.Bookmark" Role="Bookmark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lot">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bookmark">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserLot">
+    <End Type="ProviderModel.User" Role="User" Multiplicity="1" />
+    <End Type="ProviderModel.Lot" Role="Lot" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Lot">
+        <PropertyRef Name="OwnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Bet">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="User" Relationship="ProviderModel.UserBet" FromRole="Bet" ToRole="User" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <NavigationProperty Name="Lot" Relationship="ProviderModel.LotBet" FromRole="Bet" ToRole="Lot" />
+    <Property Type="Int32" Name="LotID" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="Int32" Name="BetValue" Nullable="false" />
+    <Property Type="DateTime" Name="BetDate" Nullable="false" Precision="3" />
+  </EntityType>
+  <Association Name="UserBet">
+    <End Type="ProviderModel.User" Role="User" Multiplicity="1" />
+    <End Type="ProviderModel.Bet" Role="Bet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bet">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LotBet">
+    <End Type="ProviderModel.Lot" Role="Lot" Multiplicity="1" />
+    <End Type="ProviderModel.Bet" Role="Bet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lot">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bet">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="LotPhoto">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Lot" Relationship="ProviderModel.LotLotPhoto" FromRole="LotPhoto" ToRole="Lot" />
+    <Property Type="Int32" Name="LotID" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="String" Name="PhotoLink" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <Association Name="LotLotPhoto">
+    <End Type="ProviderModel.Lot" Role="Lot" Multiplicity="1" />
+    <End Type="ProviderModel.LotPhoto" Role="LotPhoto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lot">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LotPhoto">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="User" Relationship="ProviderModel.UserComment" FromRole="Comment" ToRole="User" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <NavigationProperty Name="Lot" Relationship="ProviderModel.LotComment" FromRole="Comment" ToRole="Lot" />
+    <Property Type="Int32" Name="LotID" Nullable="false" ConcurrencyMode="None" />
+    <Property Type="String" Name="CommentText" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Type="DateTime" Name="CommentDate" Nullable="false" Precision="3" />
+  </EntityType>
+  <Association Name="UserComment">
+    <End Type="ProviderModel.User" Role="User" Multiplicity="1" />
+    <End Type="ProviderModel.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LotComment">
+    <End Type="ProviderModel.Lot" Role="Lot" Multiplicity="1" />
+    <End Type="ProviderModel.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lot">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="LocationName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="UserDatas" Relationship="ProviderModel.LocationUserData" FromRole="Location" ToRole="UserData" />
+  </EntityType>
+  <Association Name="LocationUserData">
+    <End Type="ProviderModel.Location" Role="Location" Multiplicity="1" />
+    <End Type="ProviderModel.UserData" Role="UserData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserData">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserUserData">
+    <End Type="ProviderModel.User" Role="User" Multiplicity="1" />
+    <End Type="ProviderModel.UserData" Role="UserData" Multiplicity="0..1" />
+  </Association>
   <EntityType Name="LotType">
     <Key>
-      <PropertyRef Name="TypeID" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Type="Int32" Name="TypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Type="String" Name="TypeName" Nullable="false" />
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="Lots" Relationship="ProviderModel.LotTypeLot" FromRole="LotType" ToRole="Lot" />
+    <Property Type="String" Name="TypeName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
   </EntityType>
   <Association Name="LotTypeLot">
     <End Type="ProviderModel.LotType" Role="LotType" Multiplicity="1" />
     <End Type="ProviderModel.Lot" Role="Lot" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="LotType">
-        <PropertyRef Name="TypeID" />
+        <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Lot">
-        <PropertyRef Name="TypeId" />
+        <PropertyRef Name="LotTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="UserData">
+  <EntityType Name="sysdiagram">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="diagram_id" />
     </Key>
-    <Property Type="String" Name="Location" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="Phone" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="FirstName" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="LastName" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="principal_id" Nullable="false" />
+    <Property Type="Int32" Name="diagram_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="version" />
+    <Property Type="Binary" Name="definition" MaxLength="Max" FixedLength="false" />
   </EntityType>
 </Schema>

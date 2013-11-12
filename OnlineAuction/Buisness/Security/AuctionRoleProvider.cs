@@ -18,7 +18,7 @@ namespace OnlineAuction.Buisness.Security
 
         private const string EXCEPTION_MESSAGE = "An exception occurred. Please check the Event Log.";
 
-        private MainDataBase _dataBase;
+        private MainDataBaseContainer _dataBase;
 
         private bool WriteExceptionsToEventLog { get; set; }
 
@@ -72,7 +72,7 @@ namespace OnlineAuction.Buisness.Security
                 }
             }
 
-            this._dataBase = new MainDataBase();
+            this._dataBase = new MainDataBaseContainer();
         }
 
         public override void AddUsersToRoles(string[] usernames, string[] rolenames)
@@ -137,7 +137,7 @@ namespace OnlineAuction.Buisness.Security
             {
                 var role = new Role { Rolename = rolename };
 
-                this._dataBase.Roles.AddObject(role);
+                this._dataBase.Roles.Add(role);
                 this._dataBase.SaveChanges();
             }
             catch (SqlException e)

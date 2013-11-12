@@ -11,15 +11,13 @@ namespace OnlineAuction.Buisness.Models.Lot
         
         public int ID { get; set; }
 
-        public string OwnerName { get; set; }
+        public int OwnerId { get; set; }
       
         public string Name { get; set; }
 
         public string Description { get; set; }
 
         public DateTime ActualDate { get; set; }
-   
-        public string LeaderName { get; set; }
 
         [BetRangeValidator("MinValue", ErrorMessage = "your bet can not be less than current currency")]
         [Display(Name = "currency")]

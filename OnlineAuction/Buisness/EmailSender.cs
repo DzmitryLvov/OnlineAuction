@@ -44,11 +44,13 @@ namespace OnlineAuction.Buisness
         }
         public static bool ToLeaderOnChangedRate(LotModel model, string newLeader)
         {
-            var membershipUser = Membership.GetUser(model.LeaderName);
+            /*var membershipUser = Membership.GetUser(model.LeaderName);
             return membershipUser != null && SendEamil(membershipUser.Email, model.Name,
                                                                              String.Format(
                                                                                  "Hello, {0} \r\n Your bid on lot <a href=\"{1}/Lot/Index/{2}\"> {3} </a>, was broken by <a href=\"{1}/localhost/OnlineAuction/Account/Profile?name={4}\"> {4} </a>",
                                                                                  model.LeaderName, LOCAL, model.ID, model.Name, newLeader));
+             */
+            return false;
         }
 
         public static void ToOwnerOnDelete(string ownerName)
@@ -61,36 +63,29 @@ namespace OnlineAuction.Buisness
 
 
 
-        public static bool  ToOwnerOnComplete(LotModel model, string leadername)
+        public static bool  ToOwnerOnComplete(LotModel model)
         {
-            var membershipUser = Membership.GetUser(model.OwnerName);
-            return membershipUser != null && SendEamil(membershipUser.Email, model.Name,
-                                                                             String.Format(
-                                                                                 "Hello, {0} \r\n Your  lot {1}, was won by the user {2} by $ {4}. \r\n " +
-                                                                                 "Contact them for contacts listed in the user's profile:" +
-                                                                                 " {3}/OnlineAuction/Account/Profile?name={2}",
-                                                                                 model.OwnerName, model.Name,leadername,LOCAL,model.Currency));
-        
+            //var membershipUser = Membership.GetUser(model.OwnerId); //TODO: сделать нормальный поиск пользователей
+            //return membershipUser != null && SendEamil(membershipUser.Email, model.Name,
+            //                                                                 String.Format(
+            //                                                                     "Hello, {0} \r\n Your  lot {1}, was won by the user {2} by $ {4}. \r\n " +
+            //                                                                     "Contact them for contacts listed in the user's profile:" +
+            //                                                                     " {3}/OnlineAuction/Account/Profile?name={2}",
+            //                                                                     model.OwnerName, model.Name,leadername,LOCAL,model.Currency));
+            return false;
         }
 
         public static bool ToLeaderOnComplete(LotModel model)
         {
-            var membershipUser = Membership.GetUser(model.LeaderName);
-            return membershipUser != null && SendEamil(membershipUser.Email, model.Name,
-                                                                             String.Format(
-                                                                                 "Hello, {0} \r\n Congratulations? you won lot {1} by $ {2}! \r\n " +
-                                                                                 "Wait until you contact the seller",
-                                                                                 model.LeaderName, model.Name, model.Currency));
+            //var membershipUser = Membership.GetUser(model.LeaderName);
+            //return membershipUser != null && SendEamil(membershipUser.Email, model.Name,
+            //                                                                 String.Format(
+            //                                                                     "Hello, {0} \r\n Congratulations? you won lot {1} by $ {2}! \r\n " +
+            //                                                                     "Wait until you contact the seller",
+            //                                                                     model.LeaderName, model.Name, model.Currency));
+            return false;        
         }
 
-        public static bool ToOwnerOnComplete(LotModel model) 
-        {
-            var membershipUser = Membership.GetUser(model.OwnerName);
-            return membershipUser != null && SendEamil(membershipUser.Email, model.Name,
-                                                                             String.Format(
-                                                                                 "Hello, {0} \r\n Sorry, but your  lot {1}, was removed from the auction. \r\n " ,
-                                                                                 model.OwnerName, model.Name));
         
-        }
     }
 }

@@ -4,6 +4,8 @@ using OnlineAuction.Buisness.Data;
 using OnlineAuction.Buisness.Models;
 using OnlineAuction.Buisness.Models.Account;
 using OnlineAuction.Buisness.Models.Lot;
+using System.Collections.Generic;
+using System.Data.Objects;
 
 namespace OnlineAuction.Buisness
 {
@@ -19,16 +21,16 @@ namespace OnlineAuction.Buisness
 
         static void LotTimeOutChecker()
         {
-            /*var isAlive = true;
+            var isAlive = true;
             while (isAlive)
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(7000);
                 foreach (var currentLot in dataAccess.GetCollectionToDelete())
                 {
                     DeleteLot(dataAccess.ConvertToViewModel(currentLot));
                 }
                 
-            }*/
+            }
         }
 
         internal static bool RestorePassword(RestorePasswordModel model)
@@ -44,25 +46,27 @@ namespace OnlineAuction.Buisness
         
         public static bool CreateLot(CreateLotModel model, string ownername, object image)
         {
-           return dataAccess.CreateLot(ownername,model.Name, model.Description, model.ActualDate, model.Currency,model.LotType, image);
+           //return dataAccess.CreateLot(ownername,model.Name, model.Description, model.ActualDate, model.Currency,model.LotType, image);
+            return false;
         }
 
         public static void MakeBet(LotModel model, string username)
-        {
-            if (model.LeaderName != null && username != model.LeaderName)
+        { //TODO: impliment bet making
+            /*if ( username != model.Lead)
             {
                 EmailSender.ToLeaderOnChangedRate(model, username);
             }
-            dataAccess.MakeBet(model.ID, username, model.Currency);
+            dataAccess.MakeBet(model.ID, username, model.Currency); */
         }
 
         public static bool DeleteLot(LotModel currentLot)
         {
-            try
+           try
             {
-                if (currentLot.LeaderName != null)
+               List<Bet> betSet = dataAccess.GetBetsOfCurrentLot(currentLot.ID) as List<Bet>;
+                if ( betSet != null )
                 {
-                    EmailSender.ToOwnerOnComplete(currentLot, currentLot.LeaderName);
+                    EmailSender.ToOwnerOnComplete(currentLot);
                     EmailSender.ToLeaderOnComplete(currentLot);
                 }
                 else
