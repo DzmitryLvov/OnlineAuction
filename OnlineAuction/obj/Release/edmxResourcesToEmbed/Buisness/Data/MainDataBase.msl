@@ -38,7 +38,6 @@
           <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
           <ScalarProperty Name="CommentText" ColumnName="CommentText" />
           <ScalarProperty Name="LotID" ColumnName="LotID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -66,7 +65,6 @@
           <ScalarProperty Name="LotTypeID" ColumnName="LotTypeID" />
           <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
           <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
-          <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
           <ScalarProperty Name="StartCurrency" ColumnName="StartCurrency" />
@@ -142,5 +140,170 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="BetInfos">
+      <EntityTypeMapping TypeName="MainDataBase.BetInfo">
+        <MappingFragment StoreEntitySet="BetInfos">
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          <ScalarProperty Name="BetCount" ColumnName="BetCount" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotBookmarks">
+      <EntityTypeMapping TypeName="MainDataBase.LotBookmark">
+        <MappingFragment StoreEntitySet="LotBookmarks">
+          <ScalarProperty Name="Bookmarked" ColumnName="Bookmarked" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotComments">
+      <EntityTypeMapping TypeName="MainDataBase.LotComment">
+        <MappingFragment StoreEntitySet="LotComments">
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="TimeLeft" ColumnName="TimeLeft" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotsBets">
+      <EntityTypeMapping TypeName="MainDataBase.LotsBet">
+        <MappingFragment StoreEntitySet="LotsBets">
+          <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
+          <ScalarProperty Name="CurrentValue" ColumnName="CurrentValue" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotsByCategories">
+      <EntityTypeMapping TypeName="MainDataBase.LotsByCategory">
+        <MappingFragment StoreEntitySet="LotsByCategories">
+          <ScalarProperty Name="LotSubCategory" ColumnName="LotSubCategory" />
+          <ScalarProperty Name="LotCaetgory" ColumnName="LotCaetgory" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotsByDays">
+      <EntityTypeMapping TypeName="MainDataBase.LotsByDay">
+        <MappingFragment StoreEntitySet="LotsByDays">
+          <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+          <ScalarProperty Name="Days" ColumnName="Days" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotsInfoByLocations">
+      <EntityTypeMapping TypeName="MainDataBase.LotsInfoByLocation">
+        <MappingFragment StoreEntitySet="LotsInfoByLocation">
+          <ScalarProperty Name="MinCurrency" ColumnName="MinCurrency" />
+          <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotsInfoByUsers">
+      <EntityTypeMapping TypeName="MainDataBase.LotsInfoByUser">
+        <MappingFragment StoreEntitySet="LotsInfoByUsers">
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotsPhotos">
+      <EntityTypeMapping TypeName="MainDataBase.LotsPhoto">
+        <MappingFragment StoreEntitySet="LotsPhotos">
+          <ScalarProperty Name="Link" ColumnName="Link" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotsWithPhotos">
+      <EntityTypeMapping TypeName="MainDataBase.LotsWithPhoto">
+        <MappingFragment StoreEntitySet="LotsWithPhotos">
+          <ScalarProperty Name="PhotoLink" ColumnName="PhotoLink" />
+          <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+          <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
+          <ScalarProperty Name="StartCurrency" ColumnName="StartCurrency" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotsWithSimilarParams">
+      <EntityTypeMapping TypeName="MainDataBase.LotsWithSimilarParam">
+        <MappingFragment StoreEntitySet="LotsWithSimilarParams">
+          <ScalarProperty Name="LotId" ColumnName="LotId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProfitByUsers">
+      <EntityTypeMapping TypeName="MainDataBase.ProfitByUser">
+        <MappingFragment StoreEntitySet="ProfitByUser">
+          <ScalarProperty Name="Sold" ColumnName="Sold" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserInfos">
+      <EntityTypeMapping TypeName="MainDataBase.UserInfo">
+        <MappingFragment StoreEntitySet="UserInfos">
+          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserLists">
+      <EntityTypeMapping TypeName="MainDataBase.UserList">
+        <MappingFragment StoreEntitySet="UserList">
+          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+          <ScalarProperty Name="PassLength" ColumnName="PassLength" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserLotsViews">
+      <EntityTypeMapping TypeName="MainDataBase.UserLotsView">
+        <MappingFragment StoreEntitySet="UserLotsViews">
+          <ScalarProperty Name="AvgLotViews" ColumnName="AvgLotViews" />
+          <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotsSubCategories">
+      <EntityTypeMapping TypeName="MainDataBase.LotsSubCategory">
+        <MappingFragment StoreEntitySet="LotsSubCategories">
+          <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+          <ScalarProperty Name="LotID" ColumnName="LotID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="AddNewLot" FunctionName="MainDataBase.Store.AddNewLot" />
   </EntityContainerMapping>
 </Mapping>

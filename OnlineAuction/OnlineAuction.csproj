@@ -103,6 +103,30 @@
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\DataAccess.cs" />
+    <Compile Include="Buisness\Data\FuzzySearchLot_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\GetActiveLotsOfCurrentUser_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\GetCommentsOnCurrentLot_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\GetLastBetOfLot_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\GetLotsOnCurrendDate_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\GetLotsWithShortDesc_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\GetMostActive_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\GetMostViewed_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\Location.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
@@ -110,6 +134,9 @@
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\LotPhoto.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\LotsSubCategory.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\LotType.cs">
@@ -133,10 +160,22 @@
     <Compile Include="Buisness\Data\Role.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Buisness\Data\SubCategory.cs">
+    <Compile Include="Buisness\Data\SearchLotByDescription_Result.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Buisness\Data\sysdiagram.cs">
+    <Compile Include="Buisness\Data\SearchLotByName_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\sp_helpdiagrams_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\sp_helpdiagrams_Result1.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SubCategory.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\User.cs">
@@ -151,6 +190,7 @@
     <Compile Include="Buisness\Models\Account\RestorePasswordModel.cs" />
     <Compile Include="Buisness\EmailSender.cs" />
     <Compile Include="Buisness\Models\Account\UserProfileViewModel.cs" />
+    <Compile Include="Buisness\Models\BookMarkModel.cs" />
     <Compile Include="Buisness\Models\Home\IndexModel.cs" />
     <Compile Include="Buisness\Models\Lot\BetRangeValidator.cs" />
     <Compile Include="Buisness\Models\Lot\CatalogModel.cs" />
@@ -167,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Buisness\Data\DataBaseModel.edmx.sql" />
+    <Content Include="Buisness\Data\MainDataBase.edmx.sql" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
