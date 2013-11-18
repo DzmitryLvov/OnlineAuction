@@ -1,0 +1,1310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MainDataBaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="MainDataBaseModelStoreContainer">
+          <EntitySet Name="Bets" EntityType="MainDataBaseModel.Store.Bets" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Bookmarks" EntityType="MainDataBaseModel.Store.Bookmarks" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Categories" EntityType="MainDataBaseModel.Store.Categories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Comments" EntityType="MainDataBaseModel.Store.Comments" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Locations" EntityType="MainDataBaseModel.Store.Locations" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LotPhotos" EntityType="MainDataBaseModel.Store.LotPhotos" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Lots" EntityType="MainDataBaseModel.Store.Lots" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LotsSubCategories" EntityType="MainDataBaseModel.Store.LotsSubCategories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LotTypes" EntityType="MainDataBaseModel.Store.LotTypes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Roles" EntityType="MainDataBaseModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SubCategories" EntityType="MainDataBaseModel.Store.SubCategories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserDatas" EntityType="MainDataBaseModel.Store.UserDatas" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="MainDataBaseModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__Users__RoleID__1B0907CE" Association="MainDataBaseModel.Store.FK__Users__RoleID__1B0907CE">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategorySubCategory" Association="MainDataBaseModel.Store.FK_CategorySubCategory">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="SubCategories" EntitySet="SubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocationUserData" Association="MainDataBaseModel.Store.FK_LocationUserData">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="UserDatas" EntitySet="UserDatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotBet" Association="MainDataBaseModel.Store.FK_LotBet">
+            <End Role="Lots" EntitySet="Lots" />
+            <End Role="Bets" EntitySet="Bets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotBookmark" Association="MainDataBaseModel.Store.FK_LotBookmark">
+            <End Role="Lots" EntitySet="Lots" />
+            <End Role="Bookmarks" EntitySet="Bookmarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotComment" Association="MainDataBaseModel.Store.FK_LotComment">
+            <End Role="Lots" EntitySet="Lots" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotLotPhoto" Association="MainDataBaseModel.Store.FK_LotLotPhoto">
+            <End Role="Lots" EntitySet="Lots" />
+            <End Role="LotPhotos" EntitySet="LotPhotos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotsSubCategories_Lots" Association="MainDataBaseModel.Store.FK_LotsSubCategories_Lots">
+            <End Role="Lots" EntitySet="Lots" />
+            <End Role="LotsSubCategories" EntitySet="LotsSubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotsSubCategories_SubCategories" Association="MainDataBaseModel.Store.FK_LotsSubCategories_SubCategories">
+            <End Role="SubCategories" EntitySet="SubCategories" />
+            <End Role="LotsSubCategories" EntitySet="LotsSubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotTypeLot" Association="MainDataBaseModel.Store.FK_LotTypeLot">
+            <End Role="LotTypes" EntitySet="LotTypes" />
+            <End Role="Lots" EntitySet="Lots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBet" Association="MainDataBaseModel.Store.FK_UserBet">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Bets" EntitySet="Bets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBookmark" Association="MainDataBaseModel.Store.FK_UserBookmark">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Bookmarks" EntitySet="Bookmarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserComment" Association="MainDataBaseModel.Store.FK_UserComment">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLot" Association="MainDataBaseModel.Store.FK_UserLot">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Lots" EntitySet="Lots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserUserData" Association="MainDataBaseModel.Store.FK_UserUserData">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserDatas" EntitySet="UserDatas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Bets">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="LotID" Type="int" Nullable="false" />
+          <Property Name="BetValue" Type="int" Nullable="false" />
+          <Property Name="BetDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bookmarks">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="LotID" Type="int" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LotID" Type="int" Nullable="false" />
+          <Property Name="CommentText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CommentDate" Type="datetime" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LocationName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LotPhotos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LotID" Type="int" Nullable="false" />
+          <Property Name="PhotoLink" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lots">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LotName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StartCurrency" Type="bigint" Nullable="false" />
+          <Property Name="ActualDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="OwnerId" Type="int" Nullable="false" />
+          <Property Name="ViewCount" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LotTypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LotsSubCategories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="LotID" Type="int" Nullable="false" />
+          <Property Name="SubCategoryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LotTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Rolename" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubCategories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="SubCategoryName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDatas">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Phone" Type="nvarchar(max)" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="BrithDate" Type="datetime" />
+          <Property Name="PhotoLink" Type="nvarchar(max)" />
+          <Property Name="User_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="PasswordQuestion" Type="nvarchar" MaxLength="255" />
+          <Property Name="PasswordAnswer" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="Role_ID" Type="int" />
+        </EntityType>
+        <Association Name="FK__Users__RoleID__1B0907CE">
+          <End Role="Roles" Type="MainDataBaseModel.Store.Roles" Multiplicity="0..1" />
+          <End Role="Users" Type="MainDataBaseModel.Store.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Role_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategorySubCategory">
+          <End Role="Categories" Type="MainDataBaseModel.Store.Categories" Multiplicity="1" />
+          <End Role="SubCategories" Type="MainDataBaseModel.Store.SubCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SubCategories">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocationUserData">
+          <End Role="Locations" Type="MainDataBaseModel.Store.Locations" Multiplicity="1" />
+          <End Role="UserDatas" Type="MainDataBaseModel.Store.UserDatas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserDatas">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotBet">
+          <End Role="Lots" Type="MainDataBaseModel.Store.Lots" Multiplicity="1" />
+          <End Role="Bets" Type="MainDataBaseModel.Store.Bets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lots">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bets">
+              <PropertyRef Name="LotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotBookmark">
+          <End Role="Lots" Type="MainDataBaseModel.Store.Lots" Multiplicity="1" />
+          <End Role="Bookmarks" Type="MainDataBaseModel.Store.Bookmarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lots">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bookmarks">
+              <PropertyRef Name="LotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotComment">
+          <End Role="Lots" Type="MainDataBaseModel.Store.Lots" Multiplicity="1" />
+          <End Role="Comments" Type="MainDataBaseModel.Store.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lots">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="LotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotLotPhoto">
+          <End Role="Lots" Type="MainDataBaseModel.Store.Lots" Multiplicity="1" />
+          <End Role="LotPhotos" Type="MainDataBaseModel.Store.LotPhotos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lots">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LotPhotos">
+              <PropertyRef Name="LotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotsSubCategories_Lots">
+          <End Role="Lots" Type="MainDataBaseModel.Store.Lots" Multiplicity="1" />
+          <End Role="LotsSubCategories" Type="MainDataBaseModel.Store.LotsSubCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lots">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LotsSubCategories">
+              <PropertyRef Name="LotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotsSubCategories_SubCategories">
+          <End Role="SubCategories" Type="MainDataBaseModel.Store.SubCategories" Multiplicity="1" />
+          <End Role="LotsSubCategories" Type="MainDataBaseModel.Store.LotsSubCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LotsSubCategories">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotTypeLot">
+          <End Role="LotTypes" Type="MainDataBaseModel.Store.LotTypes" Multiplicity="1" />
+          <End Role="Lots" Type="MainDataBaseModel.Store.Lots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LotTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Lots">
+              <PropertyRef Name="LotTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBet">
+          <End Role="Users" Type="MainDataBaseModel.Store.Users" Multiplicity="1" />
+          <End Role="Bets" Type="MainDataBaseModel.Store.Bets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bets">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBookmark">
+          <End Role="Users" Type="MainDataBaseModel.Store.Users" Multiplicity="1" />
+          <End Role="Bookmarks" Type="MainDataBaseModel.Store.Bookmarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bookmarks">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserComment">
+          <End Role="Users" Type="MainDataBaseModel.Store.Users" Multiplicity="0..1" />
+          <End Role="Comments" Type="MainDataBaseModel.Store.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLot">
+          <End Role="Users" Type="MainDataBaseModel.Store.Users" Multiplicity="1" />
+          <End Role="Lots" Type="MainDataBaseModel.Store.Lots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Lots">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserUserData">
+          <End Role="Users" Type="MainDataBaseModel.Store.Users" Multiplicity="1" />
+          <End Role="UserDatas" Type="MainDataBaseModel.Store.UserDatas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserDatas">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CategoryName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="AddNewLot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LotName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Descr" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartCurrency" Type="int" Mode="In" />
+          <Parameter Name="ActualDate" Type="datetime" Mode="In" />
+          <Parameter Name="OwnerId" Type="int" Mode="In" />
+          <Parameter Name="LotTypeid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddNewUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Password" Type="nvarchar" Mode="In" />
+          <Parameter Name="PasswordQuestion" Type="nvarchar" Mode="In" />
+          <Parameter Name="PasswordAnswer" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="RoleID" Type="int" Mode="In" />
+          <Parameter Name="Phone" Type="nvarchar" Mode="In" />
+          <Parameter Name="FirstName" Type="nvarchar" Mode="In" />
+          <Parameter Name="LastName" Type="nvarchar" Mode="In" />
+          <Parameter Name="BirthDate" Type="datetime" Mode="In" />
+          <Parameter Name="PhotoLink" Type="nvarchar" Mode="In" />
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddSubCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SubCategoryName" Type="nvarchar" Mode="In" />
+          <Parameter Name="CategoryId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddSubCategoryToLot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Lotid" Type="int" Mode="In" />
+          <Parameter Name="SubCategoryId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CompleteLots" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="DeleteLot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fn_diagramobjects" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetUsersWithBannedComments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="count" Type="int" Mode="In" />
+        </Function>
+        <Function Name="LeaveComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="int" Mode="In" />
+          <Parameter Name="lotid" Type="int" Mode="In" />
+          <Parameter Name="text" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="MakeBet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="LotId" Type="int" Mode="In" />
+          <Parameter Name="BetValue" Type="int" Mode="In" />
+          <Parameter Name="BetDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="MarkUserAsDeleted" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SearchByLotName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="lotname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SearchByUasers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SearchLot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="query" Type="nvarchar" Mode="In" />
+          <Parameter Name="allowDeleted" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MainDataBaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MainDataBase" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bets" EntityType="MainDataBaseModel.Bet" />
+          <EntitySet Name="Bookmarks" EntityType="MainDataBaseModel.Bookmark" />
+          <EntitySet Name="Categories" EntityType="MainDataBaseModel.Category" />
+          <EntitySet Name="Comments" EntityType="MainDataBaseModel.Comment" />
+          <EntitySet Name="Locations" EntityType="MainDataBaseModel.Location" />
+          <EntitySet Name="LotPhotos" EntityType="MainDataBaseModel.LotPhoto" />
+          <EntitySet Name="Lots" EntityType="MainDataBaseModel.Lot" />
+          <EntitySet Name="LotsSubCategories" EntityType="MainDataBaseModel.LotsSubCategory" />
+          <EntitySet Name="LotTypes" EntityType="MainDataBaseModel.LotType" />
+          <EntitySet Name="Roles" EntityType="MainDataBaseModel.Role" />
+          <EntitySet Name="SubCategories" EntityType="MainDataBaseModel.SubCategory" />
+          <EntitySet Name="UserDatas" EntityType="MainDataBaseModel.UserData" />
+          <EntitySet Name="Users" EntityType="MainDataBaseModel.User" />
+          <AssociationSet Name="FK_LotBet" Association="MainDataBaseModel.FK_LotBet">
+            <End Role="Lots" EntitySet="Lots" />
+            <End Role="Bets" EntitySet="Bets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBet" Association="MainDataBaseModel.FK_UserBet">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Bets" EntitySet="Bets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotBookmark" Association="MainDataBaseModel.FK_LotBookmark">
+            <End Role="Lots" EntitySet="Lots" />
+            <End Role="Bookmarks" EntitySet="Bookmarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBookmark" Association="MainDataBaseModel.FK_UserBookmark">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Bookmarks" EntitySet="Bookmarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategorySubCategory" Association="MainDataBaseModel.FK_CategorySubCategory">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="SubCategories" EntitySet="SubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotComment" Association="MainDataBaseModel.FK_LotComment">
+            <End Role="Lots" EntitySet="Lots" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserComment" Association="MainDataBaseModel.FK_UserComment">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocationUserData" Association="MainDataBaseModel.FK_LocationUserData">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="UserDatas" EntitySet="UserDatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotLotPhoto" Association="MainDataBaseModel.FK_LotLotPhoto">
+            <End Role="Lots" EntitySet="Lots" />
+            <End Role="LotPhotos" EntitySet="LotPhotos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotsSubCategories_Lots" Association="MainDataBaseModel.FK_LotsSubCategories_Lots">
+            <End Role="Lots" EntitySet="Lots" />
+            <End Role="LotsSubCategories" EntitySet="LotsSubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotTypeLot" Association="MainDataBaseModel.FK_LotTypeLot">
+            <End Role="LotTypes" EntitySet="LotTypes" />
+            <End Role="Lots" EntitySet="Lots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLot" Association="MainDataBaseModel.FK_UserLot">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Lots" EntitySet="Lots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LotsSubCategories_SubCategories" Association="MainDataBaseModel.FK_LotsSubCategories_SubCategories">
+            <End Role="SubCategories" EntitySet="SubCategories" />
+            <End Role="LotsSubCategories" EntitySet="LotsSubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__RoleID__1B0907CE" Association="MainDataBaseModel.FK__Users__RoleID__1B0907CE">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserUserData" Association="MainDataBaseModel.FK_UserUserData">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserDatas" EntitySet="UserDatas" />
+          </AssociationSet>
+          <FunctionImport Name="AddCategory">
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddNewLot">
+            <Parameter Name="LotName" Mode="In" Type="String" />
+            <Parameter Name="Descr" Mode="In" Type="String" />
+            <Parameter Name="StartCurrency" Mode="In" Type="Int32" />
+            <Parameter Name="ActualDate" Mode="In" Type="DateTime" />
+            <Parameter Name="OwnerId" Mode="In" Type="Int32" />
+            <Parameter Name="LotTypeid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddNewUser">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="PasswordQuestion" Mode="In" Type="String" />
+            <Parameter Name="PasswordAnswer" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="RoleID" Mode="In" Type="Int32" />
+            <Parameter Name="Phone" Mode="In" Type="String" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="BirthDate" Mode="In" Type="DateTime" />
+            <Parameter Name="PhotoLink" Mode="In" Type="String" />
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddSubCategory">
+            <Parameter Name="SubCategoryName" Mode="In" Type="String" />
+            <Parameter Name="CategoryId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddSubCategoryToLot">
+            <Parameter Name="Lotid" Mode="In" Type="Int32" />
+            <Parameter Name="SubCategoryId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CompleteLots" />
+          <FunctionImport Name="DeleteLot">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteUser">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetUsersWithBannedComments" ReturnType="Collection(MainDataBaseModel.GetUsersWithBannedComments_Result)">
+            <Parameter Name="count" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="LeaveComment">
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="lotid" Mode="In" Type="Int32" />
+            <Parameter Name="text" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MakeBet">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="LotId" Mode="In" Type="Int32" />
+            <Parameter Name="BetValue" Mode="In" Type="Int32" />
+            <Parameter Name="BetDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="MarkUserAsDeleted">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SearchByLotName" ReturnType="Collection(MainDataBaseModel.SearchByLotName_Result)">
+            <Parameter Name="lotname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SearchByUasers" ReturnType="Collection(MainDataBaseModel.SearchByUasers_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SearchLot" ReturnType="Collection(MainDataBaseModel.SearchLot_Result)">
+            <Parameter Name="query" Mode="In" Type="String" />
+            <Parameter Name="allowDeleted" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MainDataBaseModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MainDataBaseModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <EntityType Name="Bet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="LotID" Type="Int32" Nullable="false" />
+          <Property Name="BetValue" Type="Int32" Nullable="false" />
+          <Property Name="BetDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Lot" Relationship="MainDataBaseModel.FK_LotBet" FromRole="Bets" ToRole="Lots" />
+          <NavigationProperty Name="User" Relationship="MainDataBaseModel.FK_UserBet" FromRole="Bets" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Bookmark">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="LotID" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Lot" Relationship="MainDataBaseModel.FK_LotBookmark" FromRole="Bookmarks" ToRole="Lots" />
+          <NavigationProperty Name="User" Relationship="MainDataBaseModel.FK_UserBookmark" FromRole="Bookmarks" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="SubCategories" Relationship="MainDataBaseModel.FK_CategorySubCategory" FromRole="Categories" ToRole="SubCategories" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LotID" Type="Int32" Nullable="false" />
+          <Property Name="CommentText" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CommentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Lot" Relationship="MainDataBaseModel.FK_LotComment" FromRole="Comments" ToRole="Lots" />
+          <NavigationProperty Name="User" Relationship="MainDataBaseModel.FK_UserComment" FromRole="Comments" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="UserDatas" Relationship="MainDataBaseModel.FK_LocationUserData" FromRole="Locations" ToRole="UserDatas" />
+        </EntityType>
+        <EntityType Name="LotPhoto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LotID" Type="Int32" Nullable="false" />
+          <Property Name="PhotoLink" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Lot" Relationship="MainDataBaseModel.FK_LotLotPhoto" FromRole="LotPhotos" ToRole="Lots" />
+        </EntityType>
+        <EntityType Name="Lot">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LotName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="StartCurrency" Type="Int64" Nullable="false" />
+          <Property Name="ActualDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <Property Name="ViewCount" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LotTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bets" Relationship="MainDataBaseModel.FK_LotBet" FromRole="Lots" ToRole="Bets" />
+          <NavigationProperty Name="Bookmarks" Relationship="MainDataBaseModel.FK_LotBookmark" FromRole="Lots" ToRole="Bookmarks" />
+          <NavigationProperty Name="Comments" Relationship="MainDataBaseModel.FK_LotComment" FromRole="Lots" ToRole="Comments" />
+          <NavigationProperty Name="LotPhotos" Relationship="MainDataBaseModel.FK_LotLotPhoto" FromRole="Lots" ToRole="LotPhotos" />
+          <NavigationProperty Name="LotsSubCategories" Relationship="MainDataBaseModel.FK_LotsSubCategories_Lots" FromRole="Lots" ToRole="LotsSubCategories" />
+          <NavigationProperty Name="LotType" Relationship="MainDataBaseModel.FK_LotTypeLot" FromRole="Lots" ToRole="LotTypes" />
+          <NavigationProperty Name="User" Relationship="MainDataBaseModel.FK_UserLot" FromRole="Lots" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="LotsSubCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="LotID" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Lot" Relationship="MainDataBaseModel.FK_LotsSubCategories_Lots" FromRole="LotsSubCategories" ToRole="Lots" />
+          <NavigationProperty Name="SubCategory" Relationship="MainDataBaseModel.FK_LotsSubCategories_SubCategories" FromRole="LotsSubCategories" ToRole="SubCategories" />
+        </EntityType>
+        <EntityType Name="LotType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Lots" Relationship="MainDataBaseModel.FK_LotTypeLot" FromRole="LotTypes" ToRole="Lots" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rolename" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="MainDataBaseModel.FK__Users__RoleID__1B0907CE" FromRole="Roles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="SubCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Category" Relationship="MainDataBaseModel.FK_CategorySubCategory" FromRole="SubCategories" ToRole="Categories" />
+          <NavigationProperty Name="LotsSubCategories" Relationship="MainDataBaseModel.FK_LotsSubCategories_SubCategories" FromRole="SubCategories" ToRole="LotsSubCategories" />
+        </EntityType>
+        <EntityType Name="UserData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Phone" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="BrithDate" Type="DateTime" Precision="3" />
+          <Property Name="PhotoLink" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Location" Relationship="MainDataBaseModel.FK_LocationUserData" FromRole="UserDatas" ToRole="Locations" />
+          <NavigationProperty Name="User" Relationship="MainDataBaseModel.FK_UserUserData" FromRole="UserDatas" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="PasswordQuestion" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="PasswordAnswer" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="Role_ID" Type="Int32" />
+          <NavigationProperty Name="Bets" Relationship="MainDataBaseModel.FK_UserBet" FromRole="Users" ToRole="Bets" />
+          <NavigationProperty Name="Bookmarks" Relationship="MainDataBaseModel.FK_UserBookmark" FromRole="Users" ToRole="Bookmarks" />
+          <NavigationProperty Name="Comments" Relationship="MainDataBaseModel.FK_UserComment" FromRole="Users" ToRole="Comments" />
+          <NavigationProperty Name="Lots" Relationship="MainDataBaseModel.FK_UserLot" FromRole="Users" ToRole="Lots" />
+          <NavigationProperty Name="Role" Relationship="MainDataBaseModel.FK__Users__RoleID__1B0907CE" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="UserDatas" Relationship="MainDataBaseModel.FK_UserUserData" FromRole="Users" ToRole="UserDatas" />
+        </EntityType>
+        <Association Name="FK_LotBet">
+          <End Role="Lots" Type="MainDataBaseModel.Lot" Multiplicity="1" />
+          <End Role="Bets" Type="MainDataBaseModel.Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lots">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bets">
+              <PropertyRef Name="LotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBet">
+          <End Role="Users" Type="MainDataBaseModel.User" Multiplicity="1" />
+          <End Role="Bets" Type="MainDataBaseModel.Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bets">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotBookmark">
+          <End Role="Lots" Type="MainDataBaseModel.Lot" Multiplicity="1" />
+          <End Role="Bookmarks" Type="MainDataBaseModel.Bookmark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lots">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bookmarks">
+              <PropertyRef Name="LotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBookmark">
+          <End Role="Users" Type="MainDataBaseModel.User" Multiplicity="1" />
+          <End Role="Bookmarks" Type="MainDataBaseModel.Bookmark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bookmarks">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategorySubCategory">
+          <End Role="Categories" Type="MainDataBaseModel.Category" Multiplicity="1" />
+          <End Role="SubCategories" Type="MainDataBaseModel.SubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SubCategories">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotComment">
+          <End Role="Lots" Type="MainDataBaseModel.Lot" Multiplicity="1" />
+          <End Role="Comments" Type="MainDataBaseModel.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lots">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="LotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserComment">
+          <End Role="Users" Type="MainDataBaseModel.User" Multiplicity="0..1" />
+          <End Role="Comments" Type="MainDataBaseModel.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocationUserData">
+          <End Role="Locations" Type="MainDataBaseModel.Location" Multiplicity="1" />
+          <End Role="UserDatas" Type="MainDataBaseModel.UserData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserDatas">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotLotPhoto">
+          <End Role="Lots" Type="MainDataBaseModel.Lot" Multiplicity="1" />
+          <End Role="LotPhotos" Type="MainDataBaseModel.LotPhoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lots">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LotPhotos">
+              <PropertyRef Name="LotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotsSubCategories_Lots">
+          <End Role="Lots" Type="MainDataBaseModel.Lot" Multiplicity="1" />
+          <End Role="LotsSubCategories" Type="MainDataBaseModel.LotsSubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lots">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LotsSubCategories">
+              <PropertyRef Name="LotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotTypeLot">
+          <End Role="LotTypes" Type="MainDataBaseModel.LotType" Multiplicity="1" />
+          <End Role="Lots" Type="MainDataBaseModel.Lot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LotTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Lots">
+              <PropertyRef Name="LotTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLot">
+          <End Role="Users" Type="MainDataBaseModel.User" Multiplicity="1" />
+          <End Role="Lots" Type="MainDataBaseModel.Lot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Lots">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LotsSubCategories_SubCategories">
+          <End Role="SubCategories" Type="MainDataBaseModel.SubCategory" Multiplicity="1" />
+          <End Role="LotsSubCategories" Type="MainDataBaseModel.LotsSubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LotsSubCategories">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__RoleID__1B0907CE">
+          <End Role="Roles" Type="MainDataBaseModel.Role" Multiplicity="0..1" />
+          <End Role="Users" Type="MainDataBaseModel.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Role_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserUserData">
+          <End Role="Users" Type="MainDataBaseModel.User" Multiplicity="1" />
+          <End Role="UserDatas" Type="MainDataBaseModel.UserData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserDatas">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetUsersWithBannedComments_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="PasswordQuestion" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PasswordAnswer" Nullable="true" MaxLength="255" />
+          <Property Type="Boolean" Name="IsApproved" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="Int32" Name="Role_ID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SearchByLotName_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="LotName" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="Int64" Name="StartCurrency" Nullable="false" />
+          <Property Type="DateTime" Name="ActualDate" Nullable="false" Precision="23" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="Int32" Name="OwnerId" Nullable="false" />
+          <Property Type="String" Name="ViewCount" Nullable="false" />
+          <Property Type="Int32" Name="LotTypeID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SearchByUasers_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="PasswordQuestion" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PasswordAnswer" Nullable="true" MaxLength="255" />
+          <Property Type="Boolean" Name="IsApproved" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="Int32" Name="Role_ID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SearchLot_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="LotName" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="Int64" Name="StartCurrency" Nullable="false" />
+          <Property Type="DateTime" Name="ActualDate" Nullable="false" Precision="23" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="Int32" Name="OwnerId" Nullable="false" />
+          <Property Type="String" Name="ViewCount" Nullable="false" />
+          <Property Type="Int32" Name="LotTypeID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MainDataBaseModelStoreContainer" CdmEntityContainer="MainDataBase">
+          <EntitySetMapping Name="Bets">
+            <EntityTypeMapping TypeName="MainDataBaseModel.Bet">
+              <MappingFragment StoreEntitySet="Bets">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="LotID" ColumnName="LotID" />
+                <ScalarProperty Name="BetValue" ColumnName="BetValue" />
+                <ScalarProperty Name="BetDate" ColumnName="BetDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookmarks">
+            <EntityTypeMapping TypeName="MainDataBaseModel.Bookmark">
+              <MappingFragment StoreEntitySet="Bookmarks">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="LotID" ColumnName="LotID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="MainDataBaseModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="MainDataBaseModel.Comment">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LotID" ColumnName="LotID" />
+                <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+                <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="MainDataBaseModel.Location">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LotPhotos">
+            <EntityTypeMapping TypeName="MainDataBaseModel.LotPhoto">
+              <MappingFragment StoreEntitySet="LotPhotos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LotID" ColumnName="LotID" />
+                <ScalarProperty Name="PhotoLink" ColumnName="PhotoLink" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lots">
+            <EntityTypeMapping TypeName="MainDataBaseModel.Lot">
+              <MappingFragment StoreEntitySet="Lots">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LotName" ColumnName="LotName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartCurrency" ColumnName="StartCurrency" />
+                <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="LotTypeID" ColumnName="LotTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LotsSubCategories">
+            <EntityTypeMapping TypeName="MainDataBaseModel.LotsSubCategory">
+              <MappingFragment StoreEntitySet="LotsSubCategories">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LotID" ColumnName="LotID" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LotTypes">
+            <EntityTypeMapping TypeName="MainDataBaseModel.LotType">
+              <MappingFragment StoreEntitySet="LotTypes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="MainDataBaseModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubCategories">
+            <EntityTypeMapping TypeName="MainDataBaseModel.SubCategory">
+              <MappingFragment StoreEntitySet="SubCategories">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDatas">
+            <EntityTypeMapping TypeName="MainDataBaseModel.UserData">
+              <MappingFragment StoreEntitySet="UserDatas">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="BrithDate" ColumnName="BrithDate" />
+                <ScalarProperty Name="PhotoLink" ColumnName="PhotoLink" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MainDataBaseModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+                <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddCategory" FunctionName="MainDataBaseModel.Store.AddCategory" />
+          <FunctionImportMapping FunctionImportName="AddNewLot" FunctionName="MainDataBaseModel.Store.AddNewLot" />
+          <FunctionImportMapping FunctionImportName="AddNewUser" FunctionName="MainDataBaseModel.Store.AddNewUser" />
+          <FunctionImportMapping FunctionImportName="AddSubCategory" FunctionName="MainDataBaseModel.Store.AddSubCategory" />
+          <FunctionImportMapping FunctionImportName="AddSubCategoryToLot" FunctionName="MainDataBaseModel.Store.AddSubCategoryToLot" />
+          <FunctionImportMapping FunctionImportName="CompleteLots" FunctionName="MainDataBaseModel.Store.CompleteLots" />
+          <FunctionImportMapping FunctionImportName="DeleteLot" FunctionName="MainDataBaseModel.Store.DeleteLot" />
+          <FunctionImportMapping FunctionImportName="DeleteUser" FunctionName="MainDataBaseModel.Store.DeleteUser" />
+          <FunctionImportMapping FunctionImportName="GetUsersWithBannedComments" FunctionName="MainDataBaseModel.Store.GetUsersWithBannedComments">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MainDataBaseModel.GetUsersWithBannedComments_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+                <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LeaveComment" FunctionName="MainDataBaseModel.Store.LeaveComment" />
+          <FunctionImportMapping FunctionImportName="MakeBet" FunctionName="MainDataBaseModel.Store.MakeBet" />
+          <FunctionImportMapping FunctionImportName="MarkUserAsDeleted" FunctionName="MainDataBaseModel.Store.MarkUserAsDeleted" />
+          <FunctionImportMapping FunctionImportName="SearchByLotName" FunctionName="MainDataBaseModel.Store.SearchByLotName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MainDataBaseModel.SearchByLotName_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LotName" ColumnName="LotName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartCurrency" ColumnName="StartCurrency" />
+                <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="LotTypeID" ColumnName="LotTypeID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SearchByUasers" FunctionName="MainDataBaseModel.Store.SearchByUasers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MainDataBaseModel.SearchByUasers_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+                <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SearchLot" FunctionName="MainDataBaseModel.Store.SearchLot">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MainDataBaseModel.SearchLot_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LotName" ColumnName="LotName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartCurrency" ColumnName="StartCurrency" />
+                <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="LotTypeID" ColumnName="LotTypeID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="MainDataBaseModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="MainDataBaseModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="MainDataBaseModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="MainDataBaseModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MainDataBaseModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="MainDataBaseModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MainDataBaseModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="MainDataBaseModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="MainDataBaseModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,1 @@
+﻿CREATE FULLTEXT INDEX ON Lots ([Description]) KEY INDEX  PK_Lots  // в конец

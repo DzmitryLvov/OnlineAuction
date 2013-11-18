@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Data.Objects;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
+using System.Web.Security;
 using OnlineAuction.Buisness.Models.Account;
 using OnlineAuction.Buisness.Models.Lot;
 using OnlineAuction.Buisness.Data;
@@ -12,7 +15,7 @@ namespace OnlineAuction.Buisness.Data
 {
     public class DataAccess
     {
-        private readonly MainDataBaseContainer _dataBase = new MainDataBaseContainer();
+        private readonly MainDataBase _dataBase = new MainDataBase();
         private readonly string INITIAL_CATALOG = AppDomain.CurrentDomain.BaseDirectory;
 
         const string ETALON = @"qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
@@ -31,7 +34,7 @@ namespace OnlineAuction.Buisness.Data
                 }   
             }
         }
-        private  MainDataBaseContainer GetDataBase()
+        private  MainDataBase GetDataBase()
         {
             return _dataBase;
         }
@@ -215,20 +218,7 @@ namespace OnlineAuction.Buisness.Data
             return File.Exists(INITIAL_CATALOG +@"Content\Image\"+ targetFolder + @"\" + ID.ToString() + @"\index.jpg");
         }
 
-        internal void CreateUserData(string location, string phone, string firstname, string lastname, string username)
-        {
-            /*var user = _dataBase.Users.FirstOrDefault(t => t.Username == username);
-            if (user != null)
-            {
-                user.Phone = phone;
-                user.LastName = lastname;
-                user.FirstName = firstname;
-                user.Location = location;
-            }
-            */
-            //TODO: impliment user creation
-            _dataBase.SaveChanges();
-        }
+        
 
         public object GetUserProfileViewModel(string userName)
         {
@@ -261,6 +251,30 @@ namespace OnlineAuction.Buisness.Data
         internal IEnumerable<Bet> GetBetsOfCurrentLot(int lotid)
         {
             return null;
+        }
+
+        internal  MembershipCreateStatus AddNewUser(RegisterModel model)
+        {
+            var hash = new HMACSHA1();
+            var encodedPassword = Convert.ToBase64String(hash.ComputeHash(Encoding.Unicode.GetBytes(model.Password)));
+
+            return _dataBase.AddNewUser(model.UserName,
+                encodedPassword,
+                model.Question,
+                model.Answer,
+                model.Email,
+                getBaseRoleId(),
+                model.Phone,
+                model.FirstName,
+                model.LastName,
+                model.BirthDate,
+                model.PhotoLink,
+                model.LocationId) == 1 ? MembershipCreateStatus.Success : MembershipCreateStatus.ProviderError;
+        }
+
+        private int? getBaseRoleId()
+        {
+            return _dataBase.Roles.FirstOrDefault(t => t.Rolename == "Base").ID;
         }
     }
 }

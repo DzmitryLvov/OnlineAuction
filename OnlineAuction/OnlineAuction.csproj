@@ -103,28 +103,7 @@
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\DataAccess.cs" />
-    <Compile Include="Buisness\Data\FuzzySearchLot_Result.cs">
-      <DependentUpon>MainDataBase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Buisness\Data\GetActiveLotsOfCurrentUser_Result.cs">
-      <DependentUpon>MainDataBase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Buisness\Data\GetCommentsOnCurrentLot_Result.cs">
-      <DependentUpon>MainDataBase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Buisness\Data\GetLastBetOfLot_Result.cs">
-      <DependentUpon>MainDataBase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Buisness\Data\GetLotsOnCurrendDate_Result.cs">
-      <DependentUpon>MainDataBase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Buisness\Data\GetLotsWithShortDesc_Result.cs">
-      <DependentUpon>MainDataBase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Buisness\Data\GetMostActive_Result.cs">
-      <DependentUpon>MainDataBase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Buisness\Data\GetMostViewed_Result.cs">
+    <Compile Include="Buisness\Data\GetUsersWithBannedComments_Result.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\Location.cs">
@@ -160,19 +139,19 @@
     <Compile Include="Buisness\Data\Role.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Buisness\Data\SearchLotByDescription_Result.cs">
+    <Compile Include="Buisness\Data\SearchByLotName_Result.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Buisness\Data\SearchLotByName_Result.cs">
+    <Compile Include="Buisness\Data\SearchByUasers_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SearchLot_Result.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\sp_helpdiagrams_Result.cs">
-      <DependentUpon>MainDataBase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Buisness\Data\sp_helpdiagrams_Result1.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\SubCategory.cs">

@@ -20,7 +20,7 @@ namespace OnlineAuction.Buisness.Security
         private const string EVENT_LOG = "Application";
         private const string EXCEPTION_MESSAGE = "An exception occurred. Please check the Event Log.";
         private const string ENCRYPTION_KEY = "AE09F72BA97CBBB5";
-        private MainDataBaseContainer _dataBase;
+        private MainDataBase _dataBase;
         private bool _enablePasswordReset;
         private bool _enablePasswordRetrieval;
         private int _maxInvalidPasswordAttempts;
@@ -334,7 +334,7 @@ namespace OnlineAuction.Buisness.Security
                 default:
                     throw new ProviderException("Password format not supported.");
             }*/
-            this._dataBase = new MainDataBaseContainer();
+            this._dataBase = new MainDataBase();
         }
 
         public override bool ChangePassword(string username, string oldPwd, string newPwd)

@@ -53,7 +53,7 @@ namespace OnlineAuction.Buisness.Controllers
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
-                MembershipCreateStatus createStatus;
+                /*MembershipCreateStatus createStatus;
                 Membership.CreateUser(model.UserName, model.Password, model.Email, model.Question, model.Answer, true, null, out createStatus);
                 if (createStatus == MembershipCreateStatus.Success)
                 {
@@ -62,12 +62,18 @@ namespace OnlineAuction.Buisness.Controllers
                     FormsAuthentication.SetAuthCookie(model.UserName, false);
                     return RedirectToAction("Index", "Home");
                 }
-
+                */
+                var createStatus = new DataAccess().AddNewUser(model);
+                if (createStatus == MembershipCreateStatus.Success)
+                {
+                    FormsAuthentication.SetAuthCookie(model.UserName,false);
+                    return RedirectToAction("Index", "Home");
+                }
                 ModelState.AddModelError("", ErrorCodeToString(createStatus));
             }
 
 
-            // If we got this far, something failed, redisplay form
+            // если мы оказались тут, чтото пошло не так, заново отобразить форму
             return View(model);
         }
 

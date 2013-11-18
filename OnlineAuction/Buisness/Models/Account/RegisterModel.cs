@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace OnlineAuction.Buisness.Models.Account
@@ -40,11 +41,20 @@ namespace OnlineAuction.Buisness.Models.Account
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Display(Name = "Location")]
-        public string Location { get; set; }
+        [Display(Name = "LocationID")]
+        public int LocationId { get; set; }
 
         [Display(Name = "Phone")]
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
+
+        [Display(Name = "BirthDate")]
+        [DataType(DataType.Date)]
+        public DateTime BirthDate { get; set; }
+
+
+        [Display(Name = "PhotoLink")]
+        [DataType (DataType.ImageUrl)]
+        public string PhotoLink { get; set; }
     }
 }

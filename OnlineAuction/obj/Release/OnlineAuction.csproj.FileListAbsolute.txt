@@ -26,3 +26,4 @@ E:\Prog\OnlineAuction\OnlineAuction\bin\System.Web.WebPages.dll
 E:\Prog\OnlineAuction\OnlineAuction\bin\System.Web.Mvc.xml
 E:\Prog\OnlineAuction\OnlineAuction\bin\System.Web.WebPages.xml
 E:\Prog\OnlineAuction\OnlineAuction\bin\System.Web.Helpers.xml
+E:\Prog\OnlineAuction\OnlineAuction\obj\Release\OnlineAuction.csprojResolveAssemblyReference.cache
