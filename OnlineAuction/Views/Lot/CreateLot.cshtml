@@ -1,4 +1,7 @@
-﻿@model OnlineAuction.Buisness.Models.Lot.CreateLotModel
+﻿@using System.Collections
+@using System.Web.UI.WebControls
+@using OnlineAuction.Buisness.Data
+@model OnlineAuction.Buisness.Models.Lot.CreateLotModel
 @{
     ViewBag.Title = "CreateLot";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
@@ -46,17 +49,16 @@
                     <td>
                         Minimal currency:
                     </td>
-                    <td>@Html.TextBoxFor(t => t.Currency)
-                        @Html.ValidationMessageFor(t => t.Currency)
+                    <td>@Html.TextBoxFor(t => t.StartCurrency)
+                        @Html.ValidationMessageFor(t => t.StartCurrency)
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Lot Type:
+                        Lot categories
                     </td>
                     <td>
-                        @Html.DropDownListFor(t => t.LotType, new SelectList(Model.LotTypeCollection))
-                        @Html.ValidationMessageFor(t => t.LotType)
+                       
                     </td>
                 </tr>
                 <tr>
@@ -70,6 +72,9 @@
             </table>
             <button type="submit" value="Create Lot" class="btn btn-success btn-accept">
                 Save</button>
+            @(Html.Kendo().MultiSelectFor(m => m.LotSubCategories)
+                       .BindTo((SelectList)ViewBag.LotSubCategories)
+                       )
         </div>
     </div>
     <script type="text/javascript">

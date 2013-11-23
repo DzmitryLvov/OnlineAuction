@@ -228,7 +228,7 @@ namespace OnlineAuction.Buisness.Data
 
         internal IEnumerable<LotModel> GetHotLots()
         {
-            //индусский код но что поделать TODO: разобраться с этим методом
+            //TODO: разобраться с этим методом
             var tempdate = DateTime.Now + new TimeSpan(1,0,0,0);
             foreach (var lot in _dataBase.Lots.Where(t => t.ActualDate > tempdate))
             {
@@ -257,8 +257,7 @@ namespace OnlineAuction.Buisness.Data
         {
             var hash = new HMACSHA1();
             var encodedPassword = Convert.ToBase64String(hash.ComputeHash(Encoding.Unicode.GetBytes(model.Password)));
-
-            return _dataBase.AddNewUser(model.UserName,
+            var count = _dataBase.AddNewUser(model.UserName,
                 encodedPassword,
                 model.Question,
                 model.Answer,
@@ -267,14 +266,41 @@ namespace OnlineAuction.Buisness.Data
                 model.Phone,
                 model.FirstName,
                 model.LastName,
-                model.BirthDate,
+                null, //model.BirthDate,
                 model.PhotoLink,
-                model.LocationId) == 1 ? MembershipCreateStatus.Success : MembershipCreateStatus.ProviderError;
+                model.LocationId);
+            return count == 2 ? MembershipCreateStatus.Success : MembershipCreateStatus.ProviderError;
         }
 
         private int? getBaseRoleId()
         {
             return _dataBase.Roles.FirstOrDefault(t => t.Rolename == "Base").ID;
+        }
+
+        internal IEnumerable<Location> GetLocations()
+        {
+            foreach (var location in _dataBase.Locations)
+            {
+                yield return new Location()
+                {
+                    ID = location.ID,
+                    LocationName = location.LocationName
+                };
+            }
+        }
+
+
+
+        internal IEnumerable<SubCategory> GetSubCategoriesList()
+        {
+            foreach (var subCategory in _dataBase.SubCategories)
+            {
+                yield return new SubCategory()
+                {
+                    ID = subCategory.ID,
+                    SubCategoryName = subCategory.SubCategoryName
+                };
+            }
         }
     }
 }

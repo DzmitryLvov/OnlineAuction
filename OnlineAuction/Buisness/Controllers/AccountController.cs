@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Security;
 using OnlineAuction.Buisness.Data;
 using OnlineAuction.Buisness.Models.Account;
@@ -47,22 +46,13 @@ namespace OnlineAuction.Buisness.Controllers
             return View();
         }
 
+
+
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
-                /*MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, model.Question, model.Answer, true, null, out createStatus);
-                if (createStatus == MembershipCreateStatus.Success)
-                {
-
-                    new DataAccess().CreateUserData(model.Location, model.Phone, model.FirstName, model.LastName, model.UserName);
-                    FormsAuthentication.SetAuthCookie(model.UserName, false);
-                    return RedirectToAction("Index", "Home");
-                }
-                */
                 var createStatus = new DataAccess().AddNewUser(model);
                 if (createStatus == MembershipCreateStatus.Success)
                 {
@@ -199,5 +189,11 @@ namespace OnlineAuction.Buisness.Controllers
             new DataAccess().SetAdmin(username);
             return Profile(new UserProfileViewModel() {Name = username});
         }
+
+        public JsonResult GetLocations()
+        {
+            return Json(new DataAccess().GetLocations(), JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

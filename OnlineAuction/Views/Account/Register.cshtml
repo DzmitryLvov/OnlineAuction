@@ -20,14 +20,14 @@
     @Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.")
     <div>
         <fieldset class="Register-fieldset">
-        <p>
-            <div class="editor-label">
-                @Html.LabelFor(m => m.UserName)
-            </div>
-            <div class="editor-field">
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
-            </div>
+            <p>
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.UserName)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(m => m.UserName)
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </div>
             </p>
             <div class="editor-label">
                 @Html.LabelFor(m => m.Email)
@@ -66,13 +66,7 @@
                 @Html.TextBoxFor(m => m.LastName)
                 @Html.ValidationMessageFor(m => m.LastName)
             </div>
-            <div class="editor-label">
-                @Html.LabelFor(m => m.Location)
-            </div>
-            <div class="editor-field">
-                @Html.TextBoxFor(m => m.Location)
-                @Html.ValidationMessageFor(m => m.Location)
-            </div>
+            
             <div class="editor-label">
                 @Html.LabelFor(m => m.Phone)
             </div>
@@ -80,24 +74,48 @@
                 @Html.TextBoxFor(m => m.Phone)
                 @Html.ValidationMessageFor(m => m.Phone)
             </div>
-             <div class="editor-label">
+            <div class="editor-label">
                 @Html.LabelFor(m => m.Question)
             </div>
             <div class="editor-field">
                 @Html.TextBoxFor(m => m.Question)
                 @Html.ValidationMessageFor(m => m.Question)
             </div>
-             <div class="editor-label">
+            <div class="editor-label">
                 @Html.LabelFor(m => m.Answer)
             </div>
             <div class="editor-field">
                 @Html.TextBoxFor(m => m.Answer)
                 @Html.ValidationMessageFor(m => m.Answer)
             </div>
-            
+            @Html.HiddenFor(m => m.LocationId)
+            <div class="editor-field">
+            @(Html.Kendo()
+            .DropDownList()
+            .Name("Location")
+            .DataTextField("LocationName")
+            .DataValueField("ID")
+            .Events(e => e.Change("change"))
+            .DataSource(source => {
+              source.Read(read =>
+              {
+                  read.Action("GetLocations", "Account");
+              }); 
+          })
+            )
+            </div>
             <p>
                 <input type="submit" value="Register" class="btn btn-primary" />
             </p>
+            
+            
+            
         </fieldset>
     </div>
+    <script>
+            function change() {
+                var inp = document.getElementById('LocationId');
+                inp.value = $("#Location").data("kendoDropDownList").value();
+            }
+    </script>
 }

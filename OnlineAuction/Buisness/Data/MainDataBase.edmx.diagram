@@ -12,11 +12,10 @@
         <EntityTypeShape EntityType="MainDataBaseModel.Location" Width="1.5" PointX="6" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MainDataBaseModel.LotPhoto" Width="1.5" PointX="7.5" PointY="13.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MainDataBaseModel.Lot" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MainDataBaseModel.LotsSubCategory" Width="1.5" PointX="7.5" PointY="16.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MainDataBaseModel.LotType" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MainDataBaseModel.Role" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MainDataBaseModel.SubCategory" Width="1.5" PointX="5.25" PointY="17.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MainDataBaseModel.UserData" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MainDataBaseModel.UserData" Width="1.5" PointX="2.125" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MainDataBaseModel.User" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
         <AssociationConnector Association="MainDataBaseModel.FK_LotBet" ManuallyRouted="false" />
         <AssociationConnector Association="MainDataBaseModel.FK_UserBet" ManuallyRouted="false" />
@@ -27,12 +26,11 @@
         <AssociationConnector Association="MainDataBaseModel.FK_UserComment" ManuallyRouted="false" />
         <AssociationConnector Association="MainDataBaseModel.FK_LocationUserData" ManuallyRouted="false" />
         <AssociationConnector Association="MainDataBaseModel.FK_LotLotPhoto" ManuallyRouted="false" />
-        <AssociationConnector Association="MainDataBaseModel.FK_LotsSubCategories_Lots" ManuallyRouted="false" />
         <AssociationConnector Association="MainDataBaseModel.FK_LotTypeLot" ManuallyRouted="false" />
         <AssociationConnector Association="MainDataBaseModel.FK_UserLot" ManuallyRouted="false" />
-        <AssociationConnector Association="MainDataBaseModel.FK_LotsSubCategories_SubCategories" ManuallyRouted="false" />
         <AssociationConnector Association="MainDataBaseModel.FK__Users__RoleID__1B0907CE" ManuallyRouted="false" />
         <AssociationConnector Association="MainDataBaseModel.FK_UserUserData" ManuallyRouted="false" />
+        <AssociationConnector Association="MainDataBaseModel.SubCategoryLot" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

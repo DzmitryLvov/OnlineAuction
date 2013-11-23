@@ -26,6 +26,8 @@
         return true;
     }, '');
 </script>
+
+
 @using (Html.BeginForm())
 { 
     <div class="lot-container-main">
@@ -66,11 +68,7 @@
         </table>
         <div class="betinfo-container">
             <div class="currency">
-               <strong >@Model.Currency $</strong> by
-                @if (Model.LeaderName != null)
-                {
-                    <input type="text" name="LeaderName" class="leader-textbox" readonly="readonly" value=@Model.LeaderName />
-                }
+               <strong >@Model.Currency $</strong> 
             </div>
             @if (Context.User.Identity.IsAuthenticated)
             {

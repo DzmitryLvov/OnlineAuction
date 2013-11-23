@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices.ComTypes;
 using OnlineAuction.Buisness.Data;
 
 namespace OnlineAuction.Buisness.Models.Lot
@@ -26,19 +27,14 @@ namespace OnlineAuction.Buisness.Models.Lot
 
         [Required]
         [Display(Name = "currency")]
-        public Int64 Currency { get; set; }
+        public Int64 StartCurrency { get; set; }
 
-        [Required]
-        public string LotType { get; set; }
+        public int SubCategoryId { get; set; }
 
-        public IEnumerable<string> LotTypeCollection { get; private set; } 
-
-        public object Image { get; set; }
 
 
         public CreateLotModel()
         {
-            LotTypeCollection = new DataAccess().GetLotTypeList();
             ActualDate = DateTime.Parse(DateTime.Now.ToShortDateString());
         }
     }

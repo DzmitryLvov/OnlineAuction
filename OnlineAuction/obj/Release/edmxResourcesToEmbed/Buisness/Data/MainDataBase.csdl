@@ -300,7 +300,7 @@
     <Property Name="FirstName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="LastName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="LocationID" Type="Int32" Nullable="false" />
-    <Property Name="BrithDate" Type="DateTime" Precision="3" />
+    <Property Name="BrithDate" Type="DateTime" Precision="3" Nullable="true" />
     <Property Name="PhotoLink" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="User_ID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Location" Relationship="MainDataBaseModel.FK_LocationUserData" FromRole="UserDatas" ToRole="Locations" />

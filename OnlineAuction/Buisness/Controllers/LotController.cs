@@ -1,7 +1,5 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using OnlineAuction.Buisness.Data;
-using OnlineAuction.Buisness.Models.Home;
 using OnlineAuction.Buisness.Models.Lot;
 
 namespace OnlineAuction.Buisness.Controllers
@@ -40,8 +38,10 @@ namespace OnlineAuction.Buisness.Controllers
         [Authorize]
         public ActionResult CreateLot()
         {
+            ViewBag.LotSubCategories = new SelectList(new DataAccess().GetSubCategoriesList(), "ID", "SubCategoryName");
             return View( new CreateLotModel());
         }
+
         [Authorize]
         [HttpPost]
         public ActionResult CreateLot(CreateLotModel model)
@@ -57,6 +57,8 @@ namespace OnlineAuction.Buisness.Controllers
             ModelState.AddModelError("","");
             return View(model);
         }
+
+       
         [Authorize]
         public ActionResult DeleteLot( LotModel Model)
         {

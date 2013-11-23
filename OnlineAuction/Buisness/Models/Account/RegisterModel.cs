@@ -56,5 +56,6 @@ namespace OnlineAuction.Buisness.Models.Account
         [Display(Name = "PhotoLink")]
         [DataType (DataType.ImageUrl)]
         public string PhotoLink { get; set; }
+
     }
 }

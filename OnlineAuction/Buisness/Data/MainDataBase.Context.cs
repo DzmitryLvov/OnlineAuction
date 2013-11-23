@@ -35,7 +35,6 @@ namespace OnlineAuction.Buisness.Data
         public DbSet<Location> Locations { get; set; }
         public DbSet<LotPhoto> LotPhotos { get; set; }
         public DbSet<Lot> Lots { get; set; }
-        public DbSet<LotsSubCategory> LotsSubCategories { get; set; }
         public DbSet<LotType> LotTypes { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }

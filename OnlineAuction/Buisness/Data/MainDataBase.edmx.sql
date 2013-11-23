@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 11/15/2013 02:32:52
+-- Date Created: 11/23/2013 02:32:32
 -- Generated from EDMX file: E:\Prog\OnlineAuction\OnlineAuction\Buisness\Data\MainDataBase.edmx
 -- --------------------------------------------------
 
@@ -17,26 +17,23 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_LotBet]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Bets] DROP CONSTRAINT [FK_LotBet];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserBet]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Bets] DROP CONSTRAINT [FK_UserBet];
-GO
-IF OBJECT_ID(N'[dbo].[FK_LotBookmark]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Bookmarks] DROP CONSTRAINT [FK_LotBookmark];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserBookmark]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Bookmarks] DROP CONSTRAINT [FK_UserBookmark];
+IF OBJECT_ID(N'[dbo].[FK__Users__RoleID__1B0907CE]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK__Users__RoleID__1B0907CE];
 GO
 IF OBJECT_ID(N'[dbo].[FK_CategorySubCategory]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[SubCategories] DROP CONSTRAINT [FK_CategorySubCategory];
 GO
-IF OBJECT_ID(N'[dbo].[FK_LotComment]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_LotComment];
-GO
 IF OBJECT_ID(N'[dbo].[FK_LocationUserData]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserDatas] DROP CONSTRAINT [FK_LocationUserData];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LotBet]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Bets] DROP CONSTRAINT [FK_LotBet];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LotBookmark]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Bookmarks] DROP CONSTRAINT [FK_LotBookmark];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LotComment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_LotComment];
 GO
 IF OBJECT_ID(N'[dbo].[FK_LotLotPhoto]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[LotPhotos] DROP CONSTRAINT [FK_LotLotPhoto];
@@ -44,23 +41,20 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_LotTypeLot]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Lots] DROP CONSTRAINT [FK_LotTypeLot];
 GO
-IF OBJECT_ID(N'[dbo].[FK_UserLot]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Lots] DROP CONSTRAINT [FK_UserLot];
+IF OBJECT_ID(N'[dbo].[FK_UserBet]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Bets] DROP CONSTRAINT [FK_UserBet];
 GO
-IF OBJECT_ID(N'[dbo].[FK__Users__RoleID__1B0907CE]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK__Users__RoleID__1B0907CE];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserUserData]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserDatas] DROP CONSTRAINT [FK_UserUserData];
-GO
-IF OBJECT_ID(N'[dbo].[FK_LotsSubCategories_Lots]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LotsSubCategories] DROP CONSTRAINT [FK_LotsSubCategories_Lots];
-GO
-IF OBJECT_ID(N'[dbo].[FK_LotsSubCategories_SubCategories]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LotsSubCategories] DROP CONSTRAINT [FK_LotsSubCategories_SubCategories];
+IF OBJECT_ID(N'[dbo].[FK_UserBookmark]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Bookmarks] DROP CONSTRAINT [FK_UserBookmark];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserComment]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_UserComment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserLot]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Lots] DROP CONSTRAINT [FK_UserLot];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserUserData]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserDatas] DROP CONSTRAINT [FK_UserUserData];
 GO
 
 -- --------------------------------------------------
@@ -103,12 +97,6 @@ GO
 IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Users];
 GO
-IF OBJECT_ID(N'[dbo].[UserLists]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[UserLists];
-GO
-IF OBJECT_ID(N'[dbo].[LotsSubCategories]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[LotsSubCategories];
-GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -146,7 +134,8 @@ CREATE TABLE [dbo].[Comments] (
     [LotID] int  NOT NULL,
     [CommentText] nvarchar(max)  NOT NULL,
     [CommentDate] datetime  NOT NULL,
-    [UserID] int  NULL
+    [UserID] int  NULL,
+    [IsApproved] bit  NOT NULL
 );
 GO
 
@@ -175,7 +164,8 @@ CREATE TABLE [dbo].[Lots] (
     [IsDeleted] bit  NOT NULL,
     [OwnerId] int  NOT NULL,
     [ViewCount] nvarchar(max)  NOT NULL,
-    [LotTypeID] int  NOT NULL
+    [LotTypeID] int  NOT NULL,
+    [SubCategoryID] int  NOT NULL
 );
 GO
 
@@ -226,24 +216,6 @@ CREATE TABLE [dbo].[Users] (
     [IsApproved] bit  NOT NULL,
     [IsDeleted] bit  NOT NULL,
     [Role_ID] int  NULL
-);
-GO
-
--- Creating table 'UserLists'
-CREATE TABLE [dbo].[UserLists] (
-    [Username] nvarchar(255)  NOT NULL,
-    [Email] nvarchar(100)  NOT NULL,
-    [Password] nvarchar(128)  NOT NULL,
-    [PassLength] int  NULL,
-    [Rolename] nvarchar(255)  NOT NULL
-);
-GO
-
--- Creating table 'LotsSubCategories'
-CREATE TABLE [dbo].[LotsSubCategories] (
-    [ID] int  NOT NULL,
-    [LotID] int  NOT NULL,
-    [SubCategoryID] int  NOT NULL
 );
 GO
 
@@ -320,18 +292,6 @@ GO
 -- Creating primary key on [ID] in table 'Users'
 ALTER TABLE [dbo].[Users]
 ADD CONSTRAINT [PK_Users]
-    PRIMARY KEY CLUSTERED ([ID] ASC);
-GO
-
--- Creating primary key on [Username], [Email], [Password], [Rolename] in table 'UserLists'
-ALTER TABLE [dbo].[UserLists]
-ADD CONSTRAINT [PK_UserLists]
-    PRIMARY KEY CLUSTERED ([Username], [Email], [Password], [Rolename] ASC);
-GO
-
--- Creating primary key on [ID] in table 'LotsSubCategories'
-ALTER TABLE [dbo].[LotsSubCategories]
-ADD CONSTRAINT [PK_LotsSubCategories]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
@@ -423,6 +383,20 @@ ON [dbo].[Comments]
     ([LotID]);
 GO
 
+-- Creating foreign key on [UserID] in table 'Comments'
+ALTER TABLE [dbo].[Comments]
+ADD CONSTRAINT [FK_UserComment]
+    FOREIGN KEY ([UserID])
+    REFERENCES [dbo].[Users]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserComment'
+CREATE INDEX [IX_FK_UserComment]
+ON [dbo].[Comments]
+    ([UserID]);
+GO
+
 -- Creating foreign key on [LocationID] in table 'UserDatas'
 ALTER TABLE [dbo].[UserDatas]
 ADD CONSTRAINT [FK_LocationUserData]
@@ -507,46 +481,18 @@ ON [dbo].[UserDatas]
     ([User_ID]);
 GO
 
--- Creating foreign key on [LotID] in table 'LotsSubCategories'
-ALTER TABLE [dbo].[LotsSubCategories]
-ADD CONSTRAINT [FK_LotsSubCategories_Lots]
-    FOREIGN KEY ([LotID])
-    REFERENCES [dbo].[Lots]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_LotsSubCategories_Lots'
-CREATE INDEX [IX_FK_LotsSubCategories_Lots]
-ON [dbo].[LotsSubCategories]
-    ([LotID]);
-GO
-
--- Creating foreign key on [SubCategoryID] in table 'LotsSubCategories'
-ALTER TABLE [dbo].[LotsSubCategories]
-ADD CONSTRAINT [FK_LotsSubCategories_SubCategories]
+-- Creating foreign key on [SubCategoryID] in table 'Lots'
+ALTER TABLE [dbo].[Lots]
+ADD CONSTRAINT [FK_SubCategoryLot]
     FOREIGN KEY ([SubCategoryID])
     REFERENCES [dbo].[SubCategories]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- Creating non-clustered index for FOREIGN KEY 'FK_LotsSubCategories_SubCategories'
-CREATE INDEX [IX_FK_LotsSubCategories_SubCategories]
-ON [dbo].[LotsSubCategories]
+-- Creating non-clustered index for FOREIGN KEY 'FK_SubCategoryLot'
+CREATE INDEX [IX_FK_SubCategoryLot]
+ON [dbo].[Lots]
     ([SubCategoryID]);
-GO
-
--- Creating foreign key on [UserID] in table 'Comments'
-ALTER TABLE [dbo].[Comments]
-ADD CONSTRAINT [FK_UserComment]
-    FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_UserComment'
-CREATE INDEX [IX_FK_UserComment]
-ON [dbo].[Comments]
-    ([UserID]);
 GO
 
 -- --------------------------------------------------
