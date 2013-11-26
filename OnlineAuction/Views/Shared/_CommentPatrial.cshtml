@@ -1,0 +1,19 @@
+﻿@using System.Activities.Expressions
+@using System.Activities.Statements
+@model OnlineAuction.Buisness.Models.Lot.CommentViewModel
+
+<div>
+    <div class="panel"></div>
+    posted on <time>@Model.CommentDate</time> by <strong>@Model.Username</strong>
+        <p>
+            @if (Model.IsApproved)
+            {
+                @Model.CommentText
+            }
+            else
+            {
+                <text>Censored</text>
+            }
+        </p>
+</div>
+

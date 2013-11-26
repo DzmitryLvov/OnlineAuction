@@ -17,7 +17,7 @@ namespace OnlineAuction.Buisness.Models.Lot
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "description")]
-        [StringLength(1000, ErrorMessage = "Name must have more then 10 letters", MinimumLength = 10)]
+        [StringLength(1000, ErrorMessage = "Description must have more then 10 letters", MinimumLength = 10)]
         public string Description { get; set; }
 
         [Required]
@@ -27,8 +27,9 @@ namespace OnlineAuction.Buisness.Models.Lot
 
         [Required]
         [Display(Name = "currency")]
-        public Int64 StartCurrency { get; set; }
+        public Int32 StartCurrency { get; set; }
 
+        [Required]
         public int SubCategoryId { get; set; }
 
 

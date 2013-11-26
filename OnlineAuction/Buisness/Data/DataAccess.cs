@@ -18,7 +18,9 @@ namespace OnlineAuction.Buisness.Data
         private readonly MainDataBase _dataBase = new MainDataBase();
         private readonly string INITIAL_CATALOG = AppDomain.CurrentDomain.BaseDirectory;
 
-        const string ETALON = @"qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
+        const string ETALON = @"qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"; //для генерации пароля
+        private const string ENCRYPTION_KEY = "AE09F72BA97CBBB5"; // для генерации хэша HMACSHA1
+
 
         public DataAccess()
         {
@@ -47,71 +49,65 @@ namespace OnlineAuction.Buisness.Data
             }
         }
 
-        public  IEnumerable<LotModel> ConvertedActualLotCollection
+        public  IEnumerable<LotPreviewModel> GetConvertedActualLotCollection()
         {
-            get
+            foreach (var m in _dataBase.Lots)
             {
-                    return from lot in LotDataBase
-                           where !lot.IsDeleted
-                           orderby lot.ActualDate
-                           select new LotModel
-                           {
-                               ID = lot.ID,
-                               ActualDate = lot.ActualDate,
-                               Description = lot.Description,
-                               Name = lot.LotName
-                           }; 
+                yield return new LotPreviewModel()
+                       {
+                           ID = m.ID,
+                           LotName = m.LotName,
+                           Currency =  (GetmaxBetValue(m.ID) == -1) ? (int)m.StartCurrency : (GetmaxBetValue(m.ID)),
+                           SubCategoryID = m.SubCategoryID,
+                           PhotoLink =  IndexPhotoLink(m.ID),
+                           ActualDate = m.ActualDate
+                       };
             }
+                       
         }
 
-        public LotModel ConvertToViewModel(Lot lot)
+        private string IndexPhotoLink(int id)
         {
-            var model = new LotModel
+           return IndexImageExits(id, "Lots")
+                            ? @"Content/Image/Lots/" + id + @"/index.jpg"
+                            : @"Content/Image/Lots/Default/index.jpg";
+        }
+
+        public  LotViewModel GetViewModelById(int id)
+        {
+            var lot = _dataBase.LotInfos.FirstOrDefault(t => t.ID == id);
+            var comments = _dataBase.CommentInfos.Where(t => t.LotID == id);
+            return lot != null ? new LotViewModel() {Model = lot, Comments = comments.Select(
+                t => new CommentViewModel
                 {
-                    ID = lot.ID,
-                    ActualDate = lot.ActualDate,
-                    Currency = lot.StartCurrency,
-                    Description = lot.Description,
-                    Name = lot.LotName,
-                    OwnerId = lot.OwnerId
-                };
-            return model;
+                    CommentDate = t.CommentDate,
+                    CommentText = t.CommentText,
+                    ID = t.ID,
+                    IsApproved = t.IsApproved,
+                    LotID = t.LotID,
+                    Userid = t.Userid,
+                    Username = t.Username
+                })}: null;
         }
-
-        public  LotModel GetViewModelById(int id)
-        {
-            var lot = LotDataBase.FirstOrDefault(l => l.ID == id);
-            return lot != null ? ConvertToViewModel(lot) : null;
-        }
-
-        public bool MakeBet(int lotid, string leadername, Int64 newcurrency)
-        {
-            try
-            {
-               //TODO: Make bets
-                return false;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-       public bool CreateLot(int ownerid, string name, string description, DateTime date, Int64 currency, string typeName, object image)
+       
+       public bool CreateLot(string ownerName, string name, string description, DateTime date, int currency, int subCategoryId)
        {
            try
            {
-               _dataBase.Lots.Add(new Lot
-               {
-                   LotName = name,
-                   ActualDate = date,
-                   StartCurrency  = currency,
-                   Description = description,
-                   IsDeleted = false,
-                   OwnerId = ownerid,
-                   LotType = _dataBase.LotTypes.FirstOrDefault(t => t.TypeName == typeName)
-               });
+               var id  =  new ObjectParameter("UserId",typeof(int));
+               _dataBase.UserIdByName(ownerName, id);
+               var typeid = new ObjectParameter("TypeId", typeof (int));
+               _dataBase.GetBasicLotTypeId(typeid);
+
+               _dataBase.AddNewLot(name,
+                   description,
+                   currency,
+                   date,
+                   (int)id.Value,
+                   (int)typeid.Value,
+                   subCategoryId);
                _dataBase.SaveChanges();
-               var path = String.Format("{0}Content\\Image\\Lots\\{1}",INITIAL_CATALOG,
+               /*var path = String.Format("{0}Content\\Image\\Lots\\{1}",INITIAL_CATALOG,
                                         LotDataBase.FirstOrDefault(
                                             t => t.OwnerId == ownerid &&
                                                 t.LotName == name) // TODO: Leaderame is not null
@@ -128,10 +124,10 @@ namespace OnlineAuction.Buisness.Data
                    {
                        File.Delete(filePath);
                    }
-               }
+               }*/
                return true;
            }
-           catch (Exception)
+           catch (Exception e)
            {
                return false;
            }
@@ -190,23 +186,6 @@ namespace OnlineAuction.Buisness.Data
             return s.AsQueryable();
         }
 
-        internal IEnumerable<LotModel> GetLotTypePreviewCollection(string typeName)
-        {
-            var rnd  = new Random();
-            int count;
-            if ((count = (LotDataBase.Count(t => !t.IsDeleted && t.LotType.TypeName == typeName ) >= 3)?3:LotDataBase.Count(t =>!t.IsDeleted && t.LotType.TypeName == typeName)) > 0)
-            {
-                for (var i = 0; i < count; i++)
-                {
-                    var index = rnd.Next(LotDataBase.Count(t => !t.IsDeleted && t.LotType.TypeName == typeName));
-
-                    yield return
-                        ConvertToViewModel(LotDataBase.Where(t => !t.IsDeleted && t.LotType.TypeName == typeName).ToList()[index]);
-
-                    _dataBase.Lots.Remove(LotDataBase.Where(t => !t.IsDeleted && t.LotType.TypeName == typeName).ToList()[index]);
-                }
-            }
-        }
 
         internal IEnumerable<string> GetLotTypeList()
         {
@@ -220,21 +199,17 @@ namespace OnlineAuction.Buisness.Data
 
         
 
-        public object GetUserProfileViewModel(string userName)
+        public UserFullInfo GetUserProfileViewModel(string userName)
         {
-            return _dataBase.Users.FirstOrDefault(t => t.Username == userName);
+            return _dataBase.UserFullInfos.FirstOrDefault(t => t.Username == userName);
 
         }
 
-        internal IEnumerable<LotModel> GetHotLots()
+        internal IEnumerable<LotViewModel> GetHotLots()
         {
             //TODO: разобраться с этим методом
             var tempdate = DateTime.Now + new TimeSpan(1,0,0,0);
-            foreach (var lot in _dataBase.Lots.Where(t => t.ActualDate > tempdate))
-            {
-                yield return new DataAccess().ConvertToViewModel(lot);
-            }
-
+            return _dataBase.LotInfos.Where(t => t.ActualDate > tempdate).Select(lot => new LotViewModel(){Model = lot});
         }
 
         public bool UserIsAdmin(string username)
@@ -244,8 +219,17 @@ namespace OnlineAuction.Buisness.Data
 
         internal void SetAdmin(string username)
         {
-            _dataBase.Users.FirstOrDefault(t => t.Username == username).Role =
-                _dataBase.Roles.FirstOrDefault(t => t.Rolename == "amdin");
+            try
+            {
+                var id = new ObjectParameter("id", typeof(int));
+                _dataBase.GetAdministratorRoleId(id);
+
+                _dataBase.TrySetUserRole(username, (int)id.Value);
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
         internal IEnumerable<Bet> GetBetsOfCurrentLot(int lotid)
@@ -255,7 +239,10 @@ namespace OnlineAuction.Buisness.Data
 
         internal  MembershipCreateStatus AddNewUser(RegisterModel model)
         {
-            var hash = new HMACSHA1();
+            var hash = new HMACSHA1()
+            {
+                Key = HexToByte(ENCRYPTION_KEY)
+            };
             var encodedPassword = Convert.ToBase64String(hash.ComputeHash(Encoding.Unicode.GetBytes(model.Password)));
             var count = _dataBase.AddNewUser(model.UserName,
                 encodedPassword,
@@ -271,15 +258,25 @@ namespace OnlineAuction.Buisness.Data
                 model.LocationId);
             return count == 2 ? MembershipCreateStatus.Success : MembershipCreateStatus.ProviderError;
         }
+        private static byte[] HexToByte(string hexString)
+        {
+            var returnBytes = new byte[hexString.Length / 2];
+            for (var i = 0; i < returnBytes.Length; i++)
+            {
+                returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
+            }
+
+            return returnBytes;
+        }
 
         private int? getBaseRoleId()
         {
-            return _dataBase.Roles.FirstOrDefault(t => t.Rolename == "Base").ID;
+            return _dataBase.Roles.FirstOrDefault(t => t.Rolename == "Simpleuser").ID;
         }
 
         internal IEnumerable<Location> GetLocations()
         {
-            foreach (var location in _dataBase.Locations)
+            foreach (var location in _dataBase.Locations) // TODO:не превращать в linq, отвалится dropdown binding
             {
                 yield return new Location()
                 {
@@ -301,6 +298,66 @@ namespace OnlineAuction.Buisness.Data
                     SubCategoryName = subCategory.SubCategoryName
                 };
             }
+        }
+
+        internal void StartCompletingLots()
+        {
+            _dataBase.CompleteLots();
+        }
+
+        public IEnumerable<LotViewModel> GetLotTypePreviewCollection(string typeName)
+        {
+            return null;
+        }
+
+        internal IEnumerable<BetInfo> GetBetCollection(int id)
+        {
+            foreach (var bet in _dataBase.BetInfos)
+            {
+                if(bet.LotID == id)
+                yield return new BetInfo()
+                {
+                    BetDate = bet.BetDate,
+                    BetValue = bet.BetValue,
+                    ID = bet.ID,
+                    LotID = bet.LotID,
+                    UserID = bet.UserID,
+                    Username = bet.Username
+                };
+            }
+        }
+
+        internal int GetmaxBetValue(int id)
+        {
+            int tempValue;
+            var betValue = new ObjectParameter("Value", typeof (int));
+            _dataBase.GetMaxBet(id, betValue);
+            if (int.TryParse(betValue.Value.ToString(), out tempValue))
+                return (int) betValue.Value;
+            else return -1;
+        }
+
+        internal bool MakeBet(string userName, int lotId, int betValue)
+        {
+            try
+            {
+                var userid = new ObjectParameter("UserId", typeof (int));
+                _dataBase.UserIdByName(userName, userid);
+                _dataBase.MakeBet((int) userid.Value, lotId, betValue, DateTime.Now);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        internal void LeaveComment(int lotid, string userName, string commentText)
+        {
+            var userid = new ObjectParameter("UserId", typeof(int));
+            _dataBase.UserIdByName(userName, userid);
+
+            _dataBase.AddComment((int)userid.Value, lotid, commentText);
         }
     }
 }

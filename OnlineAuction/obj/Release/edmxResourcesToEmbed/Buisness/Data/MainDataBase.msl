@@ -2,7 +2,7 @@
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="MainDataBaseModelStoreContainer" CdmEntityContainer="MainDataBase">
     <EntitySetMapping Name="Bets">
-      <EntityTypeMapping TypeName="MainDataBaseModel.Bet">
+      <EntityTypeMapping TypeName="IsTypeOf(MainDataBaseModel.Bet)">
         <MappingFragment StoreEntitySet="Bets">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -13,7 +13,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Bookmarks">
-      <EntityTypeMapping TypeName="MainDataBaseModel.Bookmark">
+      <EntityTypeMapping TypeName="IsTypeOf(MainDataBaseModel.Bookmark)">
         <MappingFragment StoreEntitySet="Bookmarks">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -23,7 +23,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Categories">
-      <EntityTypeMapping TypeName="MainDataBaseModel.Category">
+      <EntityTypeMapping TypeName="IsTypeOf(MainDataBaseModel.Category)">
         <MappingFragment StoreEntitySet="Categories">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
@@ -31,7 +31,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Comments">
-      <EntityTypeMapping TypeName="MainDataBaseModel.Comment">
+      <EntityTypeMapping TypeName="IsTypeOf(MainDataBaseModel.Comment)">
         <MappingFragment StoreEntitySet="Comments">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="LotID" ColumnName="LotID" />
@@ -43,7 +43,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Locations">
-      <EntityTypeMapping TypeName="MainDataBaseModel.Location">
+      <EntityTypeMapping TypeName="IsTypeOf(MainDataBaseModel.Location)">
         <MappingFragment StoreEntitySet="Locations">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="LocationName" ColumnName="LocationName" />
@@ -51,7 +51,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="LotPhotos">
-      <EntityTypeMapping TypeName="MainDataBaseModel.LotPhoto">
+      <EntityTypeMapping TypeName="IsTypeOf(MainDataBaseModel.LotPhoto)">
         <MappingFragment StoreEntitySet="LotPhotos">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="LotID" ColumnName="LotID" />
@@ -60,7 +60,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Lots">
-      <EntityTypeMapping TypeName="MainDataBaseModel.Lot">
+      <EntityTypeMapping TypeName="IsTypeOf(MainDataBaseModel.Lot)">
         <MappingFragment StoreEntitySet="Lots">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="LotName" ColumnName="LotName" />
@@ -71,20 +71,12 @@
           <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
           <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
           <ScalarProperty Name="LotTypeID" ColumnName="LotTypeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="LotsSubCategories">
-      <EntityTypeMapping TypeName="MainDataBaseModel.LotsSubCategory">
-        <MappingFragment StoreEntitySet="LotsSubCategories">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="LotID" ColumnName="LotID" />
           <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="LotTypes">
-      <EntityTypeMapping TypeName="MainDataBaseModel.LotType">
+      <EntityTypeMapping TypeName="IsTypeOf(MainDataBaseModel.LotType)">
         <MappingFragment StoreEntitySet="LotTypes">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="TypeName" ColumnName="TypeName" />
@@ -92,7 +84,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Roles">
-      <EntityTypeMapping TypeName="MainDataBaseModel.Role">
+      <EntityTypeMapping TypeName="IsTypeOf(MainDataBaseModel.Role)">
         <MappingFragment StoreEntitySet="Roles">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Rolename" ColumnName="Rolename" />
@@ -101,7 +93,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="SubCategories">
-      <EntityTypeMapping TypeName="MainDataBaseModel.SubCategory">
+      <EntityTypeMapping TypeName="IsTypeOf(MainDataBaseModel.SubCategory)">
         <MappingFragment StoreEntitySet="SubCategories">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
@@ -110,7 +102,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserDatas">
-      <EntityTypeMapping TypeName="MainDataBaseModel.UserData">
+      <EntityTypeMapping TypeName="IsTypeOf(MainDataBaseModel.UserData)">
         <MappingFragment StoreEntitySet="UserDatas">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -124,7 +116,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="MainDataBaseModel.User">
+      <EntityTypeMapping TypeName="IsTypeOf(MainDataBaseModel.User)">
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Username" ColumnName="Username" />
@@ -139,7 +131,6 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="AddCategory" FunctionName="MainDataBaseModel.Store.AddCategory" />
-    <FunctionImportMapping FunctionImportName="AddNewLot" FunctionName="MainDataBaseModel.Store.AddNewLot" />
     <FunctionImportMapping FunctionImportName="AddNewUser" FunctionName="MainDataBaseModel.Store.AddNewUser" />
     <FunctionImportMapping FunctionImportName="AddSubCategory" FunctionName="MainDataBaseModel.Store.AddSubCategory" />
     <FunctionImportMapping FunctionImportName="AddSubCategoryToLot" FunctionName="MainDataBaseModel.Store.AddSubCategoryToLot" />
@@ -148,7 +139,7 @@
     <FunctionImportMapping FunctionImportName="DeleteUser" FunctionName="MainDataBaseModel.Store.DeleteUser" />
     <FunctionImportMapping FunctionImportName="GetUsersWithBannedComments" FunctionName="MainDataBaseModel.Store.GetUsersWithBannedComments">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MainDataBaseModel.GetUsersWithBannedComments_Result">
+        <ComplexTypeMapping TypeName="MainDataBaseModel.GetUsersWithBannedComments_Result1">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Username" ColumnName="Username" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -161,12 +152,11 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="LeaveComment" FunctionName="MainDataBaseModel.Store.LeaveComment" />
     <FunctionImportMapping FunctionImportName="MakeBet" FunctionName="MainDataBaseModel.Store.MakeBet" />
     <FunctionImportMapping FunctionImportName="MarkUserAsDeleted" FunctionName="MainDataBaseModel.Store.MarkUserAsDeleted" />
     <FunctionImportMapping FunctionImportName="SearchByLotName" FunctionName="MainDataBaseModel.Store.SearchByLotName">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MainDataBaseModel.SearchByLotName_Result">
+        <ComplexTypeMapping TypeName="MainDataBaseModel.SearchByLotName_Result1">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="LotName" ColumnName="LotName" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -176,12 +166,13 @@
           <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
           <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
           <ScalarProperty Name="LotTypeID" ColumnName="LotTypeID" />
+          <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SearchByUasers" FunctionName="MainDataBaseModel.Store.SearchByUasers">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MainDataBaseModel.SearchByUasers_Result">
+        <ComplexTypeMapping TypeName="MainDataBaseModel.SearchByUasers_Result1">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Username" ColumnName="Username" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -196,7 +187,7 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SearchLot" FunctionName="MainDataBaseModel.Store.SearchLot">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MainDataBaseModel.SearchLot_Result">
+        <ComplexTypeMapping TypeName="MainDataBaseModel.SearchLot_Result1">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="LotName" ColumnName="LotName" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -206,32 +197,150 @@
           <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
           <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
           <ScalarProperty Name="LotTypeID" ColumnName="LotTypeID" />
+          <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="MainDataBaseModel.Store.sp_alterdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="MainDataBaseModel.Store.sp_creatediagram" />
-    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="MainDataBaseModel.Store.sp_dropdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="MainDataBaseModel.Store.sp_helpdiagramdefinition">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MainDataBaseModel.sp_helpdiagramdefinition_Result">
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="MainDataBaseModel.Store.sp_helpdiagrams">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MainDataBaseModel.sp_helpdiagrams_Result">
-          <ScalarProperty Name="Database" ColumnName="Database" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
+    <FunctionImportMapping FunctionImportName="CreateLot" FunctionName="MainDataBaseModel.Store.AddNewLot" />
+    <FunctionImportMapping FunctionImportName="UserIdByName" FunctionName="MainDataBaseModel.Store.GetUserIdByName" />
+    <FunctionImportMapping FunctionImportName="GetBasicLotTypeId" FunctionName="MainDataBaseModel.Store.GetBasicLotTypeId" />
+    <FunctionImportMapping FunctionImportName="AddNewLot" FunctionName="MainDataBaseModel.Store.AddNewLot" />
+    <FunctionImportMapping FunctionImportName="GetMaxBet" FunctionName="MainDataBaseModel.Store.GetMaxBet" />
+    <FunctionImportMapping FunctionImportName="AddComment" FunctionName="MainDataBaseModel.Store.LeaveComment" />
+    <EntitySetMapping Name="BetInfos">
+      <EntityTypeMapping TypeName="MainDataBaseModel.BetInfo">
+        <MappingFragment StoreEntitySet="BetInfos">
+          <ScalarProperty Name="LotID" ColumnName="LotID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Owner" ColumnName="Owner" />
-          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="MainDataBaseModel.Store.sp_renamediagram" />
-    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="MainDataBaseModel.Store.sp_upgraddiagrams" />
+          <ScalarProperty Name="BetDate" ColumnName="BetDate" />
+          <ScalarProperty Name="BetValue" ColumnName="BetValue" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BookmarkInfos">
+      <EntityTypeMapping TypeName="MainDataBaseModel.BookmarkInfo">
+        <MappingFragment StoreEntitySet="BookmarkInfos">
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="LotID" ColumnName="LotID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CommentInfos">
+      <EntityTypeMapping TypeName="MainDataBaseModel.CommentInfo">
+        <MappingFragment StoreEntitySet="CommentInfos">
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="Userid" ColumnName="Userid" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
+          <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+          <ScalarProperty Name="LotID" ColumnName="LotID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotByLocations">
+      <EntityTypeMapping TypeName="MainDataBaseModel.LotByLocation">
+        <MappingFragment StoreEntitySet="LotByLocations">
+          <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotCategoryInfos">
+      <EntityTypeMapping TypeName="MainDataBaseModel.LotCategoryInfo">
+        <MappingFragment StoreEntitySet="LotCategoryInfos">
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+          <ScalarProperty Name="SubCategoryid" ColumnName="SubCategoryid" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotInfos">
+      <EntityTypeMapping TypeName="MainDataBaseModel.LotInfo">
+        <MappingFragment StoreEntitySet="LotInfos">
+          <ScalarProperty Name="PhotoLink" ColumnName="PhotoLink" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="MaxBet" ColumnName="MaxBet" />
+          <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
+          <ScalarProperty Name="StartCurrency" ColumnName="StartCurrency" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotShortPreviews">
+      <EntityTypeMapping TypeName="MainDataBaseModel.LotShortPreview">
+        <MappingFragment StoreEntitySet="LotShortPreview">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="StartCurrency" ColumnName="StartCurrency" />
+          <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserFullInfos">
+      <EntityTypeMapping TypeName="MainDataBaseModel.UserFullInfo">
+        <MappingFragment StoreEntitySet="UserFullInfos">
+          <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+          <ScalarProperty Name="Locationid" ColumnName="Locationid" />
+          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+          <ScalarProperty Name="Roleid" ColumnName="Roleid" />
+          <ScalarProperty Name="PhotoLink" ColumnName="PhotoLink" />
+          <ScalarProperty Name="BrithDate" ColumnName="BrithDate" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRoleInfos">
+      <EntityTypeMapping TypeName="MainDataBaseModel.UserRoleInfo">
+        <MappingFragment StoreEntitySet="UserRoleInfos">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserUnapprovedComments">
+      <EntityTypeMapping TypeName="MainDataBaseModel.UserUnapprovedComment">
+        <MappingFragment StoreEntitySet="UserUnapprovedComments">
+          <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
+          <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+          <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="TrySetUserRole" FunctionName="MainDataBaseModel.Store.TrySetUserRole" />
+    <FunctionImportMapping FunctionImportName="GetAdministratorRoleId" FunctionName="MainDataBaseModel.Store.GetAdministratorRoleId" />
   </EntityContainerMapping>
 </Mapping>

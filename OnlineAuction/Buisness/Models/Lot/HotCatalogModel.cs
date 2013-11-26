@@ -6,7 +6,7 @@ namespace OnlineAuction.Buisness.Models.Lot
 {
     public class HotCatalogModel
     {
-        public IEnumerable<LotModel> Lots { get; set; }
+        public IEnumerable<LotViewModel> Lots { get; set; }
 
         public HotCatalogModel()
         {

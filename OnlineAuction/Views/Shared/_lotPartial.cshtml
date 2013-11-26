@@ -1,15 +1,16 @@
-﻿@model OnlineAuction.Buisness.Models.Lot.LotModel
+﻿@model OnlineAuction.Buisness.Models.Lot.LotPreviewModel
+
 <div class="lot-preview">
     <table style="padding: 15px 15px 15px 115px;" cellpadding="4" cellspacing="0">
         <tr>
             <td colspan="2" style="text-align: center; overflow: hidden; background-color: #d4ebeb; border-radius: 0 0 4px 4px;">
-                @Model.Name
+                @Model.LotName
             </td>
             <td></td>
         </tr>
         <tr>
             <td style="text-align: center; overflow: hidden; height: 120px; padding-top: 15px;"  >
-                <img src="@Model.ImageUrl" width="150px;" />
+                <img src="@Model.PhotoLink" width="150px;" />
             </td>
             <td >
                 Remaining:

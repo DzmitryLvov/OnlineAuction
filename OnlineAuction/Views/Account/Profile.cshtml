@@ -1,26 +1,32 @@
 ﻿@using OnlineAuction.Buisness.Data
-@model OnlineAuction.Buisness.Models.Account.UserProfileViewModel
+@model OnlineAuction.Buisness.Data.UserFullInfo
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
 }
-<h2 style="margin: 0 auto; width: 200px;margin-bottom: 25px; position: relative;color: #808080">
-    Profile</h2>
+<h2 style="margin: 0 auto; width: 200px; margin-bottom: 25px; position: relative; color: #808080">Profile</h2>
 @using (Html.BeginForm())
 {
+    if (Model != null)
+    {
     <div class="user-info-container">
         <table>
             <tr>
-                <td rowspan="5" style="width: 250px;">
-                    <img src=../../@Model.ImageUrl width="200px">
+                <td rowspan="6" style="width: 250px;">
+                    
+                        @if (Model.PhotoLink != null)
+                        {
+                            <img src=@Model.PhotoLink width="200px" style="border: 1px solid #808080;"/>
+                        }
+                        else
+                        {
+                            <img src="/OnlineAuction/Content/Image/UserProfile/Default/index.jpg" width="200px" />
+                        }
                 </td>
-                <td>
-                </td>
-                <td>
-                    User name:
-                    @if (Model.Name != null)
+                <td>User name:
+                    @if (Model.Username != null)
                     {
-                        <strong>@Model.Name</strong>
+                        <strong>@Model.Username</strong>
                     }
                     else
                     {
@@ -28,13 +34,10 @@
                     }
                 </td>
                 <tr>
-                    <td>
-                    </td>
-                    <td>
-                        First name:
-                        @if (Model.Firstname != null)
+                    <td>First name:
+                        @if (Model.FirstName != null)
                         {
-                            @Model.Firstname
+                            @Model.FirstName
                         }
                         else
                         {
@@ -42,26 +45,20 @@
                         }
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        Last name:
-                        @if (Model.LastName != null)
+            <tr>
+                <td>Last name:
+                        @if (Model.FirstName != null)
                         {
-                            @Model.LastName
+                            @Model.FirstName
                         }
                         else
                         {
                             <span>No Data</span>
                         }
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        Phone:
+                </td>
+            </tr>
+            <tr>
+                <td>Phone:
                         @if (Model.Phone != null)
                         {
                             @Model.Phone
@@ -70,25 +67,42 @@
                         {
                             <span>No Data</span>
                         }
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        Location:
-                        @if (Model.Location != null)
+                </td>
+            </tr>
+            <tr>
+                <td>Location:
+                        @if (Model.LocationName != null)
                         {
-                            @Model.Location
+                            @Model.LocationName
+                            ;
                         }
                         else
                         {
                             <span>No Data</span>
                         }
-                    </td>
-                </tr>
+                </td>
+            </tr>
+            <tr>
+                <td>Role:
+                        @if (Model.Rolename != null)
+                        {
+                            @Model.Rolename
+                            if (User.IsInRole("admin"))
+                            {
+                                if (!(new DataAccess().UserIsAdmin(Model.Username)))
+                                {
+                            @Html.ActionLink("Set as asministrator", "SetAsAdministrator", "Account", new { username = @Model.Username }, new { @class = "btn btn-info" })
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <span>No Data</span>
+                        }
+                </td>
+            </tr>
         </table>
-        @if (User.Identity.Name == Model.Name)
+        @if (User.Identity.Name == Model.Username)
         {
             <div style="margin-top: 25px;">
                 @Html.ActionLink("Edit profile", "EditProfile", "Account", null, new { @class = "btn btn-info" })
@@ -96,10 +110,15 @@
         }
         @if (User.IsInRole("admin"))
         {
-            if(!(new DataAccess().UserIsAdmin(Model.Name)))
+            if (!(new DataAccess().UserIsAdmin(Model.Username)))
             {
-                @Html.ActionLink("Set as asministrator", "SetAsAdministrator", "Account", new {username = @Model.Name}, new { @class = "btn btn-info" })
+            @Html.ActionLink("Set as asministrator", "SetAsAdministrator", "Account", new { username = @Model.Username }, new { @class = "btn btn-info" })
             }
         }
     </div>
+    }
+    else
+    {
+    <h2 style="text-align: center;">User not found :(</h2>
+    }
 }

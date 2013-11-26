@@ -91,7 +91,7 @@
             @Html.HiddenFor(m => m.LocationId)
             <div class="editor-field">
             @(Html.Kendo()
-            .DropDownList()
+            .DropDownList().HtmlAttributes(new { style = "width:250px"})
             .Name("Location")
             .DataTextField("LocationName")
             .DataValueField("ID")

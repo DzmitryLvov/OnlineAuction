@@ -90,13 +90,20 @@
   <ItemGroup>
     <Compile Include="Buisness\Auction.cs" />
     <Compile Include="Buisness\Controllers\AccountController.cs" />
+    <Compile Include="Buisness\Controllers\AdministrationController.cs" />
     <Compile Include="Buisness\Controllers\ErrorController.cs" />
     <Compile Include="Buisness\Controllers\HomeController.cs" />
     <Compile Include="Buisness\Controllers\LotController.cs" />
     <Compile Include="Buisness\Data\Bet.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\BetInfo.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\Bookmark.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\BookmarkInfo.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\Category.cs">
@@ -105,8 +112,14 @@
     <Compile Include="Buisness\Data\Comment.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\CommentInfo.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\DataAccess.cs" />
     <Compile Include="Buisness\Data\GetUsersWithBannedComments_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\GetUsersWithBannedComments_Result1.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\Location.cs">
@@ -115,10 +128,19 @@
     <Compile Include="Buisness\Data\Lot.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\LotByLocation.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\LotCategoryInfo.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\LotInfo.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\LotPhoto.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Buisness\Data\LotsSubCategory.cs">
+    <Compile Include="Buisness\Data\LotShortPreview.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\LotType.cs">
@@ -145,10 +167,19 @@
     <Compile Include="Buisness\Data\SearchByLotName_Result.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\SearchByLotName_Result1.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\SearchByUasers_Result.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\SearchByUasers_Result1.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\SearchLot_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SearchLot_Result1.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\sp_helpdiagramdefinition_Result.cs">
@@ -166,6 +197,15 @@
     <Compile Include="Buisness\Data\UserData.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\UserFullInfo.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\UserRoleInfo.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\UserUnapprovedComment.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Models\Account\ChangePasswordModel.cs" />
     <Compile Include="Buisness\Models\Account\LogOnModel.cs" />
     <Compile Include="Buisness\Models\Account\RegisterModel.cs" />
@@ -176,9 +216,11 @@
     <Compile Include="Buisness\Models\Home\IndexModel.cs" />
     <Compile Include="Buisness\Models\Lot\BetRangeValidator.cs" />
     <Compile Include="Buisness\Models\Lot\CatalogModel.cs" />
+    <Compile Include="Buisness\Models\Lot\CommentViewModel.cs" />
     <Compile Include="Buisness\Models\Lot\CreateLotModel.cs" />
     <Compile Include="Buisness\Models\Lot\HotCatalogModel.cs" />
-    <Compile Include="Buisness\Models\Lot\LotModel.cs" />
+    <Compile Include="Buisness\Models\Lot\LotPreviewModel.cs" />
+    <Compile Include="Buisness\Models\Lot\LotViewModel.cs" />
     <Compile Include="Buisness\Models\Lot\LotTypePreviewModel.cs" />
     <Compile Include="Buisness\Security\AuctionMembershipProvider.cs" />
     <Compile Include="Buisness\Security\AuctionRoleProvider.cs" />
@@ -188,8 +230,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Buisness\Data\DataBaseModel.edmx.sql" />
-    <Content Include="Buisness\Data\MainDataBase.edmx.sql" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -201,8 +241,6 @@
     <Content Include="Content\jquery.ui.button.css" />
     <Content Include="Content\jquery.ui.core.css" />
     <Content Include="Content\jquery.ui.datepicker.css" />
-    <Content Include="Content\jquery.ui.dialog.css" />
-    <Content Include="Content\jquery.ui.resizable.css" />
     <Content Include="Content\jquery.ui.selectable.css" />
     <Content Include="Content\jquery.ui.theme.css" />
     <Content Include="Content\kendo.common.min.css" />
@@ -376,26 +414,19 @@
     <Content Include="Content\kendo\2013.2.918\Uniform\sprite_2x.png" />
     <Content Include="Content\Style.css" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.5.1.js" />
-    <Content Include="Scripts\jquery-1.5.1.min.js" />
-    <Content Include="Scripts\jquery-ui-1.8.11.js" />
-    <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
     <Content Include="Scripts\jquery.min.js" />
-    <Content Include="Scripts\jquery.ui.core.js" />
     <Content Include="Scripts\jquery.ui.core.min.js" />
-    <Content Include="Scripts\jquery.ui.datepicker.js" />
-    <Content Include="Scripts\jquery.ui.datepicker.min.js" />
-    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\kendo.aspnetmvc.min.js" />
     <Content Include="Scripts\kendo.web.min.js" />
     <Content Include="Scripts\kendo\2013.2.918\jquery.min.js" />
     <Content Include="Content\kendo\2013.2.918\images\kendoui.ttf" />
     <Content Include="Content\kendo\2013.2.918\images\kendoui.woff" />
+    <Content Include="Buisness\Models\Error\Error404.cshtml" />
     <None Include="Scripts\kendo\2013.2.918\kendo.all-vsdoc.js" />
     <None Include="Scripts\kendo\2013.2.918\kendo.all.min.intellisense.js" />
     <Content Include="Scripts\kendo\2013.2.918\kendo.all.min.js" />
@@ -512,6 +543,8 @@
       <LastGenOutput>MainDataBase.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\kendo\2013.2.918\jquery.min.map" />
+    <Content Include="Views\Shared\EditorTemplates\Bet.cshtml" />
+    <Content Include="Views\Shared\_CommentPatrial.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -521,16 +554,10 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\MicrosoftAjax.js" />
     <Content Include="Scripts\MicrosoftAjax.debug.js" />
     <Content Include="Scripts\MicrosoftMvcAjax.js" />
     <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
-    <Content Include="Scripts\MicrosoftMvcValidation.js" />
-    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -572,11 +599,11 @@
     <Content Include="Views\Account\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Errors\Error404.cshtml" />
+    <Content Include="Views\Error\Error404.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Buisness\Models\Error\" />
     <Folder Include="Content\Image\Site\" />
+    <Folder Include="Views\Administration\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\RestorePasswordConfirmation.cshtml" />
@@ -588,13 +615,7 @@
     <Content Include="Views\Account\EmailIsSent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Lot\Catalog.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\_TypePreviewPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Lot\Hot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

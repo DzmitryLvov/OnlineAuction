@@ -40,6 +40,16 @@ namespace OnlineAuction.Buisness.Data
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<UserData> UserDatas { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<BetInfo> BetInfos { get; set; }
+        public DbSet<BookmarkInfo> BookmarkInfos { get; set; }
+        public DbSet<CommentInfo> CommentInfos { get; set; }
+        public DbSet<LotByLocation> LotByLocations { get; set; }
+        public DbSet<LotCategoryInfo> LotCategoryInfos { get; set; }
+        public DbSet<LotInfo> LotInfos { get; set; }
+        public DbSet<LotShortPreview> LotShortPreviews { get; set; }
+        public DbSet<UserFullInfo> UserFullInfos { get; set; }
+        public DbSet<UserRoleInfo> UserRoleInfos { get; set; }
+        public DbSet<UserUnapprovedComment> UserUnapprovedComments { get; set; }
     
         public virtual int AddCategory(string categoryName)
         {
@@ -48,35 +58,6 @@ namespace OnlineAuction.Buisness.Data
                 new ObjectParameter("CategoryName", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddCategory", categoryNameParameter);
-        }
-    
-        public virtual int AddNewLot(string lotName, string descr, Nullable<int> startCurrency, Nullable<System.DateTime> actualDate, Nullable<int> ownerId, Nullable<int> lotTypeid)
-        {
-            var lotNameParameter = lotName != null ?
-                new ObjectParameter("LotName", lotName) :
-                new ObjectParameter("LotName", typeof(string));
-    
-            var descrParameter = descr != null ?
-                new ObjectParameter("Descr", descr) :
-                new ObjectParameter("Descr", typeof(string));
-    
-            var startCurrencyParameter = startCurrency.HasValue ?
-                new ObjectParameter("StartCurrency", startCurrency) :
-                new ObjectParameter("StartCurrency", typeof(int));
-    
-            var actualDateParameter = actualDate.HasValue ?
-                new ObjectParameter("ActualDate", actualDate) :
-                new ObjectParameter("ActualDate", typeof(System.DateTime));
-    
-            var ownerIdParameter = ownerId.HasValue ?
-                new ObjectParameter("OwnerId", ownerId) :
-                new ObjectParameter("OwnerId", typeof(int));
-    
-            var lotTypeidParameter = lotTypeid.HasValue ?
-                new ObjectParameter("LotTypeid", lotTypeid) :
-                new ObjectParameter("LotTypeid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddNewLot", lotNameParameter, descrParameter, startCurrencyParameter, actualDateParameter, ownerIdParameter, lotTypeidParameter);
         }
     
         public virtual int AddNewUser(string userName, string password, string passwordQuestion, string passwordAnswer, string email, Nullable<int> roleID, string phone, string firstName, string lastName, Nullable<System.DateTime> birthDate, string photoLink, Nullable<int> locationID)
@@ -181,30 +162,13 @@ namespace OnlineAuction.Buisness.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteUser", userIdParameter);
         }
     
-        public virtual ObjectResult<GetUsersWithBannedComments_Result> GetUsersWithBannedComments(Nullable<int> count)
+        public virtual ObjectResult<GetUsersWithBannedComments_Result1> GetUsersWithBannedComments(Nullable<int> count)
         {
             var countParameter = count.HasValue ?
                 new ObjectParameter("count", count) :
                 new ObjectParameter("count", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUsersWithBannedComments_Result>("GetUsersWithBannedComments", countParameter);
-        }
-    
-        public virtual int LeaveComment(Nullable<int> userid, Nullable<int> lotid, string text)
-        {
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            var lotidParameter = lotid.HasValue ?
-                new ObjectParameter("lotid", lotid) :
-                new ObjectParameter("lotid", typeof(int));
-    
-            var textParameter = text != null ?
-                new ObjectParameter("text", text) :
-                new ObjectParameter("text", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LeaveComment", useridParameter, lotidParameter, textParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUsersWithBannedComments_Result1>("GetUsersWithBannedComments", countParameter);
         }
     
         public virtual int MakeBet(Nullable<int> userId, Nullable<int> lotId, Nullable<int> betValue, Nullable<System.DateTime> betDate)
@@ -237,25 +201,25 @@ namespace OnlineAuction.Buisness.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MarkUserAsDeleted", userIdParameter);
         }
     
-        public virtual ObjectResult<SearchByLotName_Result> SearchByLotName(string lotname)
+        public virtual ObjectResult<SearchByLotName_Result1> SearchByLotName(string lotname)
         {
             var lotnameParameter = lotname != null ?
                 new ObjectParameter("lotname", lotname) :
                 new ObjectParameter("lotname", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchByLotName_Result>("SearchByLotName", lotnameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchByLotName_Result1>("SearchByLotName", lotnameParameter);
         }
     
-        public virtual ObjectResult<SearchByUasers_Result> SearchByUasers(string username)
+        public virtual ObjectResult<SearchByUasers_Result1> SearchByUasers(string username)
         {
             var usernameParameter = username != null ?
                 new ObjectParameter("username", username) :
                 new ObjectParameter("username", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchByUasers_Result>("SearchByUasers", usernameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchByUasers_Result1>("SearchByUasers", usernameParameter);
         }
     
-        public virtual ObjectResult<SearchLot_Result> SearchLot(string query, Nullable<bool> allowDeleted)
+        public virtual ObjectResult<SearchLot_Result1> SearchLot(string query, Nullable<bool> allowDeleted)
         {
             var queryParameter = query != null ?
                 new ObjectParameter("query", query) :
@@ -265,110 +229,131 @@ namespace OnlineAuction.Buisness.Data
                 new ObjectParameter("allowDeleted", allowDeleted) :
                 new ObjectParameter("allowDeleted", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchLot_Result>("SearchLot", queryParameter, allowDeletedParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchLot_Result1>("SearchLot", queryParameter, allowDeletedParameter);
         }
     
-        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        public virtual int CreateLot(string lotName, string descr, Nullable<int> startCurrency, Nullable<System.DateTime> actualDate, Nullable<int> ownerId, Nullable<int> lotTypeId, Nullable<int> subCategoryId)
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
+            var lotNameParameter = lotName != null ?
+                new ObjectParameter("LotName", lotName) :
+                new ObjectParameter("LotName", typeof(string));
     
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
+            var descrParameter = descr != null ?
+                new ObjectParameter("Descr", descr) :
+                new ObjectParameter("Descr", typeof(string));
     
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
+            var startCurrencyParameter = startCurrency.HasValue ?
+                new ObjectParameter("StartCurrency", startCurrency) :
+                new ObjectParameter("StartCurrency", typeof(int));
     
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
+            var actualDateParameter = actualDate.HasValue ?
+                new ObjectParameter("ActualDate", actualDate) :
+                new ObjectParameter("ActualDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+            var ownerIdParameter = ownerId.HasValue ?
+                new ObjectParameter("OwnerId", ownerId) :
+                new ObjectParameter("OwnerId", typeof(int));
+    
+            var lotTypeIdParameter = lotTypeId.HasValue ?
+                new ObjectParameter("LotTypeId", lotTypeId) :
+                new ObjectParameter("LotTypeId", typeof(int));
+    
+            var subCategoryIdParameter = subCategoryId.HasValue ?
+                new ObjectParameter("SubCategoryId", subCategoryId) :
+                new ObjectParameter("SubCategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateLot", lotNameParameter, descrParameter, startCurrencyParameter, actualDateParameter, ownerIdParameter, lotTypeIdParameter, subCategoryIdParameter);
         }
     
-        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        public virtual int UserIdByName(string username, ObjectParameter userId)
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
     
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UserIdByName", usernameParameter, userId);
         }
     
-        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+        public virtual int GetBasicLotTypeId(ObjectParameter typeId)
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetBasicLotTypeId", typeId);
         }
     
-        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        public virtual int AddNewLot(string lotName, string descr, Nullable<int> startCurrency, Nullable<System.DateTime> actualDate, Nullable<int> ownerId, Nullable<int> lotTypeId, Nullable<int> subCategoryId)
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
+            var lotNameParameter = lotName != null ?
+                new ObjectParameter("LotName", lotName) :
+                new ObjectParameter("LotName", typeof(string));
     
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
+            var descrParameter = descr != null ?
+                new ObjectParameter("Descr", descr) :
+                new ObjectParameter("Descr", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+            var startCurrencyParameter = startCurrency.HasValue ?
+                new ObjectParameter("StartCurrency", startCurrency) :
+                new ObjectParameter("StartCurrency", typeof(int));
+    
+            var actualDateParameter = actualDate.HasValue ?
+                new ObjectParameter("ActualDate", actualDate) :
+                new ObjectParameter("ActualDate", typeof(System.DateTime));
+    
+            var ownerIdParameter = ownerId.HasValue ?
+                new ObjectParameter("OwnerId", ownerId) :
+                new ObjectParameter("OwnerId", typeof(int));
+    
+            var lotTypeIdParameter = lotTypeId.HasValue ?
+                new ObjectParameter("LotTypeId", lotTypeId) :
+                new ObjectParameter("LotTypeId", typeof(int));
+    
+            var subCategoryIdParameter = subCategoryId.HasValue ?
+                new ObjectParameter("SubCategoryId", subCategoryId) :
+                new ObjectParameter("SubCategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddNewLot", lotNameParameter, descrParameter, startCurrencyParameter, actualDateParameter, ownerIdParameter, lotTypeIdParameter, subCategoryIdParameter);
         }
     
-        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        public virtual int GetMaxBet(Nullable<int> id, ObjectParameter value)
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
     
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetMaxBet", idParameter, value);
         }
     
-        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
+        public virtual int AddComment(Nullable<int> userid, Nullable<int> lotid, string text)
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
+            var lotidParameter = lotid.HasValue ?
+                new ObjectParameter("lotid", lotid) :
+                new ObjectParameter("lotid", typeof(int));
     
-            var new_diagramnameParameter = new_diagramname != null ?
-                new ObjectParameter("new_diagramname", new_diagramname) :
-                new ObjectParameter("new_diagramname", typeof(string));
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddComment", useridParameter, lotidParameter, textParameter);
         }
     
-        public virtual int sp_upgraddiagrams()
+        public virtual int TrySetUserRole(string userName, Nullable<int> roleId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+            var userNameParameter = userName != null ?
+                new ObjectParameter("userName", userName) :
+                new ObjectParameter("userName", typeof(string));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("roleId", roleId) :
+                new ObjectParameter("roleId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TrySetUserRole", userNameParameter, roleIdParameter);
+        }
+    
+        public virtual int GetAdministratorRoleId(ObjectParameter id)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAdministratorRoleId", id);
         }
     }
 }

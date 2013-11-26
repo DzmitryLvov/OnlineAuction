@@ -42,7 +42,7 @@ namespace OnlineAuction.Buisness
         {
             return;
         }
-        public static bool ToLeaderOnChangedRate(LotModel model, string newLeader)
+        public static bool ToLeaderOnChangedRate(LotViewModel model, string newLeader)
         {
             /*var membershipUser = Membership.GetUser(model.LeaderName);
             return membershipUser != null && SendEamil(membershipUser.Email, model.Name,
@@ -63,7 +63,7 @@ namespace OnlineAuction.Buisness
 
 
 
-        public static bool  ToOwnerOnComplete(LotModel model)
+        public static bool  ToOwnerOnComplete(LotViewModel model)
         {
             //var membershipUser = Membership.GetUser(model.OwnerId); //TODO: сделать нормальный поиск пользователей
             //return membershipUser != null && SendEamil(membershipUser.Email, model.Name,
@@ -75,7 +75,7 @@ namespace OnlineAuction.Buisness
             return false;
         }
 
-        public static bool ToLeaderOnComplete(LotModel model)
+        public static bool ToLeaderOnComplete(LotViewModel model)
         {
             //var membershipUser = Membership.GetUser(model.LeaderName);
             //return membershipUser != null && SendEamil(membershipUser.Email, model.Name,

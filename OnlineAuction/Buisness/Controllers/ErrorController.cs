@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Runtime.Remoting.Messaging;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 
 namespace OnlineAuction.Buisness.Controllers
 {
-    public class ErrorsController : Controller
+    public class ErrorController : Controller
     {
         public ActionResult Error404()
         {

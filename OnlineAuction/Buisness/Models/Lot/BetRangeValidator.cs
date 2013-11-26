@@ -16,8 +16,8 @@ public class BetRangeValidator : ValidationAttribute, IClientValidatable
 
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-        var dataAccess = new DataAccess();
-        var model = (LotModel)validationContext.ObjectInstance;
+       /* var dataAccess = new DataAccess();
+        var model = (LotViewModel)validationContext.ObjectInstance;
         if (model.ID > 0)
         {
             var minValue = dataAccess.GetViewModelById(model.ID).Currency;
@@ -33,7 +33,7 @@ public class BetRangeValidator : ValidationAttribute, IClientValidatable
                     );
             }
         }
-
+        */
         return null;
     }
 

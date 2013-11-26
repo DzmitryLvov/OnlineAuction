@@ -6,59 +6,63 @@
     ViewBag.Title = "CreateLot";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
 }
-
-<link href="@Url.Content("~/Content/jquery.ui.datepicker.css")" rel="stylesheet" type="text/css" />
-<script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery.ui.datepicker.min.js")" type="text/javascript"></script>
-<h2 style="width: 200px; color: #808080; margin: 0 auto;">
-    CreateLot</h2>
+<h2 style="width: 200px; color: #808080; margin: 0 auto;">CreateLot</h2>
 @using (Html.BeginForm("CreateLot", "Lot", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.")
+   
     <div>
         <div class="lot-container-create">
             <table style="margin: 10px 10px 10px 10px;">
                 <tr>
-                    <td>
-                        Name:
+                    <td>Name:
                     </td>
                     <td>
                         @Html.TextBoxFor(t => t.Name)
-                        @Html.ValidationMessageFor(t => t.Name)
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        Description:
+                    <td>Description:
                     </td>
                     <td>
                         @Html.TextAreaFor(t => t.Description)
-                        @Html.ValidationMessageFor(t => t.Description)
+                    </td>
+                </tr>
+                <tr>
+                    <td>ActualDate (dd.mm.yy):
+                    </td>
+                    <td>
+                        @(Html.Kendo().DateTimePickerFor(t => t.ActualDate).HtmlAttributes(new { style="width:220px"})
+                              .Name("ActualDate")
+                              .Value(DateTime.Now))
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        ActualDate (dd.mm.yy):
+                        Minimal currency: 
                     </td>
                     <td>
-                        @Html.TextBoxFor(t => t.ActualDate, new { @class = "date"})
-                        @Html.ValidationMessageFor(t => t.ActualDate)
+                        @Html.TextBoxFor(m => m.StartCurrency)
                     </td>
+                        
                 </tr>
                 <tr>
-                    <td>
-                        Minimal currency:
-                    </td>
-                    <td>@Html.TextBoxFor(t => t.StartCurrency)
-                        @Html.ValidationMessageFor(t => t.StartCurrency)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Lot categories
+                    <td>Lot category
                     </td>
                     <td>
-                       
+                        @Html.HiddenFor(m => m.SubCategoryId)
+                        @(Html.Kendo()
+                              .DropDownList().HtmlAttributes(new { style = "width:220px" })
+                              .Name("SubCategory")
+                              .DataTextField("SubCategoryName")
+                              .DataValueField("ID")
+                              .Events(e => e.Change("change"))
+                              .DataSource(source =>
+                              {
+                                  source.Read(read =>
+                                  {
+                                      read.Action("GetSubCategories", "Lot");
+                                  });
+                              }))
                     </td>
                 </tr>
                 <tr>
@@ -66,20 +70,27 @@
                         <span>Upload photo (less then 5 Mb)</span>
                     </td>
                     <td>
-                        <input type="file" name="fileUpload"   />
+                        @(Html.Kendo().Upload().HtmlAttributes(new { style="width=220px"} )
+                              .Name("files")
+                              )
                     </td>
                 </tr>
             </table>
+            @Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.")
+            <p> @Html.ValidationMessageFor(t => t.Name)</p>
+            <p>@Html.ValidationMessageFor(t => t.Description)</p>
+            <p>@Html.ValidationMessageFor(t => t.SubCategoryId)</p>
+            <p>@Html.ValidationMessageFor(m => m.StartCurrency)</p>
             <button type="submit" value="Create Lot" class="btn btn-success btn-accept">
                 Save</button>
-            @(Html.Kendo().MultiSelectFor(m => m.LotSubCategories)
-                       .BindTo((SelectList)ViewBag.LotSubCategories)
-                       )
+
         </div>
     </div>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('.date').datepicker({ firstDay: 1, dateFormat: 'mm.dd.yy' });
-        });
-</script>
+        function change() {
+            var inp = document.getElementById('SubCategoryId');
+            inp.value = $("#SubCategory").data("kendoDropDownList").value();
+        }
+        
+    </script>
 }

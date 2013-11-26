@@ -1,0 +1,10 @@
+﻿@using System.Runtime.InteropServices
+@model OnlineAuction.Buisness.Data.BetInfo
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BetValue)
+        </div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.BetValue)
+    @Html.ValidationMessageFor(model => model.BetValue)
+</div>

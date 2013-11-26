@@ -185,7 +185,7 @@ namespace OnlineAuction.Buisness.Security
                     pass2 = UnEncodePassword(dbPassword);
                     break;
                 case MembershipPasswordFormat.Hashed:
-                    pass1 = EncodePassword(password);
+                    pass1 = this.EncodePassword(password);
                     break;
             }
 

@@ -12,24 +12,20 @@ namespace OnlineAuction.Buisness
     public class Auction
     {
         private static DataAccess dataAccess = new DataAccess();
+        private static bool _isAlive = true;
         public static void Start()
         {
-            var t = new Thread(LotTimeOutChecker);
-            t.Priority = ThreadPriority.Lowest;
+            var t = new Thread(LotTimeOutChecker) {Priority = ThreadPriority.Lowest};
             t.Start();
         }
 
         static void LotTimeOutChecker()
         {
-            var isAlive = true;
-            while (isAlive)
+            while (_isAlive)
             {
                 Thread.Sleep(7000);
-                foreach (var currentLot in dataAccess.GetCollectionToDelete())
-                {
-                    DeleteLot(dataAccess.ConvertToViewModel(currentLot));
-                }
-                
+                dataAccess.StartCompletingLots();
+
             }
         }
 
@@ -44,36 +40,20 @@ namespace OnlineAuction.Buisness
             return false;
         }
         
-        public static bool CreateLot(CreateLotModel model, string ownername, object image)
+        public static bool CreateLot(CreateLotModel model, string ownername)
         {
-           //return dataAccess.CreateLot(ownername,model.Name, model.Description, model.ActualDate, model.Currency,model.LotType, image);
-            return false;
+           return dataAccess.CreateLot(ownername, model.Name,model.Description,model.ActualDate,model.StartCurrency, model.SubCategoryId);
+           
         }
 
-        public static void MakeBet(LotModel model, string username)
-        { //TODO: impliment bet making
-            /*if ( username != model.Lead)
-            {
-                EmailSender.ToLeaderOnChangedRate(model, username);
-            }
-            dataAccess.MakeBet(model.ID, username, model.Currency); */
+        public static void MakeBet(LotViewModel model, string username)
+        { 
         }
 
-        public static bool DeleteLot(LotModel currentLot)
+        public static bool DeleteLot(LotViewModel currentLot)
         {
            try
             {
-               List<Bet> betSet = dataAccess.GetBetsOfCurrentLot(currentLot.ID) as List<Bet>;
-                if ( betSet != null )
-                {
-                    EmailSender.ToOwnerOnComplete(currentLot);
-                    EmailSender.ToLeaderOnComplete(currentLot);
-                }
-                else
-                {
-                    EmailSender.ToOwnerOnComplete(currentLot);
-                }
-                dataAccess.DeleteLot(currentLot.ID);
                 
                 return true;
             }

@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Security;
 using OnlineAuction.Buisness.Data;
 using OnlineAuction.Buisness.Models.Account;
@@ -172,11 +173,16 @@ namespace OnlineAuction.Buisness.Controllers
         {
             return View();
         }
+
         [Authorize]
-        public ActionResult Profile(UserProfileViewModel model)
+        public ActionResult Profile(string username)
         {
-            return View(model);
+            if(username == null) username = HttpContext.User.Identity.Name;
+
+            return View(new DataAccess().GetUserProfileViewModel(username));
         }
+
+
         [Authorize]
         public ActionResult EditProfile()
         {
@@ -187,7 +193,7 @@ namespace OnlineAuction.Buisness.Controllers
         public ActionResult SetAsAdministrator( string username)
         {
             new DataAccess().SetAdmin(username);
-            return Profile(new UserProfileViewModel() {Name = username});
+            return RedirectToAction("Profile", new {username = username});
         }
 
         public JsonResult GetLocations()
