@@ -243,5 +243,6 @@ body {
   margin:0 auto;
 }
 .lot-create {
-    padding-top: 20px;
+    float:none;
+    margin-top: 15px;
 }

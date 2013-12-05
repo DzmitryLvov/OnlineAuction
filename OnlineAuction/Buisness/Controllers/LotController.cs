@@ -63,10 +63,10 @@ namespace OnlineAuction.Buisness.Controllers
         [HttpPost]
         public ActionResult CreateLot(CreateLotModel model)
         {
-            //object image = Request.Files[0];
+            object image = Request.Files[0];
             if (ModelState.IsValid)
             {
-                var errormsg = Auction.CreateLot(model, HttpContext.User.Identity.Name);
+                var errormsg = Auction.CreateLot(model, HttpContext.User.Identity.Name, image);
                 if (String.IsNullOrWhiteSpace(errormsg))
                 {
                     return RedirectToAction("Index", "Home");

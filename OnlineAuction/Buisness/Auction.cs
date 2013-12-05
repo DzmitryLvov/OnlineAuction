@@ -26,12 +26,11 @@ namespace OnlineAuction.Buisness
         }
 
         
-        public static string CreateLot(CreateLotModel model, string ownername)
+        public static string CreateLot(CreateLotModel model, string ownername, object image)
         {
             try
             {
-                if (dataAccess.CreateLot(ownername, model.Name, model.Description, model.ActualDate, model.StartCurrency, model.SelectedIds
-                    )) ;
+                if (dataAccess.CreateLot(ownername, model.Name, model.Description, model.ActualDate, model.StartCurrency, model.SelectedIds,image)) ;
                 return null;
             }
             catch (Exception e)

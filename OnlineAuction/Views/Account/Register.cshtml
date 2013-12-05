@@ -7,127 +7,127 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
-@using(Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data"}))
-{
-<div class="panel-body center-block col-md-6 highlight" style="float:none;">
-    <form class="form-horizontal"  method="POST">
-       @if (!String.IsNullOrWhiteSpace(@Html.ValidationSummary("").ToString()))
-       {
-           <div class="alert-danger">
-               @Html.ValidationSummary("")
-           </div>
-       }
-        <fieldset>
-            <legend class="">Register</legend>
-            <div class="control-group">
-                <label class="control-label" for="username">Username</label>
-                <div class="controls">
-                    @Html.TextBoxFor(t => t.UserName,new { @class="form-control"})
-                    <p class="help-block">Username can contain any letters or numbers, without spaces</p>
-                    <p class="text-danger">@Html.ValidationMessageFor(t => t.UserName)</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="Password">password</label>
-                <div class="controls">
-                    @Html.PasswordFor(t => t.Password,new { @class="form-control"})
-                    <p class="help-block">Password must contain at least 6 characters</p>
-                    <p class="text-danger">@Html.ValidationMessageFor(t => t.Password)</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="ConfirmPassword">password</label>
-                <div class="controls">
-                    @Html.PasswordFor(t => t.ConfirmPassword,new { @class="form-control"})
-                    <p class="help-block">Confirm the password</p>
-                    <p class="text-danger">@Html.ValidationMessageFor(t => t.ConfirmPassword)</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="Email">E-mail</label>
-                <div class="controls">
-                    @Html.TextBoxFor(t => t.Email,new { @class="form-control"})
-                    <p class="help-block">Please provide your E-mail</p>
-                    <p class="text-danger">@Html.ValidationMessageFor(t => t.Email)</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="Question">Secret question</label>
-                <div class="controls">
-                    @Html.TextBoxFor(t => t.Question,new { @class="form-control"})
-                    <p class="help-block">Enter secret question</p>
-                    <p class="text-danger">@Html.ValidationMessageFor(t => t.Question)</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="Answer">Answer</label>
-                <div class="controls">
-                    @Html.PasswordFor(t => t.Answer,new { @class="form-control"})
-                    <p class="help-block">Enter Answer</p>
-                    <p class="text-danger">@Html.ValidationMessageFor(t => t.Answer)</p>
-                </div>
-            </div>
-            <div class="control-group">
 
-                <label class="control-label" for="FirstName">First name</label>
-                <div class="controls">
-                    @Html.TextBoxFor(t => t.FirstName,new { @class="form-control"})
-                    <p class="help-block">Please provide your first name</p>
+<div class="panel-body center-block col-md-4 highlight lot-create">
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new {enctype = "multipart/form-data"}))
+    {
+        <form class="form-horizontal"  method="POST">
+            @if (!String.IsNullOrWhiteSpace(@Html.ValidationSummary("").ToString()))
+            {
+                <div class="alert-danger">
+                    @Html.ValidationSummary("")
                 </div>
-            </div>
-            <div class="control-group">
-
-                <label class="control-label" for="LastName">Last name</label>
-                <div class="controls">
-                    @Html.TextBoxFor(t => t.LastName,new { @class="form-control"})
-                    <p class="help-block">Please provide your last name</p>
+            }
+            <fieldset>
+                <legend class="text-center">Register</legend>
+                <div class="control-group">
+                    <label class="control-label" for="username">Username</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(t => t.UserName, new {@class = "form-control"})
+                        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+                        <p class="text-danger">@Html.ValidationMessageFor(t => t.UserName)</p>
+                    </div>
                 </div>
-            </div>
-            <div class="control-group">
-
-                <label class="control-label" for="Phone">Phone</label>
-                <div class="controls">
-                    @Html.TextBoxFor(t => t.Phone,new { @class="form-control"})
-                    <p class="help-block">Please provide your first phone</p>
+                <div class="control-group">
+                    <label class="control-label" for="Password">password</label>
+                    <div class="controls">
+                        @Html.PasswordFor(t => t.Password, new {@class = "form-control"})
+                        <p class="help-block">Password must contain at least 6 characters</p>
+                        <p class="text-danger">@Html.ValidationMessageFor(t => t.Password)</p>
+                    </div>
                 </div>
-            </div>
-            @Html.HiddenFor(m => m.LocationId)
-            <div class="control-group">
+                <div class="control-group">
+                    <label class="control-label" for="ConfirmPassword">password</label>
+                    <div class="controls">
+                        @Html.PasswordFor(t => t.ConfirmPassword, new {@class = "form-control"})
+                        <p class="help-block">Confirm the password</p>
+                        <p class="text-danger">@Html.ValidationMessageFor(t => t.ConfirmPassword)</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="Email">E-mail</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(t => t.Email, new {@class = "form-control"})
+                        <p class="help-block">Please provide your E-mail</p>
+                        <p class="text-danger">@Html.ValidationMessageFor(t => t.Email)</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="Question">Secret question</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(t => t.Question, new {@class = "form-control"})
+                        <p class="help-block">Enter secret question</p>
+                        <p class="text-danger">@Html.ValidationMessageFor(t => t.Question)</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="Answer">Answer</label>
+                    <div class="controls">
+                        @Html.PasswordFor(t => t.Answer, new {@class = "form-control"})
+                        <p class="help-block">Enter Answer</p>
+                        <p class="text-danger">@Html.ValidationMessageFor(t => t.Answer)</p>
+                    </div>
+                </div>
+                <div class="control-group">
 
-                <label class="control-label" for="Location">Location</label>
-                <div class="controls">
-                    @(Html.Kendo()
-                          .DropDownList().HtmlAttributes(new { style = "width:100% margin: 0px 0px 15px;" })
-                          .Name("Location")
-                          .DataTextField("LocationName")
-                          .DataValueField("ID")
-                          .Events(e => e.Change("change"))
-                          .DataSource(source =>
-                          {
-                              source.Read(read =>
+                    <label class="control-label" for="FirstName">First name</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(t => t.FirstName, new {@class = "form-control"})
+                        <p class="help-block">Please provide your first name</p>
+                    </div>
+                </div>
+                <div class="control-group">
+
+                    <label class="control-label" for="LastName">Last name</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(t => t.LastName, new {@class = "form-control"})
+                        <p class="help-block">Please provide your last name</p>
+                    </div>
+                </div>
+                <div class="control-group col-md-5" style="padding:0;">
+
+                    <label class="control-label " for="Phone">Phone</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(t => t.Phone, new {@class = "form-control", style="height: 29px;"})
+                    </div>
+                </div>
+                @Html.HiddenFor(m => m.LocationId)
+                <div class="control-group col-md-7" style="padding-right:0; padding-bottom: 20px;">
+
+                    <label class="control-label" for="Location">Location</label>
+                    <div class="controls">
+                        @(Html.Kendo()
+                              .DropDownList()
+                              .Name("Location").HtmlAttributes(new{@style="width:100%"})
+                              .DataTextField("LocationName")
+                              .DataValueField("ID")
+                              .Events(e => e.Change("change"))
+                              .DataSource(source =>
                               {
-                                  read.Action("GetLocations", "Account");
-                              });
-                          }).SelectedIndex(0)
-                          )
-                    <p class="help-block">Please select your location</p>
-                    <p class="text-danger">@Html.ValidationMessageFor(t => t.LocationId)</p>
+                                  source.Read(read =>
+                                  {
+                                      read.Action("GetLocations", "Account");
+                                  });
+                              }).SelectedIndex(0)
+                              )
+                        <p class="text-danger">@Html.ValidationMessageFor(t => t.LocationId)</p>
+                    </div>
                 </div>
-            </div>
         
-            <div class="control-group">
-                <div class="controls">
-                    <button type="submit" value="Register" class="btn btn-success">Register</button>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" value="Register" class="btn btn-success btn-block">Register</button>
+                    </div>
                 </div>
-            </div>
-        </fieldset>
+            </fieldset>
     
-    </form>
-      </div>
+        </form>
+    }
+</div>
 <script>
     function change() {
         var inp = document.getElementById('LocationId');
         inp.value = $("#Location").data("kendoDropDownList").value();
     }
 </script>
-    }
+    

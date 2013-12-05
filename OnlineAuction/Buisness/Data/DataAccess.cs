@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 using System.Web.Security;
 using OnlineAuction.Buisness.Models.Account;
 using OnlineAuction.Buisness.Models.Lot;
@@ -92,7 +93,13 @@ namespace OnlineAuction.Buisness.Data
                 })}: null;
         }
        
-       public bool CreateLot(string ownerName, string name, string description, DateTime date, int currency, int[] selectedSubCategories)
+       public bool CreateLot(string ownerName,
+           string name, 
+           string description, 
+           DateTime date, 
+           int currency, 
+           int[] selectedSubCategories,
+           object image)
        {
                var id  =  new ObjectParameter("UserId",typeof(int));
                _dataBase.GetUserIdByName(ownerName, id);
@@ -116,11 +123,8 @@ namespace OnlineAuction.Buisness.Data
                });
            }
                _dataBase.SaveChanges();
-               /*var path = String.Format("{0}Content\\Image\\Lots\\{1}",INITIAL_CATALOG,
-                                        LotDataBase.FirstOrDefault(
-                                            t => t.OwnerId == ownerid &&
-                                                t.LotName == name) // TODO: Leaderame is not null
-                                                  .ID);
+               var path = String.Format("{0}Content\\Image\\Lots\\{1}",INITIAL_CATALOG,
+                                            (int) inserted.Value);
                var img = image as HttpPostedFileBase;
                if (!Directory.Exists(path) && img.ContentLength > 0 )
                {
@@ -133,7 +137,7 @@ namespace OnlineAuction.Buisness.Data
                    {
                        File.Delete(filePath);
                    }
-               }*/
+               }
                return true;
            
        }

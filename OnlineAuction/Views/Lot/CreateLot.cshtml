@@ -7,48 +7,52 @@
     Layout = "~/Views/Shared/_mainLayout.cshtml";
 }
 
-<div class="col-md-6 center-block highlight row" style="float:none">
+<div class="col-md-4 center-block highlight row lot-create">
     @using (Html.BeginForm("CreateLot", "Lot", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
     {
         <fieldset class="">
             <legend class=text-center>Create Lot</legend>
             <div class="control-group">
-                <label class="control-label" for="Name">Username</label>
+                <label class="control-label" for="Name">Name</label>
                 <div class="controls">
                     @Html.TextBoxFor(t => t.Name,new { @class="form-control"})
                 </div>
             </div>
-            <div class="controls-row">
+            <div class="controls-row ">
                 <label class="control-label" for="Description">Description</label>
                 <div class="controls">
                     @Html.TextAreaFor(t => t.Description,new { @class="form-control"})
                 </div>
             </div>
-            <div class="control-group">
+            <div class="control-group col-md-5" style="padding:0;">
                 <label class="control-label" for="ActualDate">Actual date</label>
                 <div class="controls">
-                    @(Html.Kendo().DateTimePickerFor(t => t.ActualDate).HtmlAttributes(new {style = "width:220px"})
+                    @(Html.Kendo().DateTimePickerFor(t => t.ActualDate).HtmlAttributes(new {style = "width:100%;"})
                           .Name("ActualDate")
                           .Value(DateTime.Now))
                 </div>
             </div>
-            <div class="control-group">
+            <div class="control-group col-md-7" style="padding-right:0;">
                 <label class="control-label" for="StartCurrency">Start currency</label>
                 <div class="controls">
-                    @Html.TextBoxFor(t => t.StartCurrency,new { @class="form-control"})
+                    @Html.TextBoxFor(t => t.StartCurrency,new { @class="form-control", style="height:29px"})
                 </div>
             </div>
-            <div class="control-group row">
+
+            <div class="control-group">
                 <label class="control-label" for="SubCategories">Categories</label>
+
                 <div class="controls">
                     @(Html.Kendo().MultiSelectFor(model => model.SubCategories)
-                          .Name("SelectedIds")
+                          .Name("SelectedIds").Placeholder("Select any category")
                           .DataTextField("SubCategoryName")
                           .DataValueField("ID")
                           .DataSource(t => t.Read(r => r.Action("GetSubCategories", "Lot")))
                           )
                 </div>
             </div>
+           
+            
             <div class="control-group">
                 <label class="control-label">Select photo</label>
                 <div class="controls">
