@@ -8,5 +8,6 @@ namespace OnlineAuction.Buisness.Models.Home
     {
         public IEnumerable<LotPreviewModel> Lots { get;set;}
 
+        public  IEnumerable<Category> Categories { get; set; } 
     }
 }

@@ -1,27 +1,33 @@
 ﻿@using OnlineAuction.Buisness.Data
-@model OnlineAuction.Buisness.Data.UserFullInfo
+@model UserFullInfo
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
 }
 <h2 style="margin: 0 auto; width: 200px; margin-bottom: 25px; position: relative; color: #808080">Profile</h2>
+
 @using (Html.BeginForm())
 {
     if (Model != null)
     {
-    <div class="user-info-container">
-        <table>
-            <tr>
+        <div class="user-info-container">
+            @if (Model.IsDeleted)
+            {
+                <h4> [banned]</h4>
+            }
+            
+            <table>
+                <tr>
                 <td rowspan="6" style="width: 250px;">
                     
-                        @if (Model.PhotoLink != null)
-                        {
-                            <img src=@Model.PhotoLink width="200px" style="border: 1px solid #808080;"/>
-                        }
-                        else
-                        {
-                            <img src="/OnlineAuction/Content/Image/UserProfile/Default/index.jpg" width="200px" />
-                        }
+                    @if (Model.PhotoLink != null)
+                    {
+                        <img src=@Model.PhotoLink width="200px" style="border: 1px solid #808080;"/>
+                    }
+                    else
+                    {
+                        <img src="/OnlineAuction/Content/Image/UserProfile/Default/index.jpg" width="200px" />
+                    }
                 </td>
                 <td>User name:
                     @if (Model.Username != null)
@@ -45,8 +51,8 @@
                         }
                     </td>
                 </tr>
-            <tr>
-                <td>Last name:
+                <tr>
+                    <td>Last name:
                         @if (Model.FirstName != null)
                         {
                             @Model.FirstName
@@ -55,10 +61,10 @@
                         {
                             <span>No Data</span>
                         }
-                </td>
-            </tr>
-            <tr>
-                <td>Phone:
+                    </td>
+                </tr>
+                <tr>
+                    <td>Phone:
                         @if (Model.Phone != null)
                         {
                             @Model.Phone
@@ -67,10 +73,10 @@
                         {
                             <span>No Data</span>
                         }
-                </td>
-            </tr>
-            <tr>
-                <td>Location:
+                    </td>
+                </tr>
+                <tr>
+                    <td>Location:
                         @if (Model.LocationName != null)
                         {
                             @Model.LocationName
@@ -80,42 +86,44 @@
                         {
                             <span>No Data</span>
                         }
-                </td>
-            </tr>
-            <tr>
-                <td>Role:
+                    </td>
+                </tr>
+                <tr>
+                    <td>Role:
                         @if (Model.Rolename != null)
                         {
                             @Model.Rolename
-                            if (User.IsInRole("admin"))
-                            {
-                                if (!(new DataAccess().UserIsAdmin(Model.Username)))
-                                {
-                            @Html.ActionLink("Set as asministrator", "SetAsAdministrator", "Account", new { username = @Model.Username }, new { @class = "btn btn-info" })
-                                }
-                            }
                         }
                         else
                         {
                             <span>No Data</span>
                         }
-                </td>
-            </tr>
-        </table>
-        @if (User.Identity.Name == Model.Username)
-        {
-            <div style="margin-top: 25px;">
-                @Html.ActionLink("Edit profile", "EditProfile", "Account", null, new { @class = "btn btn-info" })
-            </div>
-        }
-        @if (User.IsInRole("admin"))
-        {
-            if (!(new DataAccess().UserIsAdmin(Model.Username)))
+                    </td>
+                </tr>
+            </table>
+            @if (User.Identity.Name == Model.Username)
             {
-            @Html.ActionLink("Set as asministrator", "SetAsAdministrator", "Account", new { username = @Model.Username }, new { @class = "btn btn-info" })
+                <div style="margin-top: 25px;">
+                    @Html.ActionLink("Edit profile", "EditProfile", "Account", null, new { @class = "btn btn-info" })
+                </div>
             }
-        }
-    </div>
+            <hr>
+            @if (User.IsInRole("admin"))
+            {
+                if (!(new DataAccess().UserIsAdmin(Model.Username)))
+                {
+                    @Html.ActionLink("Set as asministrator", "SetAsAdministrator", "Account", new { username = @Model.Username }, new { @class = "btn btn-info" })
+                    if (!Model.IsDeleted)
+                    {
+                        @Html.ActionLink("Ban user", "BanUser", "Account", new {username = @Model.Username}, new {@class = "btn btn-info"})
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Unban user", "UnBanUser", "Account", new {username = @Model.Username}, new {@class = "btn btn-info"})                        
+                    }
+                }
+            }
+        </div>
     }
     else
     {

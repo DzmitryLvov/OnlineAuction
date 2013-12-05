@@ -19,5 +19,6 @@ namespace OnlineAuction.Buisness.Data
         public int CommentId { get; set; }
         public string CommentText { get; set; }
         public System.DateTime CommentDate { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

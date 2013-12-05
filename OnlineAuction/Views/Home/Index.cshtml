@@ -1,11 +1,75 @@
-﻿@model OnlineAuction.Buisness.Models.Home.IndexModel
+﻿@using System.Activities.Statements
+@using OnlineAuction.Buisness.Data
+@using OnlineAuction.Buisness.Models.Lot;
+@model OnlineAuction.Buisness.Models.Home.IndexModel
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
 }
 
-@foreach (var m in Model.Lots)
-{
-    @Html.Partial("_lotPartial",m);
-}
+
+<script type="text/x-kendo-tmpl" id="template">
+    <div class="product" id="#:ID#" onClick=goToItem(#:ID#)>
+    <div class="img-container">
+        <img src="#:PhotoLink#" alt="#:LotName# image" />
+    </div>
+        <h3>#:LotName#</h3>
+        <p>#:kendo.toString(Currency, "c")#</p>
+    </div>
+</script>
+<div class="container highlight content">
+<div class="col-md-3">
+    <!--div class="bs-sidebar hidden-print affix" role="complementary">
+        <ul class="nav bs-sidenav">
+            @foreach (var c in Model.Categories)
+            {
+                <li>@Html.ActionLink(c.CategoryName,"SearchByCategory","Home", new {id=c.ID},null)</li>
+            }
+
+        </ul>
+    </div!-->
+    <div class="panel-group" id="accordion">
+        @foreach (var c in Model.Categories)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        @Html.ActionLink(c.CategoryName,"SearchByCategory","Home", new {id=c.ID},null)
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse@(c.ID)" style="float:right;">
+                            <span class="caret" style="right:0"></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse@(c.ID)" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        @foreach (var s in c.SubCategories)
+                        {
+                            <p>
+                            @Html.ActionLink(s.SubCategoryName,"SearchBySubCategory","Home", new {id=s.ID},null)
+                            </p>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="col-md-9">
+    @(Html.Kendo().ListView(Model.Lots)
+    .Name("listView")
+    .TagName("div")
+    .ClientTemplateId("template")
+    .Pageable()
+    
+)
+
+</div>
+</div>
+<script>
+    function goToItem(id) {
+        document.location.href = "/onlineauction/lot/index/" + id;
+    }
+
+
+</script>

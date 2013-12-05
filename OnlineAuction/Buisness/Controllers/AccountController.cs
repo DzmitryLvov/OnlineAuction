@@ -108,47 +108,13 @@ namespace OnlineAuction.Buisness.Controllers
             }
         }
 
-        public ActionResult RestorePassword()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult RestorePassword(RestorePasswordModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                if (Auction.RestorePassword(model))
-                {
-                    return RedirectToAction("EmailIsSent");
-                }
-            }
-            ModelState.AddModelError("", "The username or email is incorrect.");
-            return View(model);
-        }
-
-        public ActionResult RestorePasswordConfirmation(string username, string hash)
-        {
-            return Membership.Provider.ValidateUser(username, hash)
-                       ? View(new ChangePasswordModel { OldPassword = hash, UserName = username })
-                       : null;
-        }
-        [HttpPost]
-        public ActionResult RestorePasswordConfirmation(ChangePasswordModel model, string hash)
-        {
-            var membershipUser = Membership.Provider.GetUser(model.UserName, false);
-            if (membershipUser != null && membershipUser.ChangePassword(hash, model.NewPassword))
-            {
-                return RedirectToAction("ChangePasswordSuccess");
-            }
-            ModelState.AddModelError("", "Error while password changing.");
-            return View(model);
-        }
+        
         [Authorize]
         public ActionResult ChangePassword()
         {
             return View();
         }
+
         [Authorize]
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel model)
@@ -201,5 +167,16 @@ namespace OnlineAuction.Buisness.Controllers
             return Json(new DataAccess().GetLocations(), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult BanUser(string username)
+        {
+            new DataAccess().BanUser(username);
+            return RedirectToAction("Profile", new { username = username });
+        }
+
+        public ActionResult UnBanUser(string username)
+        {
+            new DataAccess().UnBanUser(username);
+            return RedirectToAction("Profile", new { username = username });
+        }
     }
 }

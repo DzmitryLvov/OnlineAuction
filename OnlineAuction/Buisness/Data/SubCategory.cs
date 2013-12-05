@@ -14,10 +14,16 @@ namespace OnlineAuction.Buisness.Data
     
     public partial class SubCategory
     {
+        public SubCategory()
+        {
+            this.LotSubCategories = new HashSet<LotSubCategory>();
+        }
+    
         public int ID { get; set; }
         public int CategoryID { get; set; }
         public string SubCategoryName { get; set; }
     
         public virtual Category Category { get; set; }
+        public virtual ICollection<LotSubCategory> LotSubCategories { get; set; }
     }
 }

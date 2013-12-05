@@ -41,7 +41,7 @@ namespace OnlineAuction.Buisness.Models.Account
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Display(Name = "LocationID")]
+        [Display(Name = "Location")]
         public int LocationId { get; set; }
 
         [Display(Name = "Phone")]

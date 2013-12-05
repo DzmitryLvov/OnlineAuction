@@ -71,10 +71,7 @@
         {
             if (Context.User.IsInRole("admin") || Context.User.Identity.Name == Model.Model.Username)
             {
-            @Html.ActionLink("Delete this lot", "DeleteLot", "Lot", new LotViewModel
-                    {
-                        Model = Model.Model
-                    }, new { @class = "btn btn-info delete-button" })
+            @Html.ActionLink("Delete this lot", "DeleteLot", "Lot", Model.Model, new { @class = "btn btn-info delete-button" })
             }
             @(Html.Kendo().Grid<BetInfo>().Name("Bets")
                           .Columns(columns =>
@@ -104,7 +101,7 @@
             </div>
         }
     </div>
-    <hr>
+    <hr/>
     @if (Context.User.Identity.IsAuthenticated)
     {
         <div class="k-editor-textarea">
@@ -115,10 +112,13 @@
             <input type="submit" value="Comment" class="btn btn-info"/>
         </div>
     }
-    <hr/>
-    @foreach (var c in Model.Comments)
+    <div class="panel">
+        @foreach (var c in Model.Comments)
     {
+        <hr/>
         @Html.Partial("_CommentPatrial", c)
     }
+    </div>
+    
 </div>
 }

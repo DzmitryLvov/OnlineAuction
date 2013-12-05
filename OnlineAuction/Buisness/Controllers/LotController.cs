@@ -27,6 +27,7 @@ namespace OnlineAuction.Buisness.Controllers
 
 
             var model = dataAccess.GetViewModelById(id);
+
             if (model != null)
             {
                 return View( model);
@@ -65,12 +66,14 @@ namespace OnlineAuction.Buisness.Controllers
             //object image = Request.Files[0];
             if (ModelState.IsValid)
             {
-                if (Auction.CreateLot(model,HttpContext.User.Identity.Name))
+                var errormsg = Auction.CreateLot(model, HttpContext.User.Identity.Name);
+                if (String.IsNullOrWhiteSpace(errormsg))
                 {
                     return RedirectToAction("Index", "Home");
                 }
+                ModelState.AddModelError("", errormsg);
             }
-            ModelState.AddModelError("","");
+            ModelState.AddModelError("", "");
             return View(model);
         }
 
@@ -80,20 +83,17 @@ namespace OnlineAuction.Buisness.Controllers
         }
        
         [Authorize]
-        public ActionResult DeleteLot( LotViewModel Model)
+        public ActionResult DeleteLot( LotViewModel model)
         {
-            if (Auction.DeleteLot(Model))
+            var lotid = Convert.ToInt32(Request.Cookies["LotId"].Value);
+            if (Auction.DeleteLot(lotid))
             {
                 return RedirectToAction("Index", "Home");
             }
             ModelState.AddModelError("","Fail while model deleting.");
-            return Index(Model);
+            return Index(model);
         }
 
-        public ActionResult Hot()
-        {
-            return View(new HotCatalogModel());
-        }
 
         [Authorize]
         public ActionResult MakeBet(BetInfo Model)
@@ -110,9 +110,18 @@ namespace OnlineAuction.Buisness.Controllers
         }
 
         [Authorize]
-        public ActionResult BanComment(BetInfo model)
+        public ActionResult BanComment(CommentInfo model)
         {
-            throw new NotImplementedException();
-        }    
+            new DataAccess().BanComment(model.ID);
+            return RedirectToAction("Index", "Lot", new { id = model.LotID });
+        }
+
+
+        public ActionResult GetPreViewCollection([DataSourceRequest] DataSourceRequest dsRequest)
+        {
+            return Json(new DataAccess().GetConvertedActualLotCollection().ToDataSourceResult(dsRequest));
+        }
+
+       
     }
 }

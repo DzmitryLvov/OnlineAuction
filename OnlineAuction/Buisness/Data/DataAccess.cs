@@ -5,11 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 using System.Web.Security;
 using OnlineAuction.Buisness.Models.Account;
 using OnlineAuction.Buisness.Models.Lot;
-using OnlineAuction.Buisness.Data;
 
 namespace OnlineAuction.Buisness.Data
 {
@@ -22,10 +20,6 @@ namespace OnlineAuction.Buisness.Data
         private const string ENCRYPTION_KEY = "AE09F72BA97CBBB5"; // для генерации хэша HMACSHA1
 
 
-        public DataAccess()
-        {
-            // .CommandTimeout = 5;
-        }
         public  object DataBase
         {
             get
@@ -35,10 +29,6 @@ namespace OnlineAuction.Buisness.Data
                     return _dataBase;
                 }   
             }
-        }
-        private  MainDataBase GetDataBase()
-        {
-            return _dataBase;
         }
         public  IEnumerable<Lot> LotDataBase
         {
@@ -53,12 +43,12 @@ namespace OnlineAuction.Buisness.Data
         {
             foreach (var m in _dataBase.Lots)
             {
+                if(!m.IsDeleted)
                 yield return new LotPreviewModel()
                        {
                            ID = m.ID,
                            LotName = m.LotName,
                            Currency =  (GetmaxBetValue(m.ID) == -1) ? (int)m.StartCurrency : (GetmaxBetValue(m.ID)),
-                           SubCategoryID = m.SubCategoryID,
                            PhotoLink =  IndexPhotoLink(m.ID),
                            ActualDate = m.ActualDate
                        };
@@ -75,9 +65,21 @@ namespace OnlineAuction.Buisness.Data
 
         public  LotViewModel GetViewModelById(int id)
         {
-            var lot = _dataBase.LotInfos.FirstOrDefault(t => t.ID == id);
+            var lot = _dataBase.Lots.FirstOrDefault(t => t.ID == id);
             var comments = _dataBase.CommentInfos.Where(t => t.LotID == id);
-            return lot != null ? new LotViewModel() {Model = lot, Comments = comments.Select(
+            return lot != null ? new LotViewModel() 
+            {
+                Model = new LotInfo()
+                {
+                    LotName = lot.LotName,
+                    ID = lot.ID,
+                    ActualDate = lot.ActualDate,
+                    Description = lot.Description,
+                    IsDeleted = lot.IsDeleted,
+                    MaxBet = GetmaxBetValue(lot.ID),
+                    Username = lot.User.Username
+                },
+                Comments = comments.Select(
                 t => new CommentViewModel
                 {
                     CommentDate = t.CommentDate,
@@ -90,22 +92,29 @@ namespace OnlineAuction.Buisness.Data
                 })}: null;
         }
        
-       public bool CreateLot(string ownerName, string name, string description, DateTime date, int currency, int subCategoryId)
+       public bool CreateLot(string ownerName, string name, string description, DateTime date, int currency, int[] selectedSubCategories)
        {
-           try
-           {
                var id  =  new ObjectParameter("UserId",typeof(int));
-               _dataBase.UserIdByName(ownerName, id);
+               _dataBase.GetUserIdByName(ownerName, id);
                var typeid = new ObjectParameter("TypeId", typeof (int));
                _dataBase.GetBasicLotTypeId(typeid);
 
+           var inserted = new ObjectParameter("id", typeof (int));
                _dataBase.AddNewLot(name,
                    description,
                    currency,
                    date,
                    (int)id.Value,
                    (int)typeid.Value,
-                   subCategoryId);
+                   inserted);
+           foreach (var selectedId in selectedSubCategories)
+           {
+               _dataBase.LotSubCategories.Add(new LotSubCategory
+               {
+                   LotID = (int) inserted.Value,
+                   SubCategoryID = selectedId
+               });
+           }
                _dataBase.SaveChanges();
                /*var path = String.Format("{0}Content\\Image\\Lots\\{1}",INITIAL_CATALOG,
                                         LotDataBase.FirstOrDefault(
@@ -126,11 +135,6 @@ namespace OnlineAuction.Buisness.Data
                    }
                }*/
                return true;
-           }
-           catch (Exception e)
-           {
-               return false;
-           }
            
        }
 
@@ -151,18 +155,7 @@ namespace OnlineAuction.Buisness.Data
            }
        }
 
-        public string RestorePassword(RestorePasswordModel model)
-        {
-            var result = "";
-            var etalon = _dataBase.Users.FirstOrDefault(u => u.Username == model.UserName);
-            if (etalon != null && etalon.Email == model.Email)
-            {
-                result = GenerateRandomPass();
-                etalon.Password = result;
-                _dataBase.SaveChanges();
-            }
-            return result;
-        }
+       
 
         private string GenerateRandomPass()
         {
@@ -201,8 +194,27 @@ namespace OnlineAuction.Buisness.Data
 
         public UserFullInfo GetUserProfileViewModel(string userName)
         {
-            return _dataBase.UserFullInfos.FirstOrDefault(t => t.Username == userName);
+            var result = new UserFullInfo(); 
+            var model =  _dataBase.Users.FirstOrDefault(t => t.Username == userName);
+            if (model != null)
+            {
+                result.ID = model.ID;
+                result.Username = model.Username;
+                result.IsDeleted = model.IsDeleted;
+                result.Rolename = model.Role.Rolename;
 
+                var userData = _dataBase.UserDatas.FirstOrDefault(t => t.User_ID == model.ID);
+                if (userData != null)
+                {
+                    result.FirstName = userData.FirstName;
+                    result.LastName = userData.LastName;
+                    result.Phone = userData.Phone;
+                    result.PhotoLink = userData.PhotoLink;
+                    result.LocationName = userData.Location.LocationName;
+                }
+                return result;
+            }
+            return null;
         }
 
         internal IEnumerable<LotViewModel> GetHotLots()
@@ -239,24 +251,31 @@ namespace OnlineAuction.Buisness.Data
 
         internal  MembershipCreateStatus AddNewUser(RegisterModel model)
         {
-            var hash = new HMACSHA1()
+            try
             {
-                Key = HexToByte(ENCRYPTION_KEY)
-            };
-            var encodedPassword = Convert.ToBase64String(hash.ComputeHash(Encoding.Unicode.GetBytes(model.Password)));
-            var count = _dataBase.AddNewUser(model.UserName,
-                encodedPassword,
-                model.Question,
-                model.Answer,
-                model.Email,
-                getBaseRoleId(),
-                model.Phone,
-                model.FirstName,
-                model.LastName,
-                null, //model.BirthDate,
-                model.PhotoLink,
-                model.LocationId);
-            return count == 2 ? MembershipCreateStatus.Success : MembershipCreateStatus.ProviderError;
+                var hash = new HMACSHA1()
+                {
+                    Key = HexToByte(ENCRYPTION_KEY)
+                };
+                var encodedPassword = Convert.ToBase64String(hash.ComputeHash(Encoding.Unicode.GetBytes(model.Password)));
+                var count = _dataBase.AddNewUser(model.UserName,
+                    encodedPassword,
+                    model.Question,
+                    model.Answer,
+                    model.Email,
+                    getBaseRoleId(),
+                    model.Phone,
+                    model.FirstName,
+                    model.LastName,
+                    null, //model.BirthDate,
+                    model.PhotoLink,
+                    model.LocationId);
+                return count == 2 ? MembershipCreateStatus.Success : MembershipCreateStatus.ProviderError;
+            }
+            catch (Exception ex)
+            {
+                return MembershipCreateStatus.DuplicateUserName;
+            }
         }
         private static byte[] HexToByte(string hexString)
         {
@@ -300,9 +319,11 @@ namespace OnlineAuction.Buisness.Data
             }
         }
 
-        internal void StartCompletingLots()
+        internal int StartCompletingLots()
         {
-            _dataBase.CompleteLots();
+
+            var i = _dataBase.CursorCompleteLots();
+            return i;
         }
 
         public IEnumerable<LotViewModel> GetLotTypePreviewCollection(string typeName)
@@ -312,7 +333,7 @@ namespace OnlineAuction.Buisness.Data
 
         internal IEnumerable<BetInfo> GetBetCollection(int id)
         {
-            foreach (var bet in _dataBase.BetInfos)
+            foreach (var bet in _dataBase.BetInfos.OrderBy(t => t.BetDate))
             {
                 if(bet.LotID == id)
                 yield return new BetInfo()
@@ -342,7 +363,7 @@ namespace OnlineAuction.Buisness.Data
             try
             {
                 var userid = new ObjectParameter("UserId", typeof (int));
-                _dataBase.UserIdByName(userName, userid);
+                _dataBase.GetUserIdByName(userName, userid);
                 _dataBase.MakeBet((int) userid.Value, lotId, betValue, DateTime.Now);
                 return true;
             }
@@ -352,12 +373,74 @@ namespace OnlineAuction.Buisness.Data
             }
         }
 
-        internal void LeaveComment(int lotid, string userName, string commentText)
+        internal string LeaveComment(int lotid, string userName, string commentText)
         {
-            var userid = new ObjectParameter("UserId", typeof(int));
-            _dataBase.UserIdByName(userName, userid);
+            try
+            {
+                var userid = new ObjectParameter("UserId", typeof (int));
+                _dataBase.GetUserIdByName(userName, userid);
 
-            _dataBase.AddComment((int)userid.Value, lotid, commentText);
+
+                _dataBase.LeaveComment((int) userid.Value, lotid, commentText.Trim());
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public IEnumerable<UserUnapprovedComment> GetUnApprovedComments()
+        {
+            foreach (var m in _dataBase.UserUnapprovedComments)
+            {
+                yield return new UserUnapprovedComment()
+                {
+                    CommentId = m.CommentId,
+                    CommentText = m.CommentText,
+                    CommentDate = m.CommentDate,
+                    ID = m.ID,
+                    Username = m.Username
+                };
+            }
+        }
+
+        internal void BanUser(string username)
+        {
+            _dataBase.Users.FirstOrDefault(t => t.Username == username).IsDeleted = true;
+            _dataBase.SaveChanges();
+        }
+
+        internal void UnBanUser(string username)
+        {
+            _dataBase.Users.FirstOrDefault(t => t.Username == username).IsDeleted = false;
+            _dataBase.SaveChanges();
+        }
+
+        internal IEnumerable<UserRoleInfo> GetUsersRolesInfo()
+        {
+            return _dataBase.UserRoleInfos;
+        }
+
+        internal IEnumerable<LotByLocation> GetLotsLocations()
+        {
+            return _dataBase.LotByLocations;
+        }
+
+        internal void BanComment(int id)
+        {
+            _dataBase.Comments.First(t => t.ID == id).IsApproved = false;
+            _dataBase.SaveChanges();
+        }
+
+        internal IEnumerable<Category> GetCategoriesCollection()
+        {
+            return _dataBase.Categories;
+        }
+
+        internal IEnumerable<LotPreviewModel> SearchLotBuCategoryId(int id)
+        {
+            return null;
         }
     }
 }

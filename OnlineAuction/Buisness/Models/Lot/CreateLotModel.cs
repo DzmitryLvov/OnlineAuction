@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices.ComTypes;
+using System.Web.Mvc;
 using OnlineAuction.Buisness.Data;
 
 namespace OnlineAuction.Buisness.Models.Lot
@@ -29,10 +30,9 @@ namespace OnlineAuction.Buisness.Models.Lot
         [Display(Name = "currency")]
         public Int32 StartCurrency { get; set; }
 
-        [Required]
-        public int SubCategoryId { get; set; }
+        public IEnumerable<SelectListItem> SubCategories { get; set; }
 
-
+        public int[] SelectedIds { get; set; }
 
         public CreateLotModel()
         {

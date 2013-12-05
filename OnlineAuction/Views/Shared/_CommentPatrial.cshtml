@@ -3,17 +3,28 @@
 @model OnlineAuction.Buisness.Models.Lot.CommentViewModel
 
 <div>
-    <div class="panel"></div>
-    posted on <time>@Model.CommentDate</time> by <strong>@Model.Username</strong>
-        <p>
-            @if (Model.IsApproved)
+    @if (Model.IsApproved)
+    {
+        <div class="panel panel-comment"></div>
+    }
+    else
+    {
+        
+    <div class="panel panel-banned-comment"></div>
+    }
+    posted on <time>@Model.CommentDate</time> by <strong>@Html.ActionLink(Model.Username, "Profile", "Account", new { username = Model.Username }, null)</strong>
+     @if (Context.User.IsInRole("admin") && !Model.IsApproved)
             {
-                @Model.CommentText
+                @Html.ActionLink("[Ban comment]", "BanComment", "Lot", Model, null)
             }
-            else
-            {
-                <text>Censored</text>
-            }
-        </p>
+    <p>
+    @if (Model.IsApproved)
+    {
+        @Model.CommentText
+    }
+    else
+    {
+        <text>Deleted by administrator</text>
+    }
 </div>
 

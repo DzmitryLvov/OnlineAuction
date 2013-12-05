@@ -94,6 +94,9 @@
     <Compile Include="Buisness\Controllers\ErrorController.cs" />
     <Compile Include="Buisness\Controllers\HomeController.cs" />
     <Compile Include="Buisness\Controllers\LotController.cs" />
+    <Compile Include="Buisness\Data\ActiveUserIno.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\Bet.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
@@ -109,6 +112,9 @@
     <Compile Include="Buisness\Data\Category.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\CategoryLotCount.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\Comment.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
@@ -120,6 +126,15 @@
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\GetUsersWithBannedComments_Result1.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\GetUsersWithBannedComments_Result2.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\GetUsersWithBannedComments_Result3.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\GetUsersWithBannedComments_Result4.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\Location.cs">
@@ -143,7 +158,16 @@
     <Compile Include="Buisness\Data\LotShortPreview.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\LotSubCategory.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\LotType.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\LotUserInfo.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\LotViewCount.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\MainDataBase.Context.cs">
@@ -170,10 +194,34 @@
     <Compile Include="Buisness\Data\SearchByLotName_Result1.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\SearchByLotName_Result2.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SearchByLotName_Result3.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SearchByLotName_Result4.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\SearchByUasers_Result.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\SearchByUasers_Result1.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SearchByUasers_Result2.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SearchByUasers_Result3.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SearchByUasers_Result4.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SearchLotByCategoryId_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SearchLotBySubCategoryId_Result.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\SearchLot_Result.cs">
@@ -182,10 +230,37 @@
     <Compile Include="Buisness\Data\SearchLot_Result1.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\SearchLot_Result2.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SearchLot_Result3.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SearchLot_Result4.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\sp_helpdiagramdefinition_Result1.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\sp_helpdiagramdefinition_Result2.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\sp_helpdiagramdefinition_Result3.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\sp_helpdiagrams_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\sp_helpdiagrams_Result1.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\sp_helpdiagrams_Result2.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\sp_helpdiagrams_Result3.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\SubCategory.cs">
@@ -200,6 +275,9 @@
     <Compile Include="Buisness\Data\UserFullInfo.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\UserLotCountInof.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\UserRoleInfo.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
@@ -209,12 +287,10 @@
     <Compile Include="Buisness\Models\Account\ChangePasswordModel.cs" />
     <Compile Include="Buisness\Models\Account\LogOnModel.cs" />
     <Compile Include="Buisness\Models\Account\RegisterModel.cs" />
-    <Compile Include="Buisness\Models\Account\RestorePasswordModel.cs" />
     <Compile Include="Buisness\EmailSender.cs" />
     <Compile Include="Buisness\Models\Account\UserProfileViewModel.cs" />
     <Compile Include="Buisness\Models\BookMarkModel.cs" />
     <Compile Include="Buisness\Models\Home\IndexModel.cs" />
-    <Compile Include="Buisness\Models\Lot\BetRangeValidator.cs" />
     <Compile Include="Buisness\Models\Lot\CatalogModel.cs" />
     <Compile Include="Buisness\Models\Lot\CommentViewModel.cs" />
     <Compile Include="Buisness\Models\Lot\CreateLotModel.cs" />
@@ -545,6 +621,7 @@
     <Content Include="Scripts\kendo\2013.2.918\jquery.min.map" />
     <Content Include="Views\Shared\EditorTemplates\Bet.cshtml" />
     <Content Include="Views\Shared\_CommentPatrial.cshtml" />
+    <Content Include="Views\Administration\Index.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -564,7 +641,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
     <Content Include="Views\Shared\_mainLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -587,9 +663,6 @@
     <Content Include="Views\Lot\CreateLot.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Account\RestorePassword.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Account\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -603,10 +676,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Image\Site\" />
-    <Folder Include="Views\Administration\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Account\RestorePasswordConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />

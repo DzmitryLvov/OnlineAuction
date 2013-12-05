@@ -1,0 +1,144 @@
+﻿@using OnlineAuction.Buisness.Data
+
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+
+<div id="administation-tools-container" class="content highlight col-md-9 center-block" style="float:none;">
+    
+    <style>
+        #organizer {
+            margin: 0 auto;
+            padding: 47px 0 0 0;
+        }
+        #bottom {
+            height: 90px;
+        }
+        .teamMate:after {
+            content: ".";
+            display: block;
+            height: 0;
+            line-height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+        .teamMate h2 {
+            font-size: 1.4em;
+            font-weight: normal;
+            padding-top: 20px;
+        }
+        .teamMate p {
+            margin: 5px 0;
+        }
+        .teamMate img {
+            float: left;
+            margin: 5px 15px 5px 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+
+
+    @(Html.Kendo().PanelBar()
+        .Name("panelbar")
+        .ExpandMode(PanelBarExpandMode.Multiple)
+        .Items(panelbar =>
+        {
+            panelbar.Add().Text("Users with banned comments")
+                .Expanded(true)
+                .Content(@<div style="padding: 10px;">
+                              <div class="teamMate">
+                                  @(Html.Kendo().Grid<UserUnapprovedComment>()
+                                        .Name("UnapprovedCommentsGrid")
+                                        .Columns(c =>
+                                        {
+                                            c.Bound(t => t.ID).Hidden();
+                                            c.Bound(t => t.Username);
+                                            c.Bound(t => t.CommentText);
+                                            c.Bound(t => t.CommentDate).Format("{0:dd.MM.yyyy hh:mm}");
+                                            c.Bound(t => t.IsDeleted);
+                                            c.Command(command => command.Custom("ViewProfile").Click("goToProfile"));
+                                        })
+                                        .Pageable()
+                                        .Sortable()
+                                        .Scrollable()
+                                        .HtmlAttributes(new {style = "height:430px;"})
+                                        .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(20)
+                                            .Read(read => read.Action("GetUnapprovedComments", "Administration"))
+                                        ).AutoBind(true))
+                              </div>
+                
+                          </div>);
+            panelbar.Add().Text("Users by roles")
+                .Expanded(true)
+                .Content(@<div style="padding: 10px;">
+                              <div class="teamMate">
+                                  @(Html.Kendo().Grid<UserRoleInfo>()
+                                        .Name("UserRolesGrid")
+                                        .Columns(c =>
+                                        {
+                                            c.Bound(t => t.ID).Hidden();
+                                            c.Bound(t => t.Username);
+                                            c.Bound(t => t.Rolename);
+                                            c.Bound(t => t.IsDeleted);
+                                            c.Command(command => command.Custom("ViewProfile").Click("goToProfile"));
+                                        })
+                                        .Pageable()
+                                        .Sortable()
+                                        .Scrollable()
+                                        .HtmlAttributes(new {style = "height:430px;"})
+                                        .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(20)
+                                            .Read(read => read.Action("GetUsersByRoles", "Administration"))
+                                        ).AutoBind(true))
+                              </div>
+                          </div>);
+        panelbar.Add().Text("LotsByLocations")
+                .Expanded(true)
+                .Content(@<div style="padding: 10px;">
+                              <div class="teamMate">
+                                  @(Html.Kendo().Grid<LotByLocation>()
+                                        .Name("LotsLocationsGrid")
+                                        .Columns(c =>
+                                        {
+                                            c.Bound(t => t.ID);
+                                            c.Bound(t => t.LotName);
+                                            c.Bound(t => t.LocationName);
+                                            c.Command(command => command.Custom("ViewLot").Click("goToLot"));
+                                        })
+                                        .Pageable()
+                                        .Sortable()
+                                        .Scrollable()
+                                        .HtmlAttributes(new { style = "height:430px;" })
+                                        .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(20)
+                                            .Read(read => read.Action("GetLotsLocations", "Administration"))
+                                        ).AutoBind(true))
+                              </div>
+                          </div>);
+        }))
+     </div>               
+
+<script type="text/javascript">
+   
+    function goToProfile(e) {
+        e.preventDefault();
+                
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        //alert(dataItem.ID);
+        document.location.href = "/onlineauction/Account/Profile?username=" + dataItem.Username;
+    }
+    function goToLot(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+
+        document.location.href = "/onlineauction/Lot/Index/" + dataItem.ID;
+    }
+</script>
+   

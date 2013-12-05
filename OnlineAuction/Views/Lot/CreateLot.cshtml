@@ -6,91 +6,90 @@
     ViewBag.Title = "CreateLot";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
 }
-<h2 style="width: 200px; color: #808080; margin: 0 auto;">CreateLot</h2>
-@using (Html.BeginForm("CreateLot", "Lot", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-   
-    <div>
-        <div class="lot-container-create">
-            <table style="margin: 10px 10px 10px 10px;">
-                <tr>
-                    <td>Name:
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(t => t.Name)
-                    </td>
-                </tr>
-                <tr>
-                    <td>Description:
-                    </td>
-                    <td>
-                        @Html.TextAreaFor(t => t.Description)
-                    </td>
-                </tr>
-                <tr>
-                    <td>ActualDate (dd.mm.yy):
-                    </td>
-                    <td>
-                        @(Html.Kendo().DateTimePickerFor(t => t.ActualDate).HtmlAttributes(new { style="width:220px"})
-                              .Name("ActualDate")
-                              .Value(DateTime.Now))
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Minimal currency: 
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.StartCurrency)
-                    </td>
-                        
-                </tr>
-                <tr>
-                    <td>Lot category
-                    </td>
-                    <td>
-                        @Html.HiddenFor(m => m.SubCategoryId)
-                        @(Html.Kendo()
-                              .DropDownList().HtmlAttributes(new { style = "width:220px" })
-                              .Name("SubCategory")
-                              .DataTextField("SubCategoryName")
-                              .DataValueField("ID")
-                              .Events(e => e.Change("change"))
-                              .DataSource(source =>
-                              {
-                                  source.Read(read =>
-                                  {
-                                      read.Action("GetSubCategories", "Lot");
-                                  });
-                              }))
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span>Upload photo (less then 5 Mb)</span>
-                    </td>
-                    <td>
-                        @(Html.Kendo().Upload().HtmlAttributes(new { style="width=220px"} )
-                              .Name("files")
-                              )
-                    </td>
-                </tr>
-            </table>
-            @Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.")
-            <p> @Html.ValidationMessageFor(t => t.Name)</p>
-            <p>@Html.ValidationMessageFor(t => t.Description)</p>
-            <p>@Html.ValidationMessageFor(t => t.SubCategoryId)</p>
-            <p>@Html.ValidationMessageFor(m => m.StartCurrency)</p>
-            <button type="submit" value="Create Lot" class="btn btn-success btn-accept">
-                Save</button>
 
-        </div>
-    </div>
-    <script type="text/javascript">
-        function change() {
-            var inp = document.getElementById('SubCategoryId');
-            inp.value = $("#SubCategory").data("kendoDropDownList").value();
+<div class="col-md-6 center-block highlight row" style="float:none">
+    @using (Html.BeginForm("CreateLot", "Lot", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
+    {
+        <fieldset class="">
+            <legend class=text-center>Create Lot</legend>
+            <div class="control-group">
+                <label class="control-label" for="Name">Username</label>
+                <div class="controls">
+                    @Html.TextBoxFor(t => t.Name,new { @class="form-control"})
+                </div>
+            </div>
+            <div class="controls-row">
+                <label class="control-label" for="Description">Description</label>
+                <div class="controls">
+                    @Html.TextAreaFor(t => t.Description,new { @class="form-control"})
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="ActualDate">Actual date</label>
+                <div class="controls">
+                    @(Html.Kendo().DateTimePickerFor(t => t.ActualDate).HtmlAttributes(new {style = "width:220px"})
+                          .Name("ActualDate")
+                          .Value(DateTime.Now))
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="StartCurrency">Start currency</label>
+                <div class="controls">
+                    @Html.TextBoxFor(t => t.StartCurrency,new { @class="form-control"})
+                </div>
+            </div>
+            <div class="control-group row">
+                <label class="control-label" for="SubCategories">Categories</label>
+                <div class="controls">
+                    @(Html.Kendo().MultiSelectFor(model => model.SubCategories)
+                          .Name("SelectedIds")
+                          .DataTextField("SubCategoryName")
+                          .DataValueField("ID")
+                          .DataSource(t => t.Read(r => r.Action("GetSubCategories", "Lot")))
+                          )
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Select photo</label>
+                <div class="controls">
+                    @(Html.Kendo().Upload().HtmlAttributes(new {style = ""})
+                          .Name("files"))
+                </div>
+            </div>
+           
+            <div class="alert-warning">
+                @Html.ValidationSummary(true, "Lot creation was unsuccessful. Please correct the errors and try again.")
+                <p> @Html.ValidationMessageFor(t => t.Name)</p>
+                <p>@Html.ValidationMessageFor(t => t.Description)</p>
+                <p>@Html.ValidationMessageFor(m => m.StartCurrency)</p>
+            </div>     
+           
+            <button type="submit" value="Create Lot" class="btn btn-success btn-block">
+                Save</button>
+        </fieldset>
+    }
+</div>
+<script type="text/javascript">
+
+    function serialize(data) {
+        debugger;
+        for (var property in data) {
+            if ($.isArray(data[property])) {
+                serializeArray(property, data[property], data);
+            }
         }
-        
-    </script>
-}
+    }
+
+    function serializeArray(prefix, array, result) {
+        for (var i = 0; i < array.length; i++) {
+            if ($.isPlainObject(array[i])) {
+                for (var property in array[i]) {
+                    result[prefix + "[" + i + "]." + property] = array[i][property];
+                }
+            }
+            else {
+                result[prefix + "[" + i + "]"] = array[i];
+            }
+        }
+    }
+</script>

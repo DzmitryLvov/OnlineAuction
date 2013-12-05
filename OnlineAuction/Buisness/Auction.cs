@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Threading;
 using OnlineAuction.Buisness.Data;
-using OnlineAuction.Buisness.Models;
-using OnlineAuction.Buisness.Models.Account;
 using OnlineAuction.Buisness.Models.Lot;
-using System.Collections.Generic;
-using System.Data.Objects;
 
 namespace OnlineAuction.Buisness
 {
@@ -29,35 +25,32 @@ namespace OnlineAuction.Buisness
             }
         }
 
-        internal static bool RestorePassword(RestorePasswordModel model)
-        {
-            var newpass = "";
-            if (!String.IsNullOrEmpty( newpass = dataAccess.RestorePassword(model)))
-            {
-                EmailSender.SendResetEmail(model.Email, model.UserName, newpass);
-                return true;
-            }
-            return false;
-        }
         
-        public static bool CreateLot(CreateLotModel model, string ownername)
+        public static string CreateLot(CreateLotModel model, string ownername)
         {
-           return dataAccess.CreateLot(ownername, model.Name,model.Description,model.ActualDate,model.StartCurrency, model.SubCategoryId);
+            try
+            {
+                if (dataAccess.CreateLot(ownername, model.Name, model.Description, model.ActualDate, model.StartCurrency, model.SelectedIds
+                    )) ;
+                return null;
+            }
+            catch (Exception e)
+            {
+                return e.InnerException.Message;
+            }
+           
            
         }
 
-        public static void MakeBet(LotViewModel model, string username)
-        { 
-        }
 
-        public static bool DeleteLot(LotViewModel currentLot)
+        public static bool DeleteLot(int id)
         {
            try
-            {
-                
+           {
+               new MainDataBase().DeleteLot(id);
                 return true;
             }
-            catch (ArgumentException)
+            catch (Exception ex)
             {
                 return false;
             }
