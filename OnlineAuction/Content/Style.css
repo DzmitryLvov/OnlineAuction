@@ -48,6 +48,8 @@ body {
     z-index: -1000;
     position: relative;
     padding-top: 50px;
+    background-image: url(Image/background.jpg);
+    bac
 }
 
 .container {

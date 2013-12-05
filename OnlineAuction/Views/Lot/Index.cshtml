@@ -27,53 +27,33 @@
     }, '');
 </script>
 
-@using(Html.BeginForm()){
-<div class="lot-container-main">
-    <div class="title-container">
-        <strong class="title">@Model.Model.LotName</strong>
-    </div>
-    <table class="lot-table">
-        <tr>
-            <td style="width: 370px;">
-                <div class="img-index">
-                    <img  src="../../@Model.ImageUrl"  width="350" />
-                </div>
-            </td>
-            <td style="padding: 0 0 0 0; vertical-align: top; left: 10px;">
-                <table class="lot-info-table">
-                    <tr>
-                        <td style="height: 20px;"></td>
-                    </tr>
-                    <tr>
-                        <td style="display: inline-block; padding-top: 30px;">
-                            @Model.Model.Description
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-top: 20px;">Remaining
-                                @{
-                                    <h4>@String.Format("{0} d {1} h {2} m",
+@using (Html.BeginForm())
+{
+    <div class="col-md-9 highlight center-block" style="float: none;">
+        <div class="title-container">
+            <span>@Model.Model.LotName</span>
+        </div>
+
+        <div class="img-index col-md-3">
+            <img  src="../../@Model.ImageUrl"  width="350" />
+        </div>
+        <div class="col-md-9">
+            @Model.Model.Description
+            @{
+                <h4>@String.Format("{0} d {1} h {2} m",
                                             (Model.Model.ActualDate - DateTime.Now).Days.ToString(),
                                             (Model.Model.ActualDate - DateTime.Now).Hours.ToString(),
                                             (Model.Model.ActualDate - DateTime.Now).Minutes.ToString())</h4>
-                                }
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-    <div class="betinfo-container">
-        <div class="currency">
-            <strong>Start from: @Model.Model.StartCurrency $</strong>
-        </div>
-        @if (Context.User.Identity.IsAuthenticated)
-        {
-            if (Context.User.IsInRole("admin") || Context.User.Identity.Name == Model.Model.Username)
-            {
-            @Html.ActionLink("Delete this lot", "DeleteLot", "Lot", Model.Model, new { @class = "btn btn-info delete-button" })
             }
-            @(Html.Kendo().Grid<BetInfo>().Name("Bets")
+        </div>
+<strong>Start from: @Model.Model.StartCurrency $</strong>
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                if (Context.User.IsInRole("admin") || Context.User.Identity.Name == Model.Model.Username)
+                {
+                @Html.ActionLink("Delete this lot", "DeleteLot", "Lot", Model.Model, new { @class = "btn btn-info" })
+                }
+                @(Html.Kendo().Grid<BetInfo>().Name("Bets")
                           .Columns(columns =>
                           {
                               columns.Bound(t => t.Username);
@@ -90,35 +70,33 @@
                               .Create(update => update.Action("MakeBet", "Lot"))
                               .Read(read => read.Action("GetBets", "Lot"))
                           ).AutoBind(true))
-        }
-        else
-        {
-            <div class="logon-warning-message">
-                <span>Unregistered users can not bet. Please, @Html.ActionLink("Log on", "LogOn", "Account", null, new { @class = "btn btn-info" })
-                    or
+            }
+            else
+            {
+                <div class="logon-warning-message">
+                    <span>Unregistered users can not bet. Please, @Html.ActionLink("Log on", "LogOn", "Account", null, new { @class = "btn btn-info" })
+                        or
                         @Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn btn-info" })
-                </span>
-            </div>
-        }
-    </div>
-    <hr/>
-    @if (Context.User.Identity.IsAuthenticated)
-    {
-        <div class="k-editor-textarea">
-            Leave comment:
+                    </span>
+                </div>
+            }
+        </div>
+        <hr />
+        if (Context.User.Identity.IsAuthenticated)
+        {
+            <div class="k-editor-textarea">
+                Leave comment:
             <div>
                 @Html.Kendo().EditorFor(m => m.CommentText)
             </div>
-            <input type="submit" value="Comment" class="btn btn-info"/>
+                <input type="submit" value="Comment" class="btn btn-info" />
+            </div>
+        }
+        <div class="panel">
+            @foreach (var c in Model.Comments)
+            {
+                <hr />
+                @Html.Partial("_CommentPatrial", c)
+            }
         </div>
-    }
-    <div class="panel">
-        @foreach (var c in Model.Comments)
-    {
-        <hr/>
-        @Html.Partial("_CommentPatrial", c)
-    }
-    </div>
-    
-</div>
 }
