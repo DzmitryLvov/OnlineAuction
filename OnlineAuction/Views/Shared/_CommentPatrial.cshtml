@@ -2,23 +2,15 @@
 @using System.Activities.Statements
 @model OnlineAuction.Buisness.Models.Lot.CommentViewModel
 
-<div>
-    @if (Model.IsApproved)
-    {
-        <div class="panel panel-comment"></div>
-    }
-    else
-    {
-        
-    <div class="panel panel-banned-comment"></div>
-    }
-    posted on <time>@Model.CommentDate</time> by <strong>@Html.ActionLink(Model.Username, "Profile", "Account", new { username = Model.Username }, null)</strong>
-     @if (Context.User.IsInRole("admin") && !Model.IsApproved)
-            {
-                @Html.ActionLink("[Ban comment]", "BanComment", "Lot", Model, null)
-            }
-    <p>
-    @if (Model.IsApproved)
+
+    
+   
+<a class="pull-left comment-image" href="#">
+      <img class="media-object" src="../../@Model.ImageUrl" alt="@Model.Username" width="100%">
+    </a>
+    <div class="media-body">
+        <h5 class="media-heading">@Html.ActionLink(Model.Username, "Profile", "Account", new { username = Model.Username }, null)<span style="float: right;"><small>  posted on <time>@Model.CommentDate</time></small></span></h5>
+         @if (Model.IsApproved)
     {
         @Model.CommentText
     }
@@ -26,5 +18,9 @@
     {
         <text>Deleted by administrator</text>
     }
-</div>
+        @if (Context.User.IsInRole("admin") && Model.IsApproved)
+    {
+        @Html.ActionLink("[Ban comment]", "BanComment", "Lot", Model, null)
+    }
+    </div>
 

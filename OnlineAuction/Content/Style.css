@@ -1,12 +1,23 @@
 .logon-nabar {
-    height: 50px;
-    padding-top: 11px;
+    padding-top: 2px;
+    vertical-align: middle;
+    line-height: 3;
 }
 .navbar {
     background-color: #333;
+    position: fixed;
+top: 0;
+z-index: 999;
+border-top: 0;
+border-left: 0;
+border-right: 0;
+border-radius: 0;
+width: 100%;
+border-color: #292829;
 }
 .navbar-collapse {
     width: 970px;
+    margin: 0 auto;
 }
 .bs-docs-nav {
     text-shadow: 0 -1px 0 rgba(0,0,0,.15);
@@ -48,8 +59,8 @@ body {
     z-index: -1000;
     position: relative;
     padding-top: 50px;
-    background-image: url(Image/background.jpg);
-    bac
+   /*background-image: url(Image/background.jpg);*/
+  
 }
 
 .container {
@@ -87,7 +98,6 @@ body {
     }
     .product img {
         width: 200px;
-        border: 1px solid #333;
     }
     .product h3 {
         margin: 0;
@@ -103,11 +113,12 @@ body {
     .product p {
         visibility: hidden;
     }
-    .img-comtainer {
+    .img-container {
         height: 200px;
         width: 200px;
         line-height: 200px;
         overflow: hidden;
+
     }
     .product:hover p {
         visibility: visible;
@@ -247,4 +258,51 @@ body {
 .lot-create {
     float:none;
     margin-top: 15px;
+}
+
+.product-detail {
+    
+}
+.product-detail h3 {
+    border-bottom: 1px solid #BEBCBC;
+margin-bottom: 20px;
+}
+.product-administration {
+    
+}
+.product-administration h3 {
+    border-bottom: 1px solid #BEBCBC;
+margin-bottom: 20px;
+}
+.comment-image {
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+}
+.comment-body {
+    border: 1px solid #dddddd;
+    padding: 5px;
+}
+.description-container {
+    margin: 20px 0;
+padding: 20px;
+border-left: 3px solid #eee;
+background-color: #f4f8fa;
+border-color: #bce8f1;
+}
+
+.bet-block {
+    align-content: center;
+    align-items: baseline;
+    line-height: 1;
+    border: 1px solid #ddd;
+padding-top: 15px;
+margin: 0;
+border-radius: 4px;
+    margin-bottom: 15px;
+}
+.bet-button {
+    margin-left: -1px;
+    border-bottom-left-radius: 0;
+border-top-left-radius: 0;
 }

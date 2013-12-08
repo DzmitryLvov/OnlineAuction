@@ -20,51 +20,45 @@
 </script>
 <div class="container highlight content">
 <div class="col-md-3">
-    <!--div class="bs-sidebar hidden-print affix" role="complementary">
-        <ul class="nav bs-sidenav">
-            @foreach (var c in Model.Categories)
-            {
-                <li>@Html.ActionLink(c.CategoryName,"SearchByCategory","Home", new {id=c.ID},null)</li>
-            }
-
-        </ul>
-    </div!-->
     <div class="panel-group" id="accordion">
-        @foreach (var c in Model.Categories)
+        @if (Model.Categories != null)
         {
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        @Html.ActionLink(c.CategoryName,"SearchByCategory","Home", new {id=c.ID},null)
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse@(c.ID)" style="float:right;">
-                            <span class="caret" style="right:0"></span>
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapse@(c.ID)" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        @foreach (var s in c.SubCategories)
-                        {
-                            <p>
-                            @Html.ActionLink(s.SubCategoryName,"SearchBySubCategory","Home", new {id=s.ID},null)
-                            </p>
-                        }
-                    </div>
-                </div>
-            </div>
+            foreach (var c in Model.Categories)
+             {
+                 <div class="panel panel-default">
+                     <div class="panel-heading">
+                         <h4 class="panel-title">
+                             @Html.ActionLink(c.CategoryName, "SearchByCategory", "Home", new {id = c.ID}, null)
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse@(c.ID)" style="float: right;">
+                                 <span class="caret" style="right: 0"></span>
+                             </a>
+                         </h4>
+                     </div>
+                     <div id="collapse@(c.ID)" class="panel-collapse collapse">
+                         <div class="panel-body">
+                             @foreach (var s in c.SubCategories)
+                             {
+                                 <p>
+                                     @Html.ActionLink(s.SubCategoryName, "SearchBySubCategory", "Home", new {id = s.ID}, null)
+                                 </p>
+                             }
+                         </div>
+                     </div>
+                 </div>
+             }
         }
     </div>
 </div>
-<div class="col-md-9">
-    @(Html.Kendo().ListView(Model.Lots)
-    .Name("listView")
-    .TagName("div")
-    .ClientTemplateId("template")
-    .Pageable()
-    
-)
+    <div class="col-md-9">
+            @(Html.Kendo().ListView(Model.Lots)
+                .Name("listView")
+                .TagName("div")
+                .BindTo(Model.Lots)
+                .ClientTemplateId("template"))
+       
 
-</div>
+
+    </div>
 </div>
 <script>
     function goToItem(id) {

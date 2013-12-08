@@ -1,16 +1,18 @@
 ﻿@using System.Activities.Statements
+@using System.Web.UI.WebControls
+@using OnlineAuction.Buisness.Models.Home
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    
+
     <script src="@Url.Content("~/Scripts/jquery.min.js")"></script>
 
     <link rel="stylesheet" href="@Url.Content("~/Content/kendo.common.min.css")" />
     <link rel="stylesheet" href="@Url.Content("~/Content/kendo.default.min.css")" />
     <script src="@Url.Content("~/Scripts/kendo.web.min.js")"></script>
     <script src="@Url.Content("~/Scripts/kendo.aspnetmvc.min.js")"></script>
-    
+
     <link href="@Url.Content("~/Content/jquery.ui.core.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/jquery.ui.theme.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>
@@ -22,26 +24,15 @@
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")" type="text/javascript"></script>
     <link href="@Url.Content("~/Content/style.css")" rel="stylesheet" type="text/css" />
 
-    
-
-    
 
     <title>@ViewBag.Title</title>
 </head>
 <body data-twttr-rendered="true">
-    <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
-        <div class="container">
+    <!--
+        <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+            <div class="container">
                 <div class="logon-nabar pull-right">
-                      @if(Request.IsAuthenticated) {
-        
-                  <span  style=color:#C4C4C4>Welcome, </span> <strong style="margin-right: 20px;">
-                 @Html.ActionLink(User.Identity.Name, "Profile", "Account")</strong>
-                 @Html.ActionLink("Log Off", "LogOff", "Account", null, new { @class = "btn btn-info btn-sm" })
-    }
-    else
-    {
-        @Html.ActionLink("Log On", "LogOn", "Account", null, new { @class = "btn btn-info btn-sm" })
-    }
+                    
                 </div>
                 <div class="container">
                     <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation" >
@@ -59,16 +50,70 @@
                             <li>
                                 @if (Context.User.IsInRole("admin"))
                                 {
-                                    @Html.ActionLink("Administration","Index","Administration")
+                                    @Html.ActionLink("Administration", "Index", "Administration")
                                 }
+                            </li>
+                            <li>
+                                
                             </li>
                         </ul>
                     
                     </nav>
-                    </div>
+                </div>
             </div>
         
-    </header>
-            @RenderBody()
+        </header> -->
+    <nav class="navbar navbar-default bs-docs-nav" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Auction</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    @Html.ActionLink("Home", "Index", "Home")
+                </li>
+                <li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Create Lot", "CreateLot", "Lot");
+                    }
+
+                </li>
+                <li>
+                    @if (Context.User.IsInRole("admin"))
+                    {
+                        @Html.ActionLink("Administration", "Index", "Administration")
+                    }
+                </li>
+            </ul>
+            <div class="logon-nabar navbar-right">
+                @if (Request.IsAuthenticated)
+                {
+        
+                    <span  style=color:#C4C4C4>Welcome, </span> <strong style="margin-right: 20px;">
+                                                                    @Html.ActionLink(User.Identity.Name, "Profile", "Account")</strong>
+                    @Html.ActionLink("LogOut", "LogOff", "Account", null, new { @class = "btn btn-info btn-sm"} )
+                }
+                else
+                {
+                    @Html.ActionLink("Log On", "LogOn", "Account", null, new { @class = "btn btn-info btn-sm" })
+                }
+            </div>
+            <form class = "navbar-form navbar-right" role = "search">
+                                    @Html.Partial("_SearchByNamePartial", new SearchModel())
+            </form>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+    @RenderBody()
 </body>
 </html>

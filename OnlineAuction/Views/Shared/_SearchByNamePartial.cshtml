@@ -1,0 +1,10 @@
+﻿@model OnlineAuction.Buisness.Models.Home.SearchModel
+
+@using (Html.BeginForm("SearchByName", "Home"))
+{
+    
+    <div class="form-group">
+        @Html.TextBoxFor(t => t.Query, new {@class = "form-control", @style = "width:300px;", @placeholder = "Search"})
+    </div>
+    @Html.ActionLink("Search","SearchByName","Home",new{query=Model.Query}, new{@class="btn btn-default"})
+}

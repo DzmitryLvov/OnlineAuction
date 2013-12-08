@@ -12,6 +12,8 @@
 
 @using (Html.BeginForm("LogOn", "Account", FormMethod.Post, new { enctype = "multipart/form-data", @class = "center-block col-md-3", @style="float:none; padding-top: 100px;",}))
 {
+    
+        
     if (@Html.ValidationSummary(true, "") != null)
      {
          <div class="alert alert-warning">

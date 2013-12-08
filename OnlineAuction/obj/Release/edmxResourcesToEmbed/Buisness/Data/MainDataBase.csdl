@@ -89,9 +89,6 @@
       <End Role="User" EntitySet="Users" />
       <End Role="UserData" EntitySet="UserDatas" />
     </AssociationSet>
-    <FunctionImport Name="AddCategory">
-      <Parameter Name="CategoryName" Mode="In" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="AddNewLot">
       <Parameter Name="LotName" Mode="In" Type="String" />
       <Parameter Name="Descr" Mode="In" Type="String" />
@@ -145,7 +142,7 @@
       <Parameter Name="username" Mode="In" Type="String" />
       <Parameter Name="UserId" Mode="InOut" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="GetUsersWithBannedComments" ReturnType="Collection(MainDataBaseModel.GetUsersWithBannedComments_Result4)">
+    <FunctionImport Name="GetUsersWithBannedComments" ReturnType="Collection(MainDataBaseModel.GetUsersWithBannedComments_Result5)">
       <Parameter Name="count" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="LeaveComment">
@@ -161,22 +158,6 @@
     </FunctionImport>
     <FunctionImport Name="MarkUserAsDeleted">
       <Parameter Name="UserId" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="SearchByLotName" ReturnType="Collection(MainDataBaseModel.SearchByLotName_Result4)">
-      <Parameter Name="lotname" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="SearchByUasers" ReturnType="Collection(MainDataBaseModel.SearchByUasers_Result4)">
-      <Parameter Name="username" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="SearchLot" ReturnType="Collection(MainDataBaseModel.SearchLot_Result4)">
-      <Parameter Name="query" Mode="In" Type="String" />
-      <Parameter Name="allowDeleted" Mode="In" Type="Boolean" />
-    </FunctionImport>
-    <FunctionImport Name="SearchLotByCategoryId">
-      <Parameter Name="id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="SearchLotBySubCategoryId">
-      <Parameter Name="id" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="sp_alterdiagram">
       <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -194,11 +175,11 @@
       <Parameter Name="diagramname" Mode="In" Type="String" />
       <Parameter Name="owner_id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MainDataBaseModel.sp_helpdiagramdefinition_Result3)">
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MainDataBaseModel.sp_helpdiagramdefinition_Result4)">
       <Parameter Name="diagramname" Mode="In" Type="String" />
       <Parameter Name="owner_id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MainDataBaseModel.sp_helpdiagrams_Result3)">
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MainDataBaseModel.sp_helpdiagrams_Result4)">
       <Parameter Name="diagramname" Mode="In" Type="String" />
       <Parameter Name="owner_id" Mode="In" Type="Int32" />
     </FunctionImport>
@@ -211,6 +192,21 @@
     <FunctionImport Name="TrySetUserRole">
       <Parameter Name="userName" Mode="In" Type="String" />
       <Parameter Name="roleId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SearchByName" EntitySet="Lots" ReturnType="Collection(MainDataBaseModel.Lot)">
+      <Parameter Name="query" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SearchlotByCategoryId" EntitySet="Lots" ReturnType="Collection(MainDataBaseModel.Lot)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SearchLotBySubCategoryId" EntitySet="Lots" ReturnType="Collection(MainDataBaseModel.Lot)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SearchByUsers" EntitySet="Users" ReturnType="Collection(MainDataBaseModel.User)">
+      <Parameter Name="username" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SearchByCompletedLots" EntitySet="Lots" ReturnType="Collection(MainDataBaseModel.Lot)">
+      <Parameter Name="query" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="GetUsersWithBannedComments_Result">
@@ -1073,6 +1069,83 @@
     <Property Type="Binary" Name="definition" Nullable="true" />
   </ComplexType>
   <ComplexType Name="sp_helpdiagrams_Result3">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="GetUsersWithBannedComments_Result5">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Username" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Password" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="PasswordQuestion" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="PasswordAnswer" Nullable="true" MaxLength="255" />
+    <Property Type="Boolean" Name="IsApproved" Nullable="false" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <Property Type="Int32" Name="Role_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SearchByCompletedLots_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="LotName" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="false" />
+    <Property Type="Int64" Name="StartCurrency" Nullable="false" />
+    <Property Type="DateTime" Name="ActualDate" Nullable="false" Precision="23" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <Property Type="Int32" Name="OwnerId" Nullable="false" />
+    <Property Type="String" Name="ViewCount" Nullable="false" />
+    <Property Type="Int32" Name="LotTypeID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SearchByLotName_Result5">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="LotName" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="false" />
+    <Property Type="Int64" Name="StartCurrency" Nullable="false" />
+    <Property Type="DateTime" Name="ActualDate" Nullable="false" Precision="23" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <Property Type="Int32" Name="OwnerId" Nullable="false" />
+    <Property Type="String" Name="ViewCount" Nullable="false" />
+    <Property Type="Int32" Name="LotTypeID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SearchByUasers_Result5">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Username" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Password" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="PasswordQuestion" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="PasswordAnswer" Nullable="true" MaxLength="255" />
+    <Property Type="Boolean" Name="IsApproved" Nullable="false" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <Property Type="Int32" Name="Role_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SearchLotByCategoryId_Result1">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="LotName" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="false" />
+    <Property Type="Int64" Name="StartCurrency" Nullable="false" />
+    <Property Type="DateTime" Name="ActualDate" Nullable="false" Precision="23" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <Property Type="Int32" Name="OwnerId" Nullable="false" />
+    <Property Type="String" Name="ViewCount" Nullable="false" />
+    <Property Type="Int32" Name="LotTypeID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SearchLotBySubCategoryId_Result1">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="LotName" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="false" />
+    <Property Type="Int64" Name="StartCurrency" Nullable="false" />
+    <Property Type="DateTime" Name="ActualDate" Nullable="false" Precision="23" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <Property Type="Int32" Name="OwnerId" Nullable="false" />
+    <Property Type="String" Name="ViewCount" Nullable="false" />
+    <Property Type="Int32" Name="LotTypeID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result4">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result4">
     <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
     <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
     <Property Type="Int32" Name="ID" Nullable="false" />

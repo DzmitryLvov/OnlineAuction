@@ -823,12 +823,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="AddCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="CategoryName" Type="nvarchar" Mode="In" />
-  </Function>
   <Function Name="AddNewLot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="LotName" Type="nvarchar" Mode="In" />
-    <Parameter Name="Descr" Type="nvarchar" Mode="In" />
+    <Parameter Name="Descr" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="StartCurrency" Type="int" Mode="In" />
     <Parameter Name="ActualDate" Type="datetime" Mode="In" />
     <Parameter Name="OwnerId" Type="int" Mode="In" />
@@ -897,15 +894,14 @@
   <Function Name="MarkUserAsDeleted" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="UserId" Type="int" Mode="In" />
   </Function>
+  <Function Name="SearchByCompletedLots" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="query" Type="nvarchar" Mode="In" />
+  </Function>
   <Function Name="SearchByLotName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="lotname" Type="nvarchar" Mode="In" />
+    <Parameter Name="query" Type="nvarchar(max)" Mode="In" />
   </Function>
   <Function Name="SearchByUasers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="username" Type="nvarchar" Mode="In" />
-  </Function>
-  <Function Name="SearchLot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="query" Type="nvarchar" Mode="In" />
-    <Parameter Name="allowDeleted" Type="bit" Mode="In" />
   </Function>
   <Function Name="SearchLotByCategoryId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="id" Type="int" Mode="In" />

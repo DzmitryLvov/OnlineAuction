@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Web;
 using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
@@ -14,8 +15,8 @@ namespace OnlineAuction.Buisness.Controllers
         DataAccess dataAccess = new DataAccess();
         
 
-
-        public ActionResult Index( int id)
+        [HttpGet]
+        public ActionResult Index( int id, string errormsg = null)
         {
             var cookie = new HttpCookie("name")
             {
@@ -28,6 +29,10 @@ namespace OnlineAuction.Buisness.Controllers
 
             var model = dataAccess.GetViewModelById(id);
 
+            if (errormsg != null)
+            {
+                ModelState.AddModelError("",errormsg);
+            }
             if (model != null)
             {
                 return View( model);
@@ -35,22 +40,11 @@ namespace OnlineAuction.Buisness.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        
         [HttpPost]
-        [Authorize]
         public ActionResult Index(LotViewModel model )
         {
-            if (ModelState.IsValid)
-            {
-                 var lotid = Convert.ToInt32(Request.Cookies["LotId"].Value);
-
-                new DataAccess().LeaveComment(lotid, HttpContext.User.Identity.Name, model.CommentText);
-
-                return RedirectToAction("Index", "Lot",new {id = lotid});
-            }
-
-            var restoreModel = dataAccess.GetViewModelById(model.Model.ID);
-
-            return View(restoreModel);
+            return View(model);
         }
 
         [Authorize]
@@ -73,7 +67,6 @@ namespace OnlineAuction.Buisness.Controllers
                 }
                 ModelState.AddModelError("", errormsg);
             }
-            ModelState.AddModelError("", "");
             return View(model);
         }
 
@@ -96,12 +89,26 @@ namespace OnlineAuction.Buisness.Controllers
 
 
         [Authorize]
-        public ActionResult MakeBet(BetInfo Model)
+        public ActionResult MakeBet(LotViewModel model)
         {
             var lotid = Convert.ToInt32(Request.Cookies["LotId"].Value); //TODO:убрать этот костыль
-            new DataAccess().MakeBet(HttpContext.User.Identity.Name,lotid, Model.BetValue);
-            return Json(ModelState.ToDataSourceResult());
+            var message = "";
+            if (ModelState.IsValid)
+            {
+                message = new DataAccess().MakeBet(HttpContext.User.Identity.Name,lotid, model.BetValue);
+                if (String.IsNullOrWhiteSpace(message))
+                {
+                    return RedirectToAction("Index", new{id=lotid});
+                }
+                model = new DataAccess().GetViewModelById(lotid);
+                ModelState.AddModelError("", message);
+                
+            }
+
+            return RedirectToAction("Index", new { id = lotid, @errormsg = message});
         }
+
+        
 
         public ActionResult GetBets([DataSourceRequest] DataSourceRequest dsRequest)
         {
@@ -122,6 +129,17 @@ namespace OnlineAuction.Buisness.Controllers
             return Json(new DataAccess().GetConvertedActualLotCollection().ToDataSourceResult(dsRequest));
         }
 
-       
+
+        public ActionResult LeaveComment(CommentInfo model)
+        {
+            var id = Convert.ToInt32(Request.Cookies["LotId"].Value);
+            var message = "";
+            if (ModelState.IsValid)
+            {
+                message = new DataAccess().LeaveComment(id, HttpContext.User.Identity.Name, model.CommentText);
+            }
+
+            return RedirectToAction("Index", new { id = id, @errormsg = message });
+        }
     }
 }

@@ -137,6 +137,9 @@
     <Compile Include="Buisness\Data\GetUsersWithBannedComments_Result4.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\GetUsersWithBannedComments_Result5.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\Location.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
@@ -188,6 +191,9 @@
     <Compile Include="Buisness\Data\Role.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\SearchByCompletedLots_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\SearchByLotName_Result.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
@@ -201,6 +207,9 @@
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\SearchByLotName_Result4.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SearchByLotName_Result5.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\SearchByUasers_Result.cs">
@@ -218,10 +227,19 @@
     <Compile Include="Buisness\Data\SearchByUasers_Result4.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\SearchByUasers_Result5.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\SearchLotByCategoryId_Result.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\SearchLotByCategoryId_Result1.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\SearchLotBySubCategoryId_Result.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\SearchLotBySubCategoryId_Result1.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\SearchLot_Result.cs">
@@ -251,6 +269,9 @@
     <Compile Include="Buisness\Data\sp_helpdiagramdefinition_Result3.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\sp_helpdiagramdefinition_Result4.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\sp_helpdiagrams_Result.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
@@ -261,6 +282,9 @@
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\sp_helpdiagrams_Result3.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\sp_helpdiagrams_Result4.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Buisness\Data\SubCategory.cs">
@@ -291,6 +315,7 @@
     <Compile Include="Buisness\Models\Account\UserProfileViewModel.cs" />
     <Compile Include="Buisness\Models\BookMarkModel.cs" />
     <Compile Include="Buisness\Models\Home\IndexModel.cs" />
+    <Compile Include="Buisness\Models\Home\SearchModel.cs" />
     <Compile Include="Buisness\Models\Lot\CatalogModel.cs" />
     <Compile Include="Buisness\Models\Lot\CommentViewModel.cs" />
     <Compile Include="Buisness\Models\Lot\CreateLotModel.cs" />
@@ -622,6 +647,7 @@
     <Content Include="Views\Shared\EditorTemplates\Bet.cshtml" />
     <Content Include="Views\Shared\_CommentPatrial.cshtml" />
     <Content Include="Views\Administration\Index.cshtml" />
+    <Content Include="Views\Shared\_SearchByNamePartial.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

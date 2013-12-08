@@ -27,76 +27,147 @@
     }, '');
 </script>
 
-@using (Html.BeginForm())
-{
-    <div class="col-md-9 highlight center-block" style="float: none;">
-        <div class="title-container">
-            <span>@Model.Model.LotName</span>
-        </div>
 
-        <div class="img-index col-md-3">
-            <img  src="../../@Model.ImageUrl"  width="350" />
+<div class="col-md-9 highlight row center-block" style="float: none;">
+    <div class="row-fluid">
+        <div class="col-md-5">
+            <div class="row-fluid">
+                <img  src="../../@Model.ImageUrl"  width="100%" />
+                @if (Context.User.Identity.IsAuthenticated)
+                {
+                    if (Context.User.IsInRole("admin") || Context.User.Identity.Name == Model.Model.Username)
+                    {
+                        <div class="product-administration">
+                            <p></p>
+                            @Html.ActionLink("Delete this lot", "DeleteLot", "Lot", Model.Model, new { @class = "btn btn-info" })
+                            <hr />
+                        </div>
+                    if (@Html.ValidationSummary(true, "") != null)
+                        {
+                <div class="alert alert-warning row bet-block">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    @Html.ValidationSummary(true, "")
+                </div>
+                        }
+                    }
+                }
+            </div>
+
         </div>
-        <div class="col-md-9">
-            @Model.Model.Description
-            @{
-                <h4>@String.Format("{0} d {1} h {2} m",
-                                            (Model.Model.ActualDate - DateTime.Now).Days.ToString(),
-                                            (Model.Model.ActualDate - DateTime.Now).Hours.ToString(),
-                                            (Model.Model.ActualDate - DateTime.Now).Minutes.ToString())</h4>
-            }
-        </div>
-<strong>Start from: @Model.Model.StartCurrency $</strong>
+        <div class="col-md-7 product-detail">
+            <h3>@Model.Model.LotName</h3>
+            <p>
+                <div class="description-container">
+                    @Model.Model.Description
+                </div>
+            </p>
+            <p></p>
+
+
             @if (Context.User.Identity.IsAuthenticated)
             {
-                if (Context.User.IsInRole("admin") || Context.User.Identity.Name == Model.Model.Username)
+                if (!Model.Model.IsDeleted)
                 {
-                @Html.ActionLink("Delete this lot", "DeleteLot", "Lot", Model.Model, new { @class = "btn btn-info" })
+                <div class="row bet-block">
+                    <div class="col-md-3">
+                        <p>Remaining:</p>
+                        <p>@String.Format("{0} d {1} h {2} m",
+                                    (Model.Model.ActualDate - DateTime.Now).Days.ToString(),
+                                    (Model.Model.ActualDate - DateTime.Now).Hours.ToString(),
+                                    (Model.Model.ActualDate - DateTime.Now).Minutes.ToString())
+                        </p>
+
+                    </div>
+                    <div class="col-md-3">
+                        <p>Current:</p>
+                        <p>
+                            <strong>$@Model.Model.MaxBet
+                            </strong>
+                        </p>
+
+                    </div>
+                    <div class="col-md-6">
+                        @using (Html.BeginForm("MakeBet", "Lot"))
+                        {
+                            <div class="input-group">
+                                @Html.TextBoxFor(t => t.BetValue, new { @class = "form-control" })
+                                <span class="input-group-btn">
+                                    <input type="submit" class="btn btn-default bet-button" value="Make bet" />
+                                </span>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+                        
                 }
-                @(Html.Kendo().Grid<BetInfo>().Name("Bets")
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">View bet history
+                            </a>
+                        </h4>
+                    </div>
+
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body" style="padding: 0;">
+                            @(Html.Kendo().Grid<BetInfo>().Name("BetHistory")
                           .Columns(columns =>
                           {
                               columns.Bound(t => t.Username);
                               columns.Bound(t => t.BetValue);
                               columns.Bound(t => t.BetDate).Format("{0:dd.MM.yyyy hh:mm}");
                           })
-                          .ToolBar(toolbar => toolbar.Create())
-                          .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Bet"))
-                          .Scrollable()
+                          .Scrollable().HtmlAttributes(new { @width = "350" })
                           .DataSource(dataSource => dataSource
                               .Ajax()
                               .PageSize(20)
                               .Model(model => model.Id(t => t.ID))
-                              .Create(update => update.Action("MakeBet", "Lot"))
                               .Read(read => read.Action("GetBets", "Lot"))
                           ).AutoBind(true))
+                        </div>
+                    </div>
+                </div>
             }
             else
             {
-                <div class="logon-warning-message">
-                    <span>Unregistered users can not bet. Please, @Html.ActionLink("Log on", "LogOn", "Account", null, new { @class = "btn btn-info" })
-                        or
-                        @Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn btn-info" })
-                    </span>
+                <div class="text-info">
+                    Unregistered users can not bet. Please, @Html.ActionLink("Log on", "LogOn", "Account", null, new { @class = "btn btn-info" })
+                    or
+                    @Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn btn-info" })
                 </div>
             }
-        </div>
-        <hr />
-        if (Context.User.Identity.IsAuthenticated)
-        {
-            <div class="k-editor-textarea">
-                Leave comment:
-            <div>
-                @Html.Kendo().EditorFor(m => m.CommentText)
-            </div>
-                <input type="submit" value="Comment" class="btn btn-info" />
-            </div>
-        }
-        <div class="panel">
-            @foreach (var c in Model.Comments)
+            <hr/>
+            @if (Context.User.Identity.IsAuthenticated)
             {
-                <hr />
-                @Html.Partial("_CommentPatrial", c)
+                using (Html.BeginForm("LeaveComment", "Lot"))
+                {
+                    <div class="input-group" style="margin-top: 30px;">
+                                @Html.TextBoxFor(t => t.CommentText, new { @class = "form-control" })
+                                <span class="input-group-btn">
+                                    <input type="submit" class="btn btn-default bet-button" value="Comment" />
+                                </span>
+                            </div>
+                <hr/>
+                }
             }
+            <ul class="media-list">
+                @foreach (var c in Model.Comments)
+                {
+                    <li class="media comment-body">
+                        @Html.Partial("_CommentPatrial", c)
+                    </li>
+                    
+                }
+            </ul>
+
         </div>
-}
+
+    </div>
+    <div class="col-md-9">
+    </div>
+
+
+</div>
+
+

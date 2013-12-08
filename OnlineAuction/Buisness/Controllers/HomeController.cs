@@ -15,40 +15,45 @@ namespace OnlineAuction.Buisness.Controllers
         public ActionResult Index(IndexModel model = null)
         {
             var dataAccess = new DataAccess();
-            return View(new IndexModel()
+            if (model.Lots == null)
             {
-                Lots = dataAccess.GetConvertedActualLotCollection(), 
-                Categories = dataAccess.GetCategoriesCollection()
-            });
+                return View(new IndexModel()
+                {
+                    Lots = dataAccess.GetConvertedActualLotCollection()
+                });
+            }
+            else
+            {
+                return View(model);
+            }
+            
         }
 
         
-
-        public ActionResult Index(IEnumerable<LotPreviewModel>  model)
-        {
-            try
-            {
-                return  Index(new IndexModel
-                {
-                    Categories = new DataAccess().GetCategoriesCollection(),
-                    Lots = model
-                });
-            }
-            catch (Exception e)
-            {
-                return View();
-            }
-        }
+        
          public ActionResult SearchByCategory(int id)
          {
-              var dataAccess = new DataAccess();
-             return RedirectToAction( "Index","Home",dataAccess.SearchLotBuCategoryId(id));
-
+             var data = new DataAccess();
+             var model = new IndexModel()
+             {
+                 Lots = data.SearchLotBuCategoryId(id)
+             };
+             return View("Index", model);
          }
 
         public ActionResult SearchBySubCategory(int id)
         {
-            return null;
+            var data = new DataAccess();
+            var model = new IndexModel()
+            {
+                Lots = data.SearchLotBySubCategoryId(id)
+            };
+            return View("Index", model);
+        }
+
+        public ActionResult SearchByName(string query)
+        {
+            throw new NotImplementedException();
         }
     }
 }

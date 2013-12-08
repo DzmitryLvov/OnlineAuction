@@ -11,8 +11,6 @@ namespace OnlineAuction.Buisness.Models.Lot
 
         public string LotName { get; set; }
 
-        public int SubCategoryID { get; set; }
-
         public string PhotoLink{ get; set;}
 
         public int Currency { get; set; }

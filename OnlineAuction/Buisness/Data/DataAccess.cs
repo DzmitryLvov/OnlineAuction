@@ -77,8 +77,8 @@ namespace OnlineAuction.Buisness.Data
                     ActualDate = lot.ActualDate,
                     Description = lot.Description,
                     IsDeleted = lot.IsDeleted,
-                    MaxBet = GetmaxBetValue(lot.ID),
-                    Username = lot.User.Username
+                    MaxBet = (GetmaxBetValue(lot.ID) == -1) ? (int)lot.StartCurrency : (GetmaxBetValue(lot.ID)),
+                    Username = lot.User.Username,
                 },
                 Comments = comments.Select(
                 t => new CommentViewModel
@@ -161,20 +161,6 @@ namespace OnlineAuction.Buisness.Data
 
        
 
-        private string GenerateRandomPass()
-        {
-            var rnd = new Random();
-
-            var size = rnd.Next(32, 36);
-
-            var result = "";
-
-            for (var i = 0; i < size; i++)
-            {
-                result += ETALON[rnd.Next(61)];
-            }
-            return result;
-        }
 
         public  IQueryable<Lot> GetCollectionToDelete()
         {
@@ -362,18 +348,21 @@ namespace OnlineAuction.Buisness.Data
             else return -1;
         }
 
-        internal bool MakeBet(string userName, int lotId, int betValue)
+        internal string MakeBet(string userName, int lotId,  int betValue)
         {
             try
             {
                 var userid = new ObjectParameter("UserId", typeof (int));
                 _dataBase.GetUserIdByName(userName, userid);
-                _dataBase.MakeBet((int) userid.Value, lotId, betValue, DateTime.Now);
-                return true;
+                var count = _dataBase.MakeBet((int) userid.Value, lotId, betValue, DateTime.Now);
+                return (count == -1)
+                    ? "Ошибка при добавлении ставки"
+                    : null;
+
             }
             catch (Exception e)
             {
-                return false;
+                return e.InnerException.Message;
             }
         }
 
@@ -385,7 +374,11 @@ namespace OnlineAuction.Buisness.Data
                 _dataBase.GetUserIdByName(userName, userid);
 
 
-                _dataBase.LeaveComment((int) userid.Value, lotid, commentText.Trim());
+                if (_dataBase.LeaveComment((int) userid.Value, lotid, commentText.Trim()) == -1)
+                {
+                    return "Ошибка при отправлении комментария";
+                }
+                else
                 return null;
             }
             catch (Exception ex)
@@ -444,7 +437,33 @@ namespace OnlineAuction.Buisness.Data
 
         internal IEnumerable<LotPreviewModel> SearchLotBuCategoryId(int id)
         {
-            return null;
+            foreach (var lot in _dataBase.SearchlotByCategoryId(id)) //не переделывать в linq, нужно для kendo bind
+            {
+                yield return new LotPreviewModel()
+                {
+                    ActualDate = lot.ActualDate,
+                    Currency = (GetmaxBetValue(lot.ID) == -1) ? (int)lot.StartCurrency : (GetmaxBetValue(lot.ID)),
+                    ID = lot.ID,
+                    LotName = lot.LotName,
+                    PhotoLink ="../../"+ IndexPhotoLink(lot.ID)
+                };
+            }
+            
+        }
+
+        public IEnumerable<LotPreviewModel> SearchLotBySubCategoryId(int id)
+        {
+            foreach (var lot in _dataBase.SearchLotBySubCategoryId(id)) 
+            {
+                yield return new LotPreviewModel()
+                {
+                    ActualDate = lot.ActualDate,
+                    Currency = (GetmaxBetValue(lot.ID) == -1) ? (int)lot.StartCurrency : (GetmaxBetValue(lot.ID)),
+                    ID = lot.ID,
+                    LotName = lot.LotName,
+                    PhotoLink = "../../" + IndexPhotoLink(lot.ID)
+                };
+            }
         }
     }
 }
