@@ -50,19 +50,25 @@
     </div>
 </div>
     <div class="col-md-9">
+        @if (Model.Lots.ToList().Count > 0 )
+        {
             @(Html.Kendo().ListView(Model.Lots)
-                .Name("listView")
-                .TagName("div")
-                .BindTo(Model.Lots)
-                .ClientTemplateId("template"))
-       
+                  .Name("listView")
+                  .TagName("div")
+                  .BindTo(Model.Lots)
+                  .ClientTemplateId("template"))
 
+        }
+        else
+        {
+            <h2 class="not-found-message">Not found</h2>
+        }
 
     </div>
 </div>
 <script>
-    function goToItem(id) {
-        document.location.href = "/onlineauction/lot/index/" + id;
+    function goToItem(lotid) {
+        document.location.href = "@(Url.Action("Index","Lot"))/index/"+ lotid ;
     }
 
 

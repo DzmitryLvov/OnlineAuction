@@ -10,17 +10,17 @@
 namespace OnlineAuction.Buisness.Data
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class LotCategoryInfo
+    public partial class SearchByLotName_Result6
     {
         public int ID { get; set; }
         public string LotName { get; set; }
+        public string Description { get; set; }
+        public long StartCurrency { get; set; }
         public System.DateTime ActualDate { get; set; }
         public bool IsDeleted { get; set; }
-        public int SubCategoryid { get; set; }
-        public string SubCategoryName { get; set; }
-        public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
+        public int OwnerId { get; set; }
+        public string ViewCount { get; set; }
+        public int LotTypeID { get; set; }
     }
 }

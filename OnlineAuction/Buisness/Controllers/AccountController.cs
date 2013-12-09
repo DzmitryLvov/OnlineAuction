@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Runtime.Remoting.Contexts;
 using System.Web.Mvc;
 using System.Web.Security;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using OnlineAuction.Buisness.Data;
 using OnlineAuction.Buisness.Models.Account;
 namespace OnlineAuction.Buisness.Controllers
@@ -177,6 +180,22 @@ namespace OnlineAuction.Buisness.Controllers
         {
             new DataAccess().UnBanUser(username);
             return RedirectToAction("Profile", new { username = username });
+        }
+
+        [Authorize]
+        public ActionResult Bookmarks()
+        {
+            return View();
+        }
+        public ActionResult GetBookmarks([DataSourceRequest] DataSourceRequest dsRequest)
+        {
+            return Json(new DataAccess().GetUserBookmarks(HttpContext.User.Identity.Name).ToDataSourceResult(dsRequest), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult DeleteUser(string username)
+        {
+            new DataAccess().DeleteUser(username);
+             return RedirectToAction("Index","Home");
         }
     }
 }

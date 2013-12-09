@@ -306,3 +306,8 @@ border-radius: 4px;
     border-bottom-left-radius: 0;
 border-top-left-radius: 0;
 }
+.not-found-message {
+    color: #333;
+    text-align: center;
+    margin-top: 50px;
+}

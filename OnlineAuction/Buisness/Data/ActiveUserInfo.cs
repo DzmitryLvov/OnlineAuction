@@ -12,7 +12,7 @@ namespace OnlineAuction.Buisness.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class ActiveUserIno
+    public partial class ActiveUserInfo
     {
         public string Username { get; set; }
         public string Email { get; set; }
@@ -21,5 +21,6 @@ namespace OnlineAuction.Buisness.Data
         public string LocationName { get; set; }
         public string Rolename { get; set; }
         public string LastName { get; set; }
+        public int ID { get; set; }
     }
 }

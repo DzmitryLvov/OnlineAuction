@@ -1,25 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
-using Kendo.Mvc.Extensions;
-using Kendo.Mvc.UI;
 using OnlineAuction.Buisness.Data;
 using OnlineAuction.Buisness.Models.Home;
-using OnlineAuction.Buisness.Models.Lot;
 
 namespace OnlineAuction.Buisness.Controllers
 {
     public class HomeController : Controller
     {
         [HttpGet]
-        public ActionResult Index(IndexModel model = null)
+        public ActionResult Index(IndexModel model = null) //разобраться с поиском
         {
             var dataAccess = new DataAccess();
-            if (model.Lots == null)
+            if (!String.IsNullOrWhiteSpace(model.SearchQuery))
+                return View(new IndexModel()
+                {
+                    Lots = dataAccess.SearchLotByName(model.SearchQuery)
+                });
+            if (model.Lots == null )
             {
                 return View(new IndexModel()
                 {
-                    Lots = dataAccess.GetConvertedActualLotCollection()
+                    Lots = dataAccess.GetConvertedActualLotCollection().OrderBy(t =>t.ActualDate)
                 });
             }
             else
@@ -28,8 +30,6 @@ namespace OnlineAuction.Buisness.Controllers
             }
             
         }
-
-        
         
          public ActionResult SearchByCategory(int id)
          {
@@ -51,9 +51,8 @@ namespace OnlineAuction.Buisness.Controllers
             return View("Index", model);
         }
 
-        public ActionResult SearchByName(string query)
-        {
-            throw new NotImplementedException();
-        }
+        
+        
+        
     }
 }

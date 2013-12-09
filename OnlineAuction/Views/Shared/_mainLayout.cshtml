@@ -1,6 +1,8 @@
 ﻿@using System.Activities.Statements
+@using System.Web.Query.Dynamic
 @using System.Web.UI.WebControls
 @using OnlineAuction.Buisness.Models.Home
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,41 +30,7 @@
     <title>@ViewBag.Title</title>
 </head>
 <body data-twttr-rendered="true">
-    <!--
-        <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
-            <div class="container">
-                <div class="logon-nabar pull-right">
-                    
-                </div>
-                <div class="container">
-                    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation" >
-                        <ul class="nav navbar-nav">
-                            <li>
-                                @Html.ActionLink("Home", "Index", "Home")
-                            </li>
-                            <li>
-                                @if (User.Identity.IsAuthenticated)
-                                {
-                                    @Html.ActionLink("Create Lot", "CreateLot", "Lot");
-                                }
-                    
-                            </li>
-                            <li>
-                                @if (Context.User.IsInRole("admin"))
-                                {
-                                    @Html.ActionLink("Administration", "Index", "Administration")
-                                }
-                            </li>
-                            <li>
-                                
-                            </li>
-                        </ul>
-                    
-                    </nav>
-                </div>
-            </div>
-        
-        </header> -->
+
     <nav class="navbar navbar-default bs-docs-nav" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -94,24 +62,40 @@
                         @Html.ActionLink("Administration", "Index", "Administration")
                     }
                 </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        @Html.ActionLink("Bookmarks", "Bookmarks", "Account")
+                    </li>
+                }
             </ul>
             <div class="logon-nabar navbar-right">
                 @if (Request.IsAuthenticated)
                 {
         
-                    <span  style=color:#C4C4C4>Welcome, </span> <strong style="margin-right: 20px;">
-                                                                    @Html.ActionLink(User.Identity.Name, "Profile", "Account")</strong>
-                    @Html.ActionLink("LogOut", "LogOff", "Account", null, new { @class = "btn btn-info btn-sm"} )
+                    <span style="color: #C4C4C4">Welcome, </span> <strong style="margin-right: 20px;">
+                        @Html.ActionLink(User.Identity.Name, "Profile", "Account")</strong>
+                    @Html.ActionLink("LogOut", "LogOff", "Account", null, new { @class = "btn btn-info btn-sm" })
                 }
                 else
                 {
                     @Html.ActionLink("Log On", "LogOn", "Account", null, new { @class = "btn btn-info btn-sm" })
                 }
             </div>
-            <form class = "navbar-form navbar-right" role = "search">
-                                    @Html.Partial("_SearchByNamePartial", new SearchModel())
-            </form>
+
+            <div class="navbar-form navbar-right" role="search">
+                <div class="form-group ">
+                    <input type="text" id="textSearch" style="width: 200px;" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" id="SearchSubmit" class="btn btn-default">Search</button>
+            </div>
         </div>
+        <script type="text/javascript">
+            $("#SearchSubmit").click(function () {
+                var inp = document.getElementById('textSearch');
+                document.location.href = "@(Url.Action("Index", "Home"))home/index/?SearchQuery=" + inp.value;
+            })
+        </script>
         <!-- /.navbar-collapse -->
     </nav>
     @RenderBody()

@@ -6,7 +6,6 @@
     <EntitySet Name="Categories" EntityType="MainDataBaseModel.Store.Categories" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Comments" EntityType="MainDataBaseModel.Store.Comments" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Locations" EntityType="MainDataBaseModel.Store.Locations" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="LotPhotos" EntityType="MainDataBaseModel.Store.LotPhotos" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Lots" EntityType="MainDataBaseModel.Store.Lots" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LotSubCategories" EntityType="MainDataBaseModel.Store.LotSubCategories" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LotTypes" EntityType="MainDataBaseModel.Store.LotTypes" store:Type="Tables" Schema="dbo" />
@@ -14,16 +13,17 @@
     <EntitySet Name="SubCategories" EntityType="MainDataBaseModel.Store.SubCategories" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserDatas" EntityType="MainDataBaseModel.Store.UserDatas" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users" EntityType="MainDataBaseModel.Store.Users" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ActiveUserInos" EntityType="MainDataBaseModel.Store.ActiveUserInos" store:Type="Views" store:Schema="dbo" store:Name="ActiveUserInos">
+    <EntitySet Name="ActiveUserInfos" EntityType="MainDataBaseModel.Store.ActiveUserInfos" store:Type="Views" store:Schema="dbo" store:Name="ActiveUserInfos">
       <DefiningQuery>SELECT 
-      [ActiveUserInos].[Username] AS [Username], 
-      [ActiveUserInos].[Email] AS [Email], 
-      [ActiveUserInos].[Phone] AS [Phone], 
-      [ActiveUserInos].[FirstName] AS [FirstName], 
-      [ActiveUserInos].[LocationName] AS [LocationName], 
-      [ActiveUserInos].[Rolename] AS [Rolename], 
-      [ActiveUserInos].[LastName] AS [LastName]
-      FROM [dbo].[ActiveUserInos] AS [ActiveUserInos]</DefiningQuery>
+      [ActiveUserInfos].[Username] AS [Username], 
+      [ActiveUserInfos].[Email] AS [Email], 
+      [ActiveUserInfos].[Phone] AS [Phone], 
+      [ActiveUserInfos].[FirstName] AS [FirstName], 
+      [ActiveUserInfos].[LocationName] AS [LocationName], 
+      [ActiveUserInfos].[Rolename] AS [Rolename], 
+      [ActiveUserInfos].[LastName] AS [LastName], 
+      [ActiveUserInfos].[ID] AS [ID]
+      FROM [dbo].[ActiveUserInfos] AS [ActiveUserInfos]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="BetInfos" EntityType="MainDataBaseModel.Store.BetInfos" store:Type="Views" store:Schema="dbo" store:Name="BetInfos">
       <DefiningQuery>SELECT 
@@ -42,17 +42,10 @@
       [BookmarkInfos].[UserID] AS [UserID], 
       [BookmarkInfos].[LotID] AS [LotID], 
       [BookmarkInfos].[Username] AS [Username], 
-      [BookmarkInfos].[LotName] AS [LotName]
+      [BookmarkInfos].[LotName] AS [LotName], 
+      [BookmarkInfos].[ActualDate] AS [ActualDate], 
+      [BookmarkInfos].[StartCurrency] AS [StartCurrency]
       FROM [dbo].[BookmarkInfos] AS [BookmarkInfos]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="CategoryLotCount" EntityType="MainDataBaseModel.Store.CategoryLotCount" store:Type="Views" store:Schema="dbo" store:Name="CategoryLotCount">
-      <DefiningQuery>SELECT 
-      [CategoryLotCount].[ID] AS [ID], 
-      [CategoryLotCount].[CategoryName] AS [CategoryName], 
-      [CategoryLotCount].[SubCategoryId] AS [SubCategoryId], 
-      [CategoryLotCount].[SubCategoryName] AS [SubCategoryName], 
-      [CategoryLotCount].[Lotcount] AS [Lotcount]
-      FROM [dbo].[CategoryLotCount] AS [CategoryLotCount]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="CommentInfos" EntityType="MainDataBaseModel.Store.CommentInfos" store:Type="Views" store:Schema="dbo" store:Name="CommentInfos">
       <DefiningQuery>SELECT 
@@ -72,17 +65,14 @@
       [LotByLocations].[LocationName] AS [LocationName]
       FROM [dbo].[LotByLocations] AS [LotByLocations]</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="LotCategoryInfos" EntityType="MainDataBaseModel.Store.LotCategoryInfos" store:Type="Views" store:Schema="dbo" store:Name="LotCategoryInfos">
+    <EntitySet Name="LotCategories" EntityType="MainDataBaseModel.Store.LotCategories" store:Type="Views" store:Schema="dbo" store:Name="LotCategories">
       <DefiningQuery>SELECT 
-      [LotCategoryInfos].[ID] AS [ID], 
-      [LotCategoryInfos].[LotName] AS [LotName], 
-      [LotCategoryInfos].[ActualDate] AS [ActualDate], 
-      [LotCategoryInfos].[IsDeleted] AS [IsDeleted], 
-      [LotCategoryInfos].[SubCategoryid] AS [SubCategoryid], 
-      [LotCategoryInfos].[SubCategoryName] AS [SubCategoryName], 
-      [LotCategoryInfos].[CategoryId] AS [CategoryId], 
-      [LotCategoryInfos].[CategoryName] AS [CategoryName]
-      FROM [dbo].[LotCategoryInfos] AS [LotCategoryInfos]</DefiningQuery>
+      [LotCategories].[SubCategoryCount] AS [SubCategoryCount], 
+      [LotCategories].[ID] AS [ID], 
+      [LotCategories].[CategoryID] AS [CategoryID], 
+      [LotCategories].[CategoryName] AS [CategoryName], 
+      [LotCategories].[SubCategoryName] AS [SubCategoryName]
+      FROM [dbo].[LotCategories] AS [LotCategories]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="LotInfos" EntityType="MainDataBaseModel.Store.LotInfos" store:Type="Views" store:Schema="dbo" store:Name="LotInfos">
       <DefiningQuery>SELECT 
@@ -195,10 +185,6 @@
       <End Role="Lots" EntitySet="Lots" />
       <End Role="Comments" EntitySet="Comments" />
     </AssociationSet>
-    <AssociationSet Name="FK_LotLotPhoto" Association="MainDataBaseModel.Store.FK_LotLotPhoto">
-      <End Role="Lots" EntitySet="Lots" />
-      <End Role="LotPhotos" EntitySet="LotPhotos" />
-    </AssociationSet>
     <AssociationSet Name="FK_LotSubCategories_Lots" Association="MainDataBaseModel.Store.FK_LotSubCategories_Lots">
       <End Role="Lots" EntitySet="Lots" />
       <End Role="LotSubCategories" EntitySet="LotSubCategories" />
@@ -276,14 +262,6 @@
     <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="LocationName" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
-  <EntityType Name="LotPhotos">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="LotID" Type="int" Nullable="false" />
-    <Property Name="PhotoLink" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
   <EntityType Name="Lots">
     <Key>
       <PropertyRef Name="ID" />
@@ -357,14 +335,15 @@
     <Property Name="Role_ID" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
-      warning 6002: The table/view 'OnlineAuctionDB.dbo.ActiveUserInos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'OnlineAuctionDB.dbo.ActiveUserInfos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-  <EntityType Name="ActiveUserInos">
+  <EntityType Name="ActiveUserInfos">
     <Key>
       <PropertyRef Name="Username" />
       <PropertyRef Name="Email" />
       <PropertyRef Name="LocationName" />
       <PropertyRef Name="Rolename" />
+      <PropertyRef Name="ID" />
     </Key>
     <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="255" />
     <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
@@ -373,6 +352,7 @@
     <Property Name="LocationName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Rolename" Type="nvarchar" Nullable="false" MaxLength="255" />
     <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="ID" Type="int" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
       warning 6002: The table/view 'OnlineAuctionDB.dbo.BetInfos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -405,28 +385,16 @@
       <PropertyRef Name="LotID" />
       <PropertyRef Name="Username" />
       <PropertyRef Name="LotName" />
+      <PropertyRef Name="ActualDate" />
+      <PropertyRef Name="StartCurrency" />
     </Key>
     <Property Name="ID" Type="int" Nullable="false" />
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="LotID" Type="int" Nullable="false" />
     <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="255" />
     <Property Name="LotName" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <!--Errors Found During Generation:
-      warning 6002: The table/view 'OnlineAuctionDB.dbo.CategoryLotCount' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-  <EntityType Name="CategoryLotCount">
-    <Key>
-      <PropertyRef Name="ID" />
-      <PropertyRef Name="CategoryName" />
-      <PropertyRef Name="SubCategoryId" />
-      <PropertyRef Name="SubCategoryName" />
-    </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
-    <Property Name="CategoryName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="SubCategoryId" Type="int" Nullable="false" />
-    <Property Name="SubCategoryName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Lotcount" Type="int" />
+    <Property Name="ActualDate" Type="datetime" Nullable="false" />
+    <Property Name="StartCurrency" Type="bigint" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
       warning 6002: The table/view 'OnlineAuctionDB.dbo.CommentInfos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -463,27 +431,20 @@
     <Property Name="LocationName" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-      warning 6002: The table/view 'OnlineAuctionDB.dbo.LotCategoryInfos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'OnlineAuctionDB.dbo.LotCategories' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-  <EntityType Name="LotCategoryInfos">
+  <EntityType Name="LotCategories">
     <Key>
       <PropertyRef Name="ID" />
-      <PropertyRef Name="LotName" />
-      <PropertyRef Name="ActualDate" />
-      <PropertyRef Name="IsDeleted" />
-      <PropertyRef Name="SubCategoryid" />
-      <PropertyRef Name="SubCategoryName" />
-      <PropertyRef Name="CategoryId" />
+      <PropertyRef Name="CategoryID" />
       <PropertyRef Name="CategoryName" />
+      <PropertyRef Name="SubCategoryName" />
     </Key>
+    <Property Name="SubCategoryCount" Type="int" />
     <Property Name="ID" Type="int" Nullable="false" />
-    <Property Name="LotName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ActualDate" Type="datetime" Nullable="false" />
-    <Property Name="IsDeleted" Type="bit" Nullable="false" />
-    <Property Name="SubCategoryid" Type="int" Nullable="false" />
-    <Property Name="SubCategoryName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="CategoryID" Type="int" Nullable="false" />
     <Property Name="CategoryName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SubCategoryName" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
       warning 6002: The table/view 'OnlineAuctionDB.dbo.LotInfos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -715,18 +676,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_LotLotPhoto">
-    <End Role="Lots" Type="MainDataBaseModel.Store.Lots" Multiplicity="1" />
-    <End Role="LotPhotos" Type="MainDataBaseModel.Store.LotPhotos" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Lots">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="LotPhotos">
-        <PropertyRef Name="LotID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_LotSubCategories_Lots">
     <End Role="Lots" Type="MainDataBaseModel.Store.Lots" Multiplicity="1" />
     <End Role="LotSubCategories" Type="MainDataBaseModel.Store.LotSubCategories" Multiplicity="*" />
@@ -823,6 +772,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="AddBookmark" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userid" Type="int" Mode="In" />
+    <Parameter Name="lotid" Type="int" Mode="In" />
+  </Function>
   <Function Name="AddNewLot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="LotName" Type="nvarchar" Mode="In" />
     <Parameter Name="Descr" Type="nvarchar(max)" Mode="In" />
@@ -846,16 +799,16 @@
     <Parameter Name="PhotoLink" Type="nvarchar" Mode="In" />
     <Parameter Name="LocationID" Type="int" Mode="In" />
   </Function>
-  <Function Name="AddSubCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="SubCategoryName" Type="nvarchar" Mode="In" />
-    <Parameter Name="CategoryId" Type="int" Mode="In" />
-  </Function>
   <Function Name="AddSubCategoryToLot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Lotid" Type="int" Mode="In" />
     <Parameter Name="SubCategoryId" Type="int" Mode="In" />
   </Function>
   <Function Name="CursorCompleteLots" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="CursorDeleteLotComments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="DeleteBookmark" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userid" Type="int" Mode="In" />
+    <Parameter Name="lotid" Type="int" Mode="In" />
+  </Function>
   <Function Name="DeleteLot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Id" Type="int" Mode="In" />
   </Function>
@@ -873,12 +826,12 @@
     <Parameter Name="Id" Type="int" Mode="In" />
     <Parameter Name="Value" Type="int" Mode="InOut" />
   </Function>
-  <Function Name="GetUserIdByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="username" Type="nvarchar" Mode="In" />
-    <Parameter Name="UserId" Type="int" Mode="InOut" />
+  <Function Name="GetUserBookmarks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
   </Function>
-  <Function Name="GetUsersWithBannedComments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="count" Type="int" Mode="In" />
+  <Function Name="GetUserIdByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="nvarchar" Mode="In" />
+    <Parameter Name="UserId" Type="int" Mode="InOut" />
   </Function>
   <Function Name="LeaveComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="userid" Type="int" Mode="In" />
@@ -894,14 +847,8 @@
   <Function Name="MarkUserAsDeleted" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="UserId" Type="int" Mode="In" />
   </Function>
-  <Function Name="SearchByCompletedLots" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="query" Type="nvarchar" Mode="In" />
-  </Function>
   <Function Name="SearchByLotName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="query" Type="nvarchar(max)" Mode="In" />
-  </Function>
-  <Function Name="SearchByUasers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="username" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="SearchLotByCategoryId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="id" Type="int" Mode="In" />
@@ -942,5 +889,11 @@
   <Function Name="TrySetUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="userName" Type="nvarchar" Mode="In" />
     <Parameter Name="roleId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="UnBanUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="UnDeleteLot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
   </Function>
 </Schema>

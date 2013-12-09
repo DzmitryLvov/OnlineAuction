@@ -6,7 +6,6 @@
     <EntitySet Name="Categories" EntityType="MainDataBaseModel.Category" />
     <EntitySet Name="Comments" EntityType="MainDataBaseModel.Comment" />
     <EntitySet Name="Locations" EntityType="MainDataBaseModel.Location" />
-    <EntitySet Name="LotPhotos" EntityType="MainDataBaseModel.LotPhoto" />
     <EntitySet Name="Lots" EntityType="MainDataBaseModel.Lot" />
     <EntitySet Name="LotSubCategories" EntityType="MainDataBaseModel.LotSubCategory" />
     <EntitySet Name="LotTypes" EntityType="MainDataBaseModel.LotType" />
@@ -14,13 +13,10 @@
     <EntitySet Name="SubCategories" EntityType="MainDataBaseModel.SubCategory" />
     <EntitySet Name="UserDatas" EntityType="MainDataBaseModel.UserData" />
     <EntitySet Name="Users" EntityType="MainDataBaseModel.User" />
-    <EntitySet Name="ActiveUserInos" EntityType="MainDataBaseModel.ActiveUserIno" />
     <EntitySet Name="BetInfos" EntityType="MainDataBaseModel.BetInfo" />
     <EntitySet Name="BookmarkInfos" EntityType="MainDataBaseModel.BookmarkInfo" />
-    <EntitySet Name="CategoryLotCounts" EntityType="MainDataBaseModel.CategoryLotCount" />
     <EntitySet Name="CommentInfos" EntityType="MainDataBaseModel.CommentInfo" />
     <EntitySet Name="LotByLocations" EntityType="MainDataBaseModel.LotByLocation" />
-    <EntitySet Name="LotCategoryInfos" EntityType="MainDataBaseModel.LotCategoryInfo" />
     <EntitySet Name="LotInfos" EntityType="MainDataBaseModel.LotInfo" />
     <EntitySet Name="LotShortPreviews" EntityType="MainDataBaseModel.LotShortPreview" />
     <EntitySet Name="LotUserInfos" EntityType="MainDataBaseModel.LotUserInfo" />
@@ -61,10 +57,6 @@
       <End Role="Location" EntitySet="Locations" />
       <End Role="UserData" EntitySet="UserDatas" />
     </AssociationSet>
-    <AssociationSet Name="FK_LotLotPhoto" Association="MainDataBaseModel.FK_LotLotPhoto">
-      <End Role="Lot" EntitySet="Lots" />
-      <End Role="LotPhoto" EntitySet="LotPhotos" />
-    </AssociationSet>
     <AssociationSet Name="FK_LotSubCategories_Lots" Association="MainDataBaseModel.FK_LotSubCategories_Lots">
       <End Role="Lot" EntitySet="Lots" />
       <End Role="LotSubCategory" EntitySet="LotSubCategories" />
@@ -89,6 +81,10 @@
       <End Role="User" EntitySet="Users" />
       <End Role="UserData" EntitySet="UserDatas" />
     </AssociationSet>
+    <FunctionImport Name="AddBookmark">
+      <Parameter Name="userid" Mode="In" Type="Int32" />
+      <Parameter Name="lotid" Mode="In" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="AddNewLot">
       <Parameter Name="LotName" Mode="In" Type="String" />
       <Parameter Name="Descr" Mode="In" Type="String" />
@@ -112,10 +108,6 @@
       <Parameter Name="PhotoLink" Mode="In" Type="String" />
       <Parameter Name="LocationID" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="AddSubCategory">
-      <Parameter Name="SubCategoryName" Mode="In" Type="String" />
-      <Parameter Name="CategoryId" Mode="In" Type="Int32" />
-    </FunctionImport>
     <FunctionImport Name="AddSubCategoryToLot">
       <Parameter Name="Lotid" Mode="In" Type="Int32" />
       <Parameter Name="SubCategoryId" Mode="In" Type="Int32" />
@@ -138,12 +130,12 @@
       <Parameter Name="Id" Mode="In" Type="Int32" />
       <Parameter Name="Value" Mode="InOut" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="GetUserIdByName">
-      <Parameter Name="username" Mode="In" Type="String" />
-      <Parameter Name="UserId" Mode="InOut" Type="Int32" />
+    <FunctionImport Name="GetUserBookmarks" EntitySet="BookmarkInfos" ReturnType="Collection(MainDataBaseModel.BookmarkInfo)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="GetUsersWithBannedComments" ReturnType="Collection(MainDataBaseModel.GetUsersWithBannedComments_Result5)">
-      <Parameter Name="count" Mode="In" Type="Int32" />
+    <FunctionImport Name="GetUserIdByName">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="UserId" Mode="InOut" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="LeaveComment">
       <Parameter Name="userid" Mode="In" Type="Int32" />
@@ -158,6 +150,15 @@
     </FunctionImport>
     <FunctionImport Name="MarkUserAsDeleted">
       <Parameter Name="UserId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SearchByLotName" EntitySet="Lots" ReturnType="Collection(MainDataBaseModel.Lot)">
+      <Parameter Name="query" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SearchLotByCategoryId" EntitySet="Lots" ReturnType="Collection(MainDataBaseModel.Lot)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SearchLotBySubCategoryId" EntitySet="Lots" ReturnType="Collection(MainDataBaseModel.Lot)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="sp_alterdiagram">
       <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -175,11 +176,11 @@
       <Parameter Name="diagramname" Mode="In" Type="String" />
       <Parameter Name="owner_id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MainDataBaseModel.sp_helpdiagramdefinition_Result4)">
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MainDataBaseModel.sp_helpdiagramdefinition_Result5)">
       <Parameter Name="diagramname" Mode="In" Type="String" />
       <Parameter Name="owner_id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MainDataBaseModel.sp_helpdiagrams_Result4)">
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MainDataBaseModel.sp_helpdiagrams_Result5)">
       <Parameter Name="diagramname" Mode="In" Type="String" />
       <Parameter Name="owner_id" Mode="In" Type="Int32" />
     </FunctionImport>
@@ -193,20 +194,17 @@
       <Parameter Name="userName" Mode="In" Type="String" />
       <Parameter Name="roleId" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="SearchByName" EntitySet="Lots" ReturnType="Collection(MainDataBaseModel.Lot)">
-      <Parameter Name="query" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="SearchlotByCategoryId" EntitySet="Lots" ReturnType="Collection(MainDataBaseModel.Lot)">
+    <FunctionImport Name="UnBanUser">
       <Parameter Name="id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="SearchLotBySubCategoryId" EntitySet="Lots" ReturnType="Collection(MainDataBaseModel.Lot)">
+    <FunctionImport Name="UnDeleteLot">
       <Parameter Name="id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="SearchByUsers" EntitySet="Users" ReturnType="Collection(MainDataBaseModel.User)">
-      <Parameter Name="username" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="SearchByCompletedLots" EntitySet="Lots" ReturnType="Collection(MainDataBaseModel.Lot)">
-      <Parameter Name="query" Mode="In" Type="String" />
+    <EntitySet Name="ActiveUserInfos" EntityType="MainDataBaseModel.ActiveUserInfo" />
+    <EntitySet Name="LotCategories" EntityType="MainDataBaseModel.LotCategory" />
+    <FunctionImport Name="DeleteBookmark">
+      <Parameter Name="userid" Mode="In" Type="Int32" />
+      <Parameter Name="lotid" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="GetUsersWithBannedComments_Result">
@@ -386,15 +384,6 @@
     <Property Type="String" Name="LocationName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="UserDatas" Relationship="MainDataBaseModel.FK_LocationUserData" FromRole="Location" ToRole="UserData" />
   </EntityType>
-  <EntityType Name="LotPhoto">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Type="Int32" Name="LotID" Nullable="false" />
-    <Property Type="String" Name="PhotoLink" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Lot" Relationship="MainDataBaseModel.FK_LotLotPhoto" FromRole="LotPhoto" ToRole="Lot" />
-  </EntityType>
   <EntityType Name="Lot">
     <Key>
       <PropertyRef Name="ID" />
@@ -411,7 +400,6 @@
     <NavigationProperty Name="Bets" Relationship="MainDataBaseModel.FK_LotBet" FromRole="Lot" ToRole="Bet" />
     <NavigationProperty Name="Bookmarks" Relationship="MainDataBaseModel.FK_LotBookmark" FromRole="Lot" ToRole="Bookmark" />
     <NavigationProperty Name="Comments" Relationship="MainDataBaseModel.FK_LotComment" FromRole="Lot" ToRole="Comment" />
-    <NavigationProperty Name="LotPhotos" Relationship="MainDataBaseModel.FK_LotLotPhoto" FromRole="Lot" ToRole="LotPhoto" />
     <NavigationProperty Name="LotSubCategories" Relationship="MainDataBaseModel.FK_LotSubCategories_Lots" FromRole="Lot" ToRole="LotSubCategory" />
     <NavigationProperty Name="LotType" Relationship="MainDataBaseModel.FK_LotTypeLot" FromRole="Lot" ToRole="LotType" />
     <NavigationProperty Name="User" Relationship="MainDataBaseModel.FK_UserLot" FromRole="Lot" ToRole="User" />
@@ -488,21 +476,6 @@
     <NavigationProperty Name="Role" Relationship="MainDataBaseModel.FK__Users__RoleID__1B0907CE" FromRole="User" ToRole="Role" />
     <NavigationProperty Name="UserDatas" Relationship="MainDataBaseModel.FK_UserUserData" FromRole="User" ToRole="UserData" />
   </EntityType>
-  <EntityType Name="ActiveUserIno">
-    <Key>
-      <PropertyRef Name="Username" />
-      <PropertyRef Name="Email" />
-      <PropertyRef Name="LocationName" />
-      <PropertyRef Name="Rolename" />
-    </Key>
-    <Property Type="String" Name="Username" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="Email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="Phone" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="FirstName" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="LocationName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="Rolename" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="LastName" MaxLength="Max" FixedLength="false" Unicode="true" />
-  </EntityType>
   <EntityType Name="BetInfo">
     <Key>
       <PropertyRef Name="LotName" />
@@ -528,25 +501,16 @@
       <PropertyRef Name="LotID" />
       <PropertyRef Name="Username" />
       <PropertyRef Name="LotName" />
+      <PropertyRef Name="ActualDate" />
+      <PropertyRef Name="StartCurrency" />
     </Key>
     <Property Type="Int32" Name="ID" Nullable="false" />
     <Property Type="Int32" Name="UserID" Nullable="false" />
     <Property Type="Int32" Name="LotID" Nullable="false" />
     <Property Type="String" Name="Username" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="LotName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="CategoryLotCount">
-    <Key>
-      <PropertyRef Name="ID" />
-      <PropertyRef Name="CategoryName" />
-      <PropertyRef Name="SubCategoryId" />
-      <PropertyRef Name="SubCategoryName" />
-    </Key>
-    <Property Type="Int32" Name="ID" Nullable="false" />
-    <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="Int32" Name="SubCategoryId" Nullable="false" />
-    <Property Type="String" Name="SubCategoryName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="Int32" Name="Lotcount" />
+    <Property Type="DateTime" Name="ActualDate" Nullable="false" Precision="3" />
+    <Property Type="Int64" Name="StartCurrency" Nullable="false" />
   </EntityType>
   <EntityType Name="CommentInfo">
     <Key>
@@ -575,26 +539,6 @@
     <Property Type="Int32" Name="ID" Nullable="false" />
     <Property Type="String" Name="LotName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="LocationName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="LotCategoryInfo">
-    <Key>
-      <PropertyRef Name="ID" />
-      <PropertyRef Name="LotName" />
-      <PropertyRef Name="ActualDate" />
-      <PropertyRef Name="IsDeleted" />
-      <PropertyRef Name="SubCategoryid" />
-      <PropertyRef Name="SubCategoryName" />
-      <PropertyRef Name="CategoryId" />
-      <PropertyRef Name="CategoryName" />
-    </Key>
-    <Property Type="Int32" Name="ID" Nullable="false" />
-    <Property Type="String" Name="LotName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="DateTime" Name="ActualDate" Nullable="false" Precision="3" />
-    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-    <Property Type="Int32" Name="SubCategoryid" Nullable="false" />
-    <Property Type="String" Name="SubCategoryName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="Int32" Name="CategoryId" Nullable="false" />
-    <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="LotInfo">
     <Key>
@@ -823,18 +767,6 @@
       </Principal>
       <Dependent Role="UserData">
         <PropertyRef Name="LocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_LotLotPhoto">
-    <End Type="MainDataBaseModel.Lot" Role="Lot" Multiplicity="1" />
-    <End Type="MainDataBaseModel.LotPhoto" Role="LotPhoto" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Lot">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="LotPhoto">
-        <PropertyRef Name="LotID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1152,4 +1084,85 @@
     <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
     <Property Type="Int32" Name="OwnerID" Nullable="false" />
   </ComplexType>
+  <ComplexType Name="GetUserBookmarks_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="Int32" Name="LotID" Nullable="false" />
+    <Property Type="String" Name="Username" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="LotName" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SearchByLotName_Result6">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="LotName" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="false" />
+    <Property Type="Int64" Name="StartCurrency" Nullable="false" />
+    <Property Type="DateTime" Name="ActualDate" Nullable="false" Precision="23" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <Property Type="Int32" Name="OwnerId" Nullable="false" />
+    <Property Type="String" Name="ViewCount" Nullable="false" />
+    <Property Type="Int32" Name="LotTypeID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SearchLotByCategoryId_Result2">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="LotName" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="false" />
+    <Property Type="Int64" Name="StartCurrency" Nullable="false" />
+    <Property Type="DateTime" Name="ActualDate" Nullable="false" Precision="23" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <Property Type="Int32" Name="OwnerId" Nullable="false" />
+    <Property Type="String" Name="ViewCount" Nullable="false" />
+    <Property Type="Int32" Name="LotTypeID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SearchLotBySubCategoryId_Result2">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="LotName" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="false" />
+    <Property Type="Int64" Name="StartCurrency" Nullable="false" />
+    <Property Type="DateTime" Name="ActualDate" Nullable="false" Precision="23" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+    <Property Type="Int32" Name="OwnerId" Nullable="false" />
+    <Property Type="String" Name="ViewCount" Nullable="false" />
+    <Property Type="Int32" Name="LotTypeID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result5">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result5">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="ActiveUserInfo">
+    <Key>
+      <PropertyRef Name="Username" />
+      <PropertyRef Name="Email" />
+      <PropertyRef Name="LocationName" />
+      <PropertyRef Name="Rolename" />
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="String" Name="Username" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Phone" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="FirstName" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="LocationName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Rolename" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="LastName" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LotCategory">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="CategoryID" />
+      <PropertyRef Name="CategoryName" />
+      <PropertyRef Name="SubCategoryName" />
+    </Key>
+    <Property Type="Int32" Name="SubCategoryCount" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="CategoryID" Nullable="false" />
+    <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="SubCategoryName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

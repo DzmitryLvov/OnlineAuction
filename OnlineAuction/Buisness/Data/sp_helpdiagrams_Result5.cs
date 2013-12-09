@@ -10,16 +10,13 @@
 namespace OnlineAuction.Buisness.Data
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class BookmarkInfo
+    public partial class sp_helpdiagrams_Result5
     {
+        public string Database { get; set; }
+        public string Name { get; set; }
         public int ID { get; set; }
-        public int UserID { get; set; }
-        public int LotID { get; set; }
-        public string Username { get; set; }
-        public string LotName { get; set; }
-        public System.DateTime ActualDate { get; set; }
-        public long StartCurrency { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

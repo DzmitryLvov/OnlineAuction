@@ -1,6 +1,6 @@
 ﻿@using OnlineAuction.Buisness.Data
 @using OnlineAuction.Buisness.Models.Lot
-@model LotViewModel
+@model OnlineAuction.Buisness.Models.Lot.LotViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
@@ -26,31 +26,43 @@
         return true;
     }, '');
 </script>
-
-
 <div class="col-md-9 highlight row center-block" style="float: none;">
     <div class="row-fluid">
         <div class="col-md-5">
             <div class="row-fluid">
                 <img  src="../../@Model.ImageUrl"  width="100%" />
-                @if (Context.User.Identity.IsAuthenticated)
+                @if(Context.User.Identity.IsAuthenticated)
                 {
-                    if (Context.User.IsInRole("admin") || Context.User.Identity.Name == Model.Model.Username)
-                    {
-                        <div class="product-administration">
-                            <p></p>
-                            @Html.ActionLink("Delete this lot", "DeleteLot", "Lot", Model.Model, new { @class = "btn btn-info" })
-                            <hr />
-                        </div>
-                    if (@Html.ValidationSummary(true, "") != null)
+                    <div class="product-administration">
+                        <p></p>
+                        @if (Context.User.IsInRole("admin") || Context.User.Identity.Name == Model.Model.Username)
                         {
-                <div class="alert alert-warning row bet-block">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    @Html.ValidationSummary(true, "")
-                </div>
+                           
+                                if (!Model.Model.IsDeleted)
+                                {
+                                    @Html.ActionLink("Delete this lot", "DeleteLot", "Lot", Model.Model, new { @class = "btn btn-default" })
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Restore", "RestoreLot", "Lot", Model.Model, new { @class = "btn btn-default" })                                    
+                                }
                         }
-                    }
+
+                        @(!Model.IsInBookmarks(Context.User.Identity.Name, Model.Model.ID) 
+                        ? Html.ActionLink("Add to bookmarks", "AddToBookmarks", "Lot", Model.Model, new {@class = "btn btn-default"}) 
+                        : Html.ActionLink("Rmove from bookmarks", "RemoveFromBookmarks", "Lot", Model.Model, new {@class = "btn btn-default"}))
+                        
+                        @if(@Html.ValidationSummary(true, "") != null)
+                        {
+                                <div class="alert alert-warning row bet-block">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    @Html.ValidationSummary(true, "")
+                                </div>
+                        }
+                             <hr />
+                    </div>
                 }
+
             </div>
 
         </div>
@@ -72,9 +84,9 @@
                     <div class="col-md-3">
                         <p>Remaining:</p>
                         <p>@String.Format("{0} d {1} h {2} m",
-                                    (Model.Model.ActualDate - DateTime.Now).Days.ToString(),
-                                    (Model.Model.ActualDate - DateTime.Now).Hours.ToString(),
-                                    (Model.Model.ActualDate - DateTime.Now).Minutes.ToString())
+                                       (Model.Model.ActualDate - DateTime.Now).Days.ToString(),
+                                       (Model.Model.ActualDate - DateTime.Now).Hours.ToString(),
+                                       (Model.Model.ActualDate - DateTime.Now).Minutes.ToString())
                         </p>
 
                     </div>
@@ -99,7 +111,7 @@
                     </div>
 
                 </div>
-                        
+
                 }
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -112,19 +124,19 @@
                     <div id="collapseOne" class="panel-collapse collapse">
                         <div class="panel-body" style="padding: 0;">
                             @(Html.Kendo().Grid<BetInfo>().Name("BetHistory")
-                          .Columns(columns =>
-                          {
-                              columns.Bound(t => t.Username);
-                              columns.Bound(t => t.BetValue);
-                              columns.Bound(t => t.BetDate).Format("{0:dd.MM.yyyy hh:mm}");
-                          })
-                          .Scrollable().HtmlAttributes(new { @width = "350" })
-                          .DataSource(dataSource => dataSource
-                              .Ajax()
-                              .PageSize(20)
-                              .Model(model => model.Id(t => t.ID))
-                              .Read(read => read.Action("GetBets", "Lot"))
-                          ).AutoBind(true))
+                                      .Columns(columns =>
+                                      {
+                                          columns.Bound(t => t.Username);
+                                          columns.Bound(t => t.BetValue);
+                                          columns.Bound(t => t.BetDate).Format("{0:dd.MM.yyyy hh:mm}");
+                                      })
+                                      .Scrollable().HtmlAttributes(new { @width = "350" })
+                                      .DataSource(dataSource => dataSource
+                                          .Ajax()
+                                          .PageSize(20)
+                                          .Model(model => model.Id(t => t.ID))
+                                          .Read(read => read.Action("GetBets", "Lot"))
+                                      ).AutoBind(true))
                         </div>
                     </div>
                 </div>
@@ -134,21 +146,21 @@
                 <div class="text-info">
                     Unregistered users can not bet. Please, @Html.ActionLink("Log on", "LogOn", "Account", null, new { @class = "btn btn-info" })
                     or
-                    @Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn btn-info" })
                 </div>
             }
-            <hr/>
+            <hr />
             @if (Context.User.Identity.IsAuthenticated)
             {
                 using (Html.BeginForm("LeaveComment", "Lot"))
                 {
-                    <div class="input-group" style="margin-top: 30px;">
-                                @Html.TextBoxFor(t => t.CommentText, new { @class = "form-control" })
-                                <span class="input-group-btn">
-                                    <input type="submit" class="btn btn-default bet-button" value="Comment" />
-                                </span>
-                            </div>
-                <hr/>
+                <div class="input-group" style="margin-top: 30px;">
+                    @Html.TextBoxFor(t => t.CommentText, new { @class = "form-control" })
+                    <span class="input-group-btn">
+                        <input type="submit" class="btn btn-default bet-button" value="Comment" />
+                    </span>
+                </div>
+                <hr />
                 }
             }
             <ul class="media-list">
@@ -157,7 +169,7 @@
                     <li class="media comment-body">
                         @Html.Partial("_CommentPatrial", c)
                     </li>
-                    
+
                 }
             </ul>
 
@@ -166,8 +178,4 @@
     </div>
     <div class="col-md-9">
     </div>
-
-
 </div>
-
-

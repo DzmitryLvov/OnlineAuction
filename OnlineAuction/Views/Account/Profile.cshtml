@@ -4,129 +4,105 @@
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
 }
-<h2 style="margin: 0 auto; width: 200px; margin-bottom: 25px; position: relative; color: #808080">Profile</h2>
 
-@using (Html.BeginForm())
-{
-    if (Model != null)
+<div class="col-md-6 highlight center-block row" style="float: none; margin-top: 20px;">
+
+
+    @using (Html.BeginForm())
     {
-        <div class="user-info-container">
-            @if (Model.IsDeleted)
+        if (Model != null)
+        {
+        <div class="col-md-4">
+            @if (Model.PhotoLink != null)
             {
-                <h4> [banned]</h4>
+                <img src=@Model.PhotoLink width="200px" style="border: 1px solid #808080;" class="img-thumbnail"/>
             }
-            
-            <table>
-                <tr>
-                <td rowspan="6" style="width: 250px;">
-                    
-                    @if (Model.PhotoLink != null)
-                    {
-                        <img src=@Model.PhotoLink width="200px" style="border: 1px solid #808080;"/>
-                    }
-                    else
-                    {
-                        <img src="/OnlineAuction/Content/Image/UserProfile/Default/index.jpg" width="200px" />
-                    }
-                </td>
-                <td>User name:
-                    @if (Model.Username != null)
-                    {
-                        <strong>@Model.Username</strong>
-                    }
-                    else
-                    {
-                        <span>No Data</span>
-                    }
-                </td>
-                <tr>
-                    <td>First name:
-                        @if (Model.FirstName != null)
-                        {
-                            @Model.FirstName
-                        }
-                        else
-                        {
-                            <span>No Data</span>
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <td>Last name:
-                        @if (Model.FirstName != null)
-                        {
-                            @Model.FirstName
-                        }
-                        else
-                        {
-                            <span>No Data</span>
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <td>Phone:
-                        @if (Model.Phone != null)
-                        {
-                            @Model.Phone
-                        }
-                        else
-                        {
-                            <span>No Data</span>
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <td>Location:
-                        @if (Model.LocationName != null)
-                        {
-                            @Model.LocationName
-                            ;
-                        }
-                        else
-                        {
-                            <span>No Data</span>
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <td>Role:
-                        @if (Model.Rolename != null)
-                        {
-                            @Model.Rolename
-                        }
-                        else
-                        {
-                            <span>No Data</span>
-                        }
-                    </td>
-                </tr>
-            </table>
-            @if (User.Identity.Name == Model.Username)
+            else
             {
-                <div style="margin-top: 25px;">
-                    @Html.ActionLink("Edit profile", "EditProfile", "Account", null, new { @class = "btn btn-info" })
-                </div>
+                <img src="/OnlineAuction/Content/Image/UserProfile/Default/index.jpg" width="200px" class="img-thumbnail" />
             }
-            <hr>
+
             @if (User.IsInRole("admin"))
             {
+                <hr/>
                 if (!(new DataAccess().UserIsAdmin(Model.Username)))
                 {
-                    @Html.ActionLink("Set as asministrator", "SetAsAdministrator", "Account", new { username = @Model.Username }, new { @class = "btn btn-info" })
-                    if (!Model.IsDeleted)
+                @Html.ActionLink("Set as asministrator", "SetAsAdministrator", "Account", new { username = @Model.Username }, new { @class = "btn btn-default btn-block" })
+                <p>   </p> 
+                if(!Model.IsDeleted)
                     {
-                        @Html.ActionLink("Ban user", "BanUser", "Account", new {username = @Model.Username}, new {@class = "btn btn-info"})
+                @Html.ActionLink("Ban user", "BanUser", "Account", new { username = @Model.Username }, new { @class = "btn btn-default btn-block" })
                     }
                     else
                     {
-                        @Html.ActionLink("Unban user", "UnBanUser", "Account", new {username = @Model.Username}, new {@class = "btn btn-info"})                        
-                    }
+                @Html.ActionLink("Unban user", "UnBanUser", "Account", new { username = @Model.Username }, new { @class = "btn btn-default btn-block" })                        
+            }
+                    
                 }
+                 @Html.ActionLink("Delete User", "DeleteUser", "Account", new { username = @Model.Username }, new { @class = "btn btn-default btn-block" })
             }
         </div>
+        <div class="col-md-8">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">Username: </label>
+                    <div class="col-sm-7">
+                        <p>@Model.Username</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">Status: </label>
+                    <div class="col-sm-7">
+                        <p>
+                            @if (Model.IsDeleted)
+                            {
+                                <span>Banned</span>
+                            }
+                            else
+                            {
+                                <span>Not banned</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">First name: </label>
+                    <div class="col-sm-7">
+                        <p>@Model.FirstName</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">Last name: </label>
+                    <div class="col-sm-7">
+                        <p>@Model.LastName</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">Phone: </label>
+                    <div class="col-sm-7">
+                        <p>@Model.Phone</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">Location: </label>
+                    <div class="col-sm-7">
+                        <p>@Model.LocationName</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">Role: </label>
+                    <div class="col-sm-7">
+                        <p>@Model.Rolename</p>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        }
+        else
+        {
+        <h2 style="text-align: center;">User not found :(</h2>
+        }
     }
-    else
-    {
-    <h2 style="text-align: center;">User not found :(</h2>
-    }
-}
+</div>

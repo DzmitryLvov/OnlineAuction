@@ -4,27 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5153f09bee26426c91cad5c34ba9ae60" Name="Diagram1" ZoomLevel="37">
+      <Diagram DiagramId="5153f09bee26426c91cad5c34ba9ae60" Name="Diagram1" ZoomLevel="71">
         <EntityTypeShape EntityType="MainDataBaseModel.Bet" Width="1.5" PointX="10.5" PointY="8" />
         <EntityTypeShape EntityType="MainDataBaseModel.Bookmark" Width="1.5" PointX="10.625" PointY="11" />
-        <EntityTypeShape EntityType="MainDataBaseModel.Category" Width="1.5" PointX="20.5" PointY="9.25" />
+        <EntityTypeShape EntityType="MainDataBaseModel.Category" Width="1.5" PointX="20.625" PointY="9.875" />
         <EntityTypeShape EntityType="MainDataBaseModel.Comment" Width="1.5" PointX="10.5" PointY="13.5" />
         <EntityTypeShape EntityType="MainDataBaseModel.Location" Width="1.5" PointX="6.625" PointY="15.25" />
-        <EntityTypeShape EntityType="MainDataBaseModel.LotPhoto" Width="1.5" PointX="16.125" PointY="9.625" />
         <EntityTypeShape EntityType="MainDataBaseModel.Lot" Width="1.5" PointX="13.625" PointY="9.75" />
-        <EntityTypeShape EntityType="MainDataBaseModel.LotSubCategory" Width="1.5" PointX="18.375" PointY="11.75" />
+        <EntityTypeShape EntityType="MainDataBaseModel.LotSubCategory" Width="1.5" PointX="15.875" PointY="9.75" />
         <EntityTypeShape EntityType="MainDataBaseModel.LotType" Width="1.5" PointX="16" PointY="13.125" />
         <EntityTypeShape EntityType="MainDataBaseModel.Role" Width="1.5" PointX="3.875" PointY="11.375" />
-        <EntityTypeShape EntityType="MainDataBaseModel.SubCategory" Width="1.5" PointX="20.5" PointY="11.625" />
+        <EntityTypeShape EntityType="MainDataBaseModel.SubCategory" Width="1.5" PointX="18.375" PointY="9.75" />
         <EntityTypeShape EntityType="MainDataBaseModel.UserData" Width="1.5" PointX="4.125" PointY="13.875" />
         <EntityTypeShape EntityType="MainDataBaseModel.User" Width="1.5" PointX="6.75" PointY="10.5" />
-        <EntityTypeShape EntityType="MainDataBaseModel.ActiveUserIno" Width="1.5" PointX="41.125" PointY="1.75" />
         <EntityTypeShape EntityType="MainDataBaseModel.BetInfo" Width="1.5" PointX="32.125" PointY="11" />
         <EntityTypeShape EntityType="MainDataBaseModel.BookmarkInfo" Width="1.5" PointX="34.625" PointY="12.5" />
-        <EntityTypeShape EntityType="MainDataBaseModel.CategoryLotCount" Width="1.5" PointX="38.5" PointY="0.625" />
         <EntityTypeShape EntityType="MainDataBaseModel.CommentInfo" Width="1.5" PointX="40.875" PointY="5.375" />
         <EntityTypeShape EntityType="MainDataBaseModel.LotByLocation" Width="1.5" PointX="32.5" PointY="0.75" />
-        <EntityTypeShape EntityType="MainDataBaseModel.LotCategoryInfo" Width="1.5" PointX="35.5" PointY="2.25" />
         <EntityTypeShape EntityType="MainDataBaseModel.LotInfo" Width="1.5" PointX="38.5" PointY="3.75" />
         <EntityTypeShape EntityType="MainDataBaseModel.LotShortPreview" Width="1.5" PointX="32.375" PointY="4.625" />
         <EntityTypeShape EntityType="MainDataBaseModel.LotUserInfo" Width="1.5" PointX="34.875" PointY="6.125" />
@@ -41,7 +37,6 @@
         <AssociationConnector Association="MainDataBaseModel.FK_LotComment" />
         <AssociationConnector Association="MainDataBaseModel.FK_UserComment" />
         <AssociationConnector Association="MainDataBaseModel.FK_LocationUserData" />
-        <AssociationConnector Association="MainDataBaseModel.FK_LotLotPhoto" />
         <AssociationConnector Association="MainDataBaseModel.FK_LotSubCategories_Lots" />
         <AssociationConnector Association="MainDataBaseModel.FK_LotTypeLot" />
         <AssociationConnector Association="MainDataBaseModel.FK_UserLot" />
@@ -52,6 +47,8 @@
           <ConnectorPoint PointX="6.75" PointY="10.937499500000001" />
         </AssociationConnector>
         <AssociationConnector Association="MainDataBaseModel.FK_UserUserData" />
+        <EntityTypeShape EntityType="MainDataBaseModel.ActiveUserInfo" Width="1.5" PointX="9.3133198252475449" PointY="31.170488729686703" />
+        <EntityTypeShape EntityType="MainDataBaseModel.LotCategory" Width="1.5" PointX="11.763146716991042" PointY="9.2521849615742386" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

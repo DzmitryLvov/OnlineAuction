@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_mainLayout.cshtml";
 }
 
-<div id="administation-tools-container" class="content highlight col-md-9 center-block" style="float:none;">
+<div id="administation-tools-container" class="content highlight col-md-9 center-block row" style="float:none;">
     
     <style>
         #organizer {
@@ -38,9 +38,11 @@
             border: 1px solid #ccc;
         }
     </style>
-
-
-    @(Html.Kendo().PanelBar()
+    <div class="col-md-3">
+                @Html.ActionLink("Clear comments", "ClearComments", "Administration", null, new { @class = "btn btn-default btn-block" })                                
+    </div>
+    <div class="col-md-9">
+        @(Html.Kendo().PanelBar()
         .Name("panelbar")
         .ExpandMode(PanelBarExpandMode.Multiple)
         .Items(panelbar =>
@@ -73,7 +75,7 @@
                 
                           </div>);
             panelbar.Add().Text("Users by roles")
-                .Expanded(true)
+                .Expanded(false)
                 .Content(@<div style="padding: 10px;">
                               <div class="teamMate">
                                   @(Html.Kendo().Grid<UserRoleInfo>()
@@ -97,9 +99,106 @@
                                         ).AutoBind(true))
                               </div>
                           </div>);
-        panelbar.Add().Text("LotsByLocations")
-                .Expanded(true)
+            panelbar.Add().Text("Lots by users")
+                .Expanded(false)
                 .Content(@<div style="padding: 10px;">
+                              <div class="teamMate">
+                                  @(Html.Kendo().Grid<LotUserInfo>()
+                                        .Name("LotsUsersGrid")
+                                        .Columns(c =>
+                                        {
+                                            c.Bound(t => t.ID).Hidden();
+                                            c.Bound(t => t.Username);
+                                            c.Bound(t => t.Phone);
+                                            c.Bound(t => t.LotName);
+                                            c.Command(command => command.Custom("ViewLot").Click("goToLot"));
+                                        })
+                                        .Pageable()
+                                        .Sortable()
+                                        .Scrollable()
+                                        .HtmlAttributes(new { style = "height:430px;" })
+                                        .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(20)
+                                            .Read(read => read.Action("LotsByUsers", "Administration")) 
+                                        ).AutoBind(true))
+                              </div>
+                          </div>);
+            panelbar.Add().Text("User lot count")
+                .Expanded(false)
+                .Content(@<div style="padding: 10px;">
+                              <div class="teamMate">
+                                  @(Html.Kendo().Grid<UserLotCountInof>()
+                                        .Name("UserLotCountGrid")
+                                        .Columns(c =>
+                                        {
+                                            c.Bound(t => t.ID).Hidden();
+                                            c.Bound(t => t.Username);
+                                            c.Bound(t => t.LotCount);
+                                            c.Command(command => command.Custom("ViewProfile").Click("goToProfile"));
+                                        })
+                                        .Pageable()
+                                        .Sortable()
+                                        .Scrollable()
+                                        .HtmlAttributes(new { style = "height:430px;" })
+                                        .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(20)
+                                            .Read(read => read.Action("GetUsersLotCount", "Administration")) 
+                                        ).AutoBind(true))
+                              </div>
+                          </div>);
+            panelbar.Add().Text("ActiveUsers")
+                .Expanded(false)
+                .Content(@<div style="padding: 10px;">
+                              <div class="teamMate">
+                                  @(Html.Kendo().Grid<ActiveUserInfo>()
+                                        .Name("ActiveUsersGrid")
+                                        .Columns(c =>
+                                        {
+                                            c.Bound(t => t.ID).Hidden();
+                                            c.Bound(t => t.Username);
+                                            c.Bound(t => t.Rolename);
+                                            c.Bound(t => t.Email);
+                                            c.Command(command => command.Custom("ViewProfile").Click("goToProfile"));
+                                        })
+                                        .Pageable()
+                                        .Sortable()
+                                        .Scrollable()
+                                        .HtmlAttributes(new { style = "height:430px;" })
+                                        .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(20)
+                                            .Read(read => read.Action("GetActiveUsers", "Administration"))
+                                        ).AutoBind(true))
+                              </div>
+                          </div>);
+            panelbar.Add().Text("Lots by categories")
+                    .Expanded(false)
+                    .Content(@<div style="padding: 10px;">
+                              <div class="teamMate">
+                                  @(Html.Kendo().Grid<LotCategory>()
+                                        .Name("LotsCategoriesGrid")
+                                        .Columns(c =>
+                                        {
+                                            c.Bound(t => t.CategoryName);
+                                            c.Bound(t => t.SubCategoryName);
+                                            c.Bound(t => t.SubCategoryCount);
+                                        })
+                                        .Pageable()
+                                        .Sortable()
+                                        .Scrollable()
+                                        .HtmlAttributes(new { style = "height:430px;" })
+                                        .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(20)
+                                            .Read(read => read.Action("GetLotsCategories", "Administration"))
+                                        ).AutoBind(true))
+                              </div>
+                          </div>);
+            panelbar.Add().Text("LotsByLocations")
+                    .Expanded(false)
+                    .Content(@<div style="padding: 10px;">
                               <div class="teamMate">
                                   @(Html.Kendo().Grid<LotByLocation>()
                                         .Name("LotsLocationsGrid")
@@ -122,6 +221,9 @@
                               </div>
                           </div>);
         }))
+    </div>
+
+    
      </div>               
 
 <script type="text/javascript">

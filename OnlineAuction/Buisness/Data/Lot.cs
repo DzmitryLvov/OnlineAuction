@@ -19,7 +19,6 @@ namespace OnlineAuction.Buisness.Data
             this.Bets = new HashSet<Bet>();
             this.Bookmarks = new HashSet<Bookmark>();
             this.Comments = new HashSet<Comment>();
-            this.LotPhotos = new HashSet<LotPhoto>();
             this.LotSubCategories = new HashSet<LotSubCategory>();
         }
     
@@ -36,7 +35,6 @@ namespace OnlineAuction.Buisness.Data
         public virtual ICollection<Bet> Bets { get; set; }
         public virtual ICollection<Bookmark> Bookmarks { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<LotPhoto> LotPhotos { get; set; }
         public virtual ICollection<LotSubCategory> LotSubCategories { get; set; }
         public virtual LotType LotType { get; set; }
         public virtual User User { get; set; }

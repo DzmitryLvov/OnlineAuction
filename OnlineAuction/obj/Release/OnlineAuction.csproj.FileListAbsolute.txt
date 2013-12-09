@@ -42,3 +42,4 @@ E:\Prog\OnlineAuction\OnlineAuction\bin\uk-UA\Kendo.Mvc.resources.dll
 E:\Prog\OnlineAuction\OnlineAuction\bin\zh-CN\Kendo.Mvc.resources.dll
 E:\Prog\OnlineAuction\OnlineAuction\obj\Release\OnlineAuction.dll
 E:\Prog\OnlineAuction\OnlineAuction\obj\Release\OnlineAuction.pdb
+E:\Prog\OnlineAuction\OnlineAuction\obj\Release\OnlineAuction.csprojResolveAssemblyReference.cache

@@ -37,6 +37,10 @@ namespace OnlineAuction.Buisness.Models.Lot
             set { _imgUrl = value; }
         }
 
+        public bool IsInBookmarks (string name, int lotid)
+        {
+            return new DataAccess().LotIsInBookmarks(name, lotid);
+        }
 
     }
 

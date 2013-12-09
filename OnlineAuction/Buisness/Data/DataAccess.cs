@@ -437,7 +437,7 @@ namespace OnlineAuction.Buisness.Data
 
         internal IEnumerable<LotPreviewModel> SearchLotBuCategoryId(int id)
         {
-            foreach (var lot in _dataBase.SearchlotByCategoryId(id)) //не переделывать в linq, нужно для kendo bind
+            foreach (var lot in _dataBase.SearchLotByCategoryId(id)) //не переделывать в linq, нужно для kendo bind
             {
                 yield return new LotPreviewModel()
                 {
@@ -464,6 +464,122 @@ namespace OnlineAuction.Buisness.Data
                     PhotoLink = "../../" + IndexPhotoLink(lot.ID)
                 };
             }
+        }
+
+        public IEnumerable<LotPreviewModel> SearchLotByName(string searchQuery)
+        {
+            foreach (var lot in _dataBase.SearchByLotName(searchQuery))
+            {
+                yield return new LotPreviewModel()
+                {
+                    ActualDate = lot.ActualDate,
+                    Currency = (GetmaxBetValue(lot.ID) == -1) ? (int)lot.StartCurrency : (GetmaxBetValue(lot.ID)),
+                    ID = lot.ID,
+                    LotName = lot.LotName,
+                    PhotoLink = "../../" +IndexPhotoLink(lot.ID)
+                };
+            }
+        }
+
+        internal IEnumerable<BookmarkInfo> GetUserBookmarks(string username)
+        {
+            var userId = new ObjectParameter("UserId", typeof (string));
+             _dataBase.GetUserIdByName(username, userId);
+
+             foreach (var t in _dataBase.GetUserBookmarks((int)userId.Value))
+            {
+                yield return new BookmarkInfo()
+                {
+                    ActualDate = t.ActualDate,
+                    ID = t.ID,
+                    LotID =  t.LotID,
+                    LotName = t.LotName,
+                    StartCurrency =  t.StartCurrency,
+                    UserID = t.UserID,
+                    Username = t.Username
+                };
+            }
+            
+        }
+
+        public string RestoreLot(int id)
+        {
+            if (_dataBase.UnDeleteLot(id) != -1)
+            {
+                return null;
+            }
+            else
+            {
+                return "Невозможно восстановить данный лот";
+            }
+        }
+
+        internal bool LotIsInBookmarks(string name, int id)
+        {
+
+            var model = _dataBase.Bookmarks.FirstOrDefault(t => t.LotID == id && t.User.Username == name);
+            return model != null;
+        }
+
+        public string AddToBookmarks(int lotid, string name)
+        {
+            try
+            {
+                _dataBase.AddBookmark(GetUserProfileViewModel(name).ID, lotid);
+                return null;
+            }
+            catch
+            {
+                return "Данный лот уже есть в закладках";
+            }
+        }
+
+        public string RemoveFromBookmarks(int lotid, string name)
+        {
+            try
+            {
+                _dataBase.DeleteBookmark(GetUserProfileViewModel(name).ID, lotid);
+                return null;
+            }
+            catch
+            {
+                return "Невозможно удалить данный лот";
+            }
+        }
+
+        internal void DeleteUser(string username)
+        {
+            _dataBase.DeleteUser(GetUserProfileViewModel(username).ID);
+        }
+
+        internal void IncrementLotView(int id)
+        {
+            
+        }
+
+        internal void ClearComments()
+        {
+            _dataBase.CursorDeleteLotComments();
+        }
+
+        public IEnumerable<LotUserInfo> GetLotsByUsers()
+        {
+            return _dataBase.LotUserInfos.ToList();
+        }
+
+        public IEnumerable<UserLotCountInof> GetUsersLotCount()
+        {
+            return _dataBase.UserLotCountInofs.ToList();
+        }
+
+        public IEnumerable<ActiveUserInfo> GetActiveUsers()
+        {
+            return _dataBase.ActiveUserInfos.ToList();
+        }
+
+        public IEnumerable<LotCategory> GetLotsCategories()
+        {
+            return _dataBase.LotCategories.ToList();
         }
     }
 }

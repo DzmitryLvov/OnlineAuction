@@ -24,5 +24,26 @@ namespace OnlineAuction.Buisness.Controllers
         {
             return Json(new DataAccess().GetLotsLocations().ToDataSourceResult(dsRequest), JsonRequestBehavior.AllowGet);
         }
+        public ActionResult LotsByUsers([DataSourceRequest] DataSourceRequest dsRequest)
+        {
+            return Json(new DataAccess().GetLotsByUsers().ToDataSourceResult(dsRequest), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetUsersLotCount([DataSourceRequest] DataSourceRequest dsRequest)
+        {
+            return Json(new DataAccess().GetUsersLotCount().ToDataSourceResult(dsRequest), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetActiveUsers([DataSourceRequest] DataSourceRequest dsRequest)
+        {
+            return Json(new DataAccess().GetActiveUsers().ToDataSourceResult(dsRequest), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetLotsCategories([DataSourceRequest] DataSourceRequest dsRequest)
+        {
+            return Json(new DataAccess().GetLotsCategories().ToDataSourceResult(dsRequest), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ClearComments()
+        {
+            new DataAccess().ClearComments();
+            return View("Index");
+        }
     }
 }

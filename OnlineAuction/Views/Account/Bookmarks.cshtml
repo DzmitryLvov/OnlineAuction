@@ -1,0 +1,36 @@
+﻿@model IEnumerable<OnlineAuction.Buisness.Data.BookmarkInfo>
+@{
+    ViewBag.Title = "Bookmarks";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+    <script type="text/javascript">
+        function goToLot(e) {
+            e.preventDefault();
+
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+
+            document.location.href = "/onlineauction/Lot/Index/" + dataItem.ID;
+        }
+</script>
+<div class="col-md-6 row center-block highlight" style="float: none;">
+     @(Html.Kendo().Grid(Model)
+                                        .Name("UnapprovedCommentsGrid")
+                                        .Columns(c =>
+                                        {
+                                            c.Bound(t => t.ID).Hidden();
+                                            c.Bound(t => t.LotName);
+                                            c.Bound(t => t.StartCurrency);
+                                            c.Bound(t => t.ActualDate).Format("{0:dd.MM.yyyy hh:mm}");
+                                            c.Command(command => command.Custom("View Lot").Click("goToLot"));
+                                        })
+                                        .Pageable()
+                                        .Sortable()
+                                        .Scrollable()
+                                        .HtmlAttributes(new { style = "height:430px;" })
+                                        .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(20)
+                                            .Read(read => read.Action("GetBookmarks", "Account"))
+                                        ).AutoBind(true))
+</div>
+    

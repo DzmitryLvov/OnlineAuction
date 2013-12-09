@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Web;
 using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
@@ -26,6 +25,7 @@ namespace OnlineAuction.Buisness.Controllers
             };
             Response.SetCookie(cookie);
 
+            new DataAccess().IncrementLotView(id);
 
             var model = dataAccess.GetViewModelById(id);
 
@@ -41,11 +41,7 @@ namespace OnlineAuction.Buisness.Controllers
         }
 
         
-        [HttpPost]
-        public ActionResult Index(LotViewModel model )
-        {
-            return View(model);
-        }
+        
 
         [Authorize]
         public ActionResult CreateLot()
@@ -84,7 +80,7 @@ namespace OnlineAuction.Buisness.Controllers
                 return RedirectToAction("Index", "Home");
             }
             ModelState.AddModelError("","Fail while model deleting.");
-            return Index(model);
+            return RedirectToAction("Index", new { id = lotid });
         }
 
 
@@ -140,6 +136,30 @@ namespace OnlineAuction.Buisness.Controllers
             }
 
             return RedirectToAction("Index", new { id = id, @errormsg = message });
+        }
+
+        [Authorize]
+        public ActionResult RestoreLot(LotInfo lotInfo)
+        {
+            var lotid = Convert.ToInt32(Request.Cookies["LotId"].Value);
+            var message = new DataAccess().RestoreLot(lotid);
+            return RedirectToAction("Index", new { id = lotid, @errormsg=message });
+        }
+
+        [Authorize]
+        public ActionResult AddToBookmarks(LotInfo lotInfo)
+        {
+            var lotid = Convert.ToInt32(Request.Cookies["LotId"].Value);
+            var message = new DataAccess().AddToBookmarks(lotid, HttpContext.User.Identity.Name);
+            return RedirectToAction("Index", new { id = lotid, @errormsg = message });
+        }
+
+        [Authorize]
+        public ActionResult RemoveFromBookmarks(LotInfo lotInfo)
+        {
+            var lotid = Convert.ToInt32(Request.Cookies["LotId"].Value);
+            var message = new DataAccess().RemoveFromBookmarks(lotid, HttpContext.User.Identity.Name);
+            return RedirectToAction("Index", new { id = lotid, @errormsg = message });
         }
     }
 }

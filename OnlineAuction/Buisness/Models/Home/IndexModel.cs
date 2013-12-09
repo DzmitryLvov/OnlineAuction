@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using OnlineAuction.Buisness.Data;
 using OnlineAuction.Buisness.Models.Lot;
 
@@ -15,5 +16,7 @@ namespace OnlineAuction.Buisness.Models.Home
                 return new DataAccess().GetCategoriesCollection();
             } 
         }
+        [AllowHtml]
+        public string SearchQuery { get; set; }
     }
 }

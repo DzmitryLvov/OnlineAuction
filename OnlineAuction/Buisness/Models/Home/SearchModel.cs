@@ -7,6 +7,6 @@ namespace OnlineAuction.Buisness.Models.Home
 {
     public class SearchModel
     {
-        public string Query { get; set; }
+        public string SearchQuery { get; set; }
     }
 }

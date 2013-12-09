@@ -33,7 +33,6 @@ namespace OnlineAuction.Buisness.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Location> Locations { get; set; }
-        public DbSet<LotPhoto> LotPhotos { get; set; }
         public DbSet<Lot> Lots { get; set; }
         public DbSet<LotSubCategory> LotSubCategories { get; set; }
         public DbSet<LotType> LotTypes { get; set; }
@@ -41,13 +40,10 @@ namespace OnlineAuction.Buisness.Data
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<UserData> UserDatas { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<ActiveUserIno> ActiveUserInos { get; set; }
         public DbSet<BetInfo> BetInfos { get; set; }
         public DbSet<BookmarkInfo> BookmarkInfos { get; set; }
-        public DbSet<CategoryLotCount> CategoryLotCounts { get; set; }
         public DbSet<CommentInfo> CommentInfos { get; set; }
         public DbSet<LotByLocation> LotByLocations { get; set; }
-        public DbSet<LotCategoryInfo> LotCategoryInfos { get; set; }
         public DbSet<LotInfo> LotInfos { get; set; }
         public DbSet<LotShortPreview> LotShortPreviews { get; set; }
         public DbSet<LotUserInfo> LotUserInfos { get; set; }
@@ -56,6 +52,21 @@ namespace OnlineAuction.Buisness.Data
         public DbSet<UserLotCountInof> UserLotCountInofs { get; set; }
         public DbSet<UserRoleInfo> UserRoleInfos { get; set; }
         public DbSet<UserUnapprovedComment> UserUnapprovedComments { get; set; }
+        public DbSet<ActiveUserInfo> ActiveUserInfos { get; set; }
+        public DbSet<LotCategory> LotCategories { get; set; }
+    
+        public virtual int AddBookmark(Nullable<int> userid, Nullable<int> lotid)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            var lotidParameter = lotid.HasValue ?
+                new ObjectParameter("lotid", lotid) :
+                new ObjectParameter("lotid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddBookmark", useridParameter, lotidParameter);
+        }
     
         public virtual int AddNewLot(string lotName, string descr, Nullable<int> startCurrency, Nullable<System.DateTime> actualDate, Nullable<int> ownerId, Nullable<int> lotTypeId, ObjectParameter id)
         {
@@ -139,19 +150,6 @@ namespace OnlineAuction.Buisness.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddNewUser", userNameParameter, passwordParameter, passwordQuestionParameter, passwordAnswerParameter, emailParameter, roleIDParameter, phoneParameter, firstNameParameter, lastNameParameter, birthDateParameter, photoLinkParameter, locationIDParameter);
         }
     
-        public virtual int AddSubCategory(string subCategoryName, Nullable<int> categoryId)
-        {
-            var subCategoryNameParameter = subCategoryName != null ?
-                new ObjectParameter("SubCategoryName", subCategoryName) :
-                new ObjectParameter("SubCategoryName", typeof(string));
-    
-            var categoryIdParameter = categoryId.HasValue ?
-                new ObjectParameter("CategoryId", categoryId) :
-                new ObjectParameter("CategoryId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddSubCategory", subCategoryNameParameter, categoryIdParameter);
-        }
-    
         public virtual int AddSubCategoryToLot(Nullable<int> lotid, Nullable<int> subCategoryId)
         {
             var lotidParameter = lotid.HasValue ?
@@ -212,22 +210,31 @@ namespace OnlineAuction.Buisness.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetMaxBet", idParameter, value);
         }
     
-        public virtual int GetUserIdByName(string username, ObjectParameter userId)
+        public virtual ObjectResult<BookmarkInfo> GetUserBookmarks(Nullable<int> id)
         {
-            var usernameParameter = username != null ?
-                new ObjectParameter("username", username) :
-                new ObjectParameter("username", typeof(string));
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetUserIdByName", usernameParameter, userId);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BookmarkInfo>("GetUserBookmarks", idParameter);
         }
     
-        public virtual ObjectResult<GetUsersWithBannedComments_Result5> GetUsersWithBannedComments(Nullable<int> count)
+        public virtual ObjectResult<BookmarkInfo> GetUserBookmarks(Nullable<int> id, MergeOption mergeOption)
         {
-            var countParameter = count.HasValue ?
-                new ObjectParameter("count", count) :
-                new ObjectParameter("count", typeof(int));
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUsersWithBannedComments_Result5>("GetUsersWithBannedComments", countParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BookmarkInfo>("GetUserBookmarks", mergeOption, idParameter);
+        }
+    
+        public virtual int GetUserIdByName(string name, ObjectParameter userId)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetUserIdByName", nameParameter, userId);
         }
     
         public virtual int LeaveComment(Nullable<int> userid, Nullable<int> lotid, string text)
@@ -275,6 +282,60 @@ namespace OnlineAuction.Buisness.Data
                 new ObjectParameter("UserId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MarkUserAsDeleted", userIdParameter);
+        }
+    
+        public virtual ObjectResult<Lot> SearchByLotName(string query)
+        {
+            var queryParameter = query != null ?
+                new ObjectParameter("query", query) :
+                new ObjectParameter("query", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchByLotName", queryParameter);
+        }
+    
+        public virtual ObjectResult<Lot> SearchByLotName(string query, MergeOption mergeOption)
+        {
+            var queryParameter = query != null ?
+                new ObjectParameter("query", query) :
+                new ObjectParameter("query", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchByLotName", mergeOption, queryParameter);
+        }
+    
+        public virtual ObjectResult<Lot> SearchLotByCategoryId(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchLotByCategoryId", idParameter);
+        }
+    
+        public virtual ObjectResult<Lot> SearchLotByCategoryId(Nullable<int> id, MergeOption mergeOption)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchLotByCategoryId", mergeOption, idParameter);
+        }
+    
+        public virtual ObjectResult<Lot> SearchLotBySubCategoryId(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchLotBySubCategoryId", idParameter);
+        }
+    
+        public virtual ObjectResult<Lot> SearchLotBySubCategoryId(Nullable<int> id, MergeOption mergeOption)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchLotBySubCategoryId", mergeOption, idParameter);
         }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
@@ -332,7 +393,7 @@ namespace OnlineAuction.Buisness.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual ObjectResult<sp_helpdiagramdefinition_Result4> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        public virtual ObjectResult<sp_helpdiagramdefinition_Result5> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
@@ -342,10 +403,10 @@ namespace OnlineAuction.Buisness.Data
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result4>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result5>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual ObjectResult<sp_helpdiagrams_Result4> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        public virtual ObjectResult<sp_helpdiagrams_Result5> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
@@ -355,7 +416,7 @@ namespace OnlineAuction.Buisness.Data
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result4>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result5>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
         }
     
         public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
@@ -393,94 +454,35 @@ namespace OnlineAuction.Buisness.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TrySetUserRole", userNameParameter, roleIdParameter);
         }
     
-        public virtual ObjectResult<Lot> SearchByName(string query)
-        {
-            var queryParameter = query != null ?
-                new ObjectParameter("query", query) :
-                new ObjectParameter("query", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchByName", queryParameter);
-        }
-    
-        public virtual ObjectResult<Lot> SearchByName(string query, MergeOption mergeOption)
-        {
-            var queryParameter = query != null ?
-                new ObjectParameter("query", query) :
-                new ObjectParameter("query", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchByName", mergeOption, queryParameter);
-        }
-    
-        public virtual ObjectResult<Lot> SearchlotByCategoryId(Nullable<int> id)
+        public virtual int UnBanUser(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchlotByCategoryId", idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UnBanUser", idParameter);
         }
     
-        public virtual ObjectResult<Lot> SearchlotByCategoryId(Nullable<int> id, MergeOption mergeOption)
+        public virtual int UnDeleteLot(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchlotByCategoryId", mergeOption, idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UnDeleteLot", idParameter);
         }
     
-        public virtual ObjectResult<Lot> SearchLotBySubCategoryId(Nullable<int> id)
+        public virtual int DeleteBookmark(Nullable<int> userid, Nullable<int> lotid)
         {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchLotBySubCategoryId", idParameter);
-        }
+            var lotidParameter = lotid.HasValue ?
+                new ObjectParameter("lotid", lotid) :
+                new ObjectParameter("lotid", typeof(int));
     
-        public virtual ObjectResult<Lot> SearchLotBySubCategoryId(Nullable<int> id, MergeOption mergeOption)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchLotBySubCategoryId", mergeOption, idParameter);
-        }
-    
-        public virtual ObjectResult<User> SearchByUsers(string username)
-        {
-            var usernameParameter = username != null ?
-                new ObjectParameter("username", username) :
-                new ObjectParameter("username", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("SearchByUsers", usernameParameter);
-        }
-    
-        public virtual ObjectResult<User> SearchByUsers(string username, MergeOption mergeOption)
-        {
-            var usernameParameter = username != null ?
-                new ObjectParameter("username", username) :
-                new ObjectParameter("username", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("SearchByUsers", mergeOption, usernameParameter);
-        }
-    
-        public virtual ObjectResult<Lot> SearchByCompletedLots(string query)
-        {
-            var queryParameter = query != null ?
-                new ObjectParameter("query", query) :
-                new ObjectParameter("query", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchByCompletedLots", queryParameter);
-        }
-    
-        public virtual ObjectResult<Lot> SearchByCompletedLots(string query, MergeOption mergeOption)
-        {
-            var queryParameter = query != null ?
-                new ObjectParameter("query", query) :
-                new ObjectParameter("query", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lot>("SearchByCompletedLots", mergeOption, queryParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteBookmark", useridParameter, lotidParameter);
         }
     }
 }
