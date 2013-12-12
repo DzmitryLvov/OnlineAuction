@@ -30,6 +30,22 @@
       [ActiveUserInfos].[ID] AS [ID]
       FROM [dbo].[ActiveUserInfos] AS [ActiveUserInfos]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="BannedLots" EntityType="MainDataBaseModel.Store.BannedLots" store:Type="Views" store:Schema="dbo" store:Name="BannedLots">
+            <DefiningQuery>SELECT 
+      [BannedLots].[ID] AS [ID], 
+      [BannedLots].[LotName] AS [LotName], 
+      [BannedLots].[ActualDate] AS [ActualDate], 
+      [BannedLots].[Username] AS [Username]
+      FROM [dbo].[BannedLots] AS [BannedLots]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="BannedUsers" EntityType="MainDataBaseModel.Store.BannedUsers" store:Type="Views" store:Schema="dbo" store:Name="BannedUsers">
+            <DefiningQuery>SELECT 
+      [BannedUsers].[ID] AS [ID], 
+      [BannedUsers].[Username] AS [Username], 
+      [BannedUsers].[Email] AS [Email], 
+      [BannedUsers].[Phone] AS [Phone]
+      FROM [dbo].[BannedUsers] AS [BannedUsers]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="BetInfos" EntityType="MainDataBaseModel.Store.BetInfos" store:Type="Views" store:Schema="dbo" store:Name="BetInfos">
             <DefiningQuery>SELECT 
       [BetInfos].[LotName] AS [LotName], 
@@ -358,6 +374,35 @@
           <Property Name="Rolename" Type="nvarchar" Nullable="false" MaxLength="255" />
           <Property Name="LastName" Type="nvarchar(max)" />
           <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'OnlineAuctionDB.dbo.BannedLots' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="BannedLots">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="LotName" />
+            <PropertyRef Name="ActualDate" />
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="LotName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ActualDate" Type="datetime" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'OnlineAuctionDB.dbo.BannedUsers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="BannedUsers">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Phone" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'OnlineAuctionDB.dbo.BetInfos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -1111,6 +1156,8 @@
             <Parameter Name="userid" Mode="In" Type="Int32" />
             <Parameter Name="lotid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="BannedLots" EntityType="MainDataBaseModel.BannedLot" />
+          <EntitySet Name="BannedUsers" EntityType="MainDataBaseModel.BannedUser" />
           </EntityContainer>
         <ComplexType Name="GetUsersWithBannedComments_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -2070,6 +2117,29 @@
           <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="SubCategoryName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="BannedLot">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="LotName" />
+            <PropertyRef Name="ActualDate" />
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="LotName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ActualDate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BannedUser">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Phone" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2431,6 +2501,26 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="DeleteBookmark" FunctionName="MainDataBaseModel.Store.DeleteBookmark" />
+          <EntitySetMapping Name="BannedLots">
+            <EntityTypeMapping TypeName="MainDataBaseModel.BannedLot">
+              <MappingFragment StoreEntitySet="BannedLots">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
+                <ScalarProperty Name="LotName" ColumnName="LotName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BannedUsers">
+            <EntityTypeMapping TypeName="MainDataBaseModel.BannedUser">
+              <MappingFragment StoreEntitySet="BannedUsers">
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

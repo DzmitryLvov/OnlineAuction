@@ -40,6 +40,14 @@ namespace OnlineAuction.Buisness.Controllers
         {
             return Json(new DataAccess().GetLotsCategories().ToDataSourceResult(dsRequest), JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetBannedUsers([DataSourceRequest] DataSourceRequest dsRequest)
+        {
+            return Json(new DataAccess().GetLotsBannedUsers().ToDataSourceResult(dsRequest), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetBannedLots([DataSourceRequest] DataSourceRequest dsRequest)
+        {
+            return Json(new DataAccess().GetBannedLots().ToDataSourceResult(dsRequest), JsonRequestBehavior.AllowGet);
+        }
         public ActionResult ClearComments()
         {
             new DataAccess().ClearComments();

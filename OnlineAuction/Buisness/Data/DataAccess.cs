@@ -581,5 +581,15 @@ namespace OnlineAuction.Buisness.Data
         {
             return _dataBase.LotCategories.ToList();
         }
+
+        internal IEnumerable<BannedUser> GetLotsBannedUsers()
+        {
+            return _dataBase.BannedUsers.ToList();
+        }
+
+        internal IEnumerable<BannedLot> GetBannedLots()
+        {
+            return _dataBase.BannedLots.ToList();
+        }
     }
 }

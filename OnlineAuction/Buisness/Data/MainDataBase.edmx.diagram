@@ -49,6 +49,8 @@
         <AssociationConnector Association="MainDataBaseModel.FK_UserUserData" />
         <EntityTypeShape EntityType="MainDataBaseModel.ActiveUserInfo" Width="1.5" PointX="9.3133198252475449" PointY="31.170488729686703" />
         <EntityTypeShape EntityType="MainDataBaseModel.LotCategory" Width="1.5" PointX="11.763146716991042" PointY="9.2521849615742386" />
+        <EntityTypeShape EntityType="MainDataBaseModel.BannedLot" Width="1.5" PointX="4.2370438576848448" PointY="6.3979252457609048" />
+        <EntityTypeShape EntityType="MainDataBaseModel.BannedUser" Width="1.5" PointX="2.2378469455232133" PointY="3.2151582554053322" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

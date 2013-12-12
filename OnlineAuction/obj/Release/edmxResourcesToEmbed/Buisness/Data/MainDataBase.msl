@@ -352,5 +352,25 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="DeleteBookmark" FunctionName="MainDataBaseModel.Store.DeleteBookmark" />
+    <EntitySetMapping Name="BannedLots">
+      <EntityTypeMapping TypeName="MainDataBaseModel.BannedLot">
+        <MappingFragment StoreEntitySet="BannedLots">
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="ActualDate" ColumnName="ActualDate" />
+          <ScalarProperty Name="LotName" ColumnName="LotName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BannedUsers">
+      <EntityTypeMapping TypeName="MainDataBaseModel.BannedUser">
+        <MappingFragment StoreEntitySet="BannedUsers">
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

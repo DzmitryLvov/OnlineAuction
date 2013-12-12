@@ -47,8 +47,59 @@
         .ExpandMode(PanelBarExpandMode.Multiple)
         .Items(panelbar =>
         {
+            panelbar.Add().Text("Banned lots")
+                    .Expanded(true)
+                    .Content(@<div style="padding: 10px;">
+                              <div class="teamMate">
+                                  @(Html.Kendo().Grid<BannedLot>()
+                                        .Name("BannedLotsGrid")
+                                        .Columns(c =>
+                                        {
+                                            c.Bound(t => t.ID);
+                                            c.Bound(t => t.LotName);
+                                            c.Bound(t => t.ActualDate).Format("{0:dd.MM.yyyy hh:mm}");
+                                            c.Bound(t => t.Username);
+                                            c.Command(command => command.Custom("ViewLot").Click("goToLot"));
+                                        })
+                                        .Pageable()
+                                        .Sortable()
+                                        .Scrollable()
+                                        .HtmlAttributes(new { style = "height:430px;" })
+                                        .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(20)
+                                            .Read(read => read.Action("GetBannedLots", "Administration"))
+                                        ).AutoBind(true))
+                              </div>
+                          </div>);
+            panelbar.Add().Text("Banned users")
+                .Expanded(false)
+                .Content(@<div style="padding: 10px;">
+                              <div class="teamMate">
+                                  @(Html.Kendo().Grid<BannedUser>()
+                                        .Name("BannedUsersGrid")
+                                        .Columns(c =>
+                                        {
+                                            c.Bound(t => t.ID).Hidden();
+                                            c.Bound(t => t.Username);
+                                            c.Bound(t => t.Email);
+                                            c.Bound(t => t.Phone);
+                                            c.Command(command => command.Custom("ViewProfile").Click("goToProfile"));
+                                        })
+                                        .Pageable()
+                                        .Sortable()
+                                        .Scrollable()
+                                        .HtmlAttributes(new { style = "height:430px;" })
+                                        .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(20)
+                                            .Read(read => read.Action("GetBannedUsers", "Administration"))
+                                        ).AutoBind(true))
+                              </div>
+                
+                          </div>);
             panelbar.Add().Text("Users with banned comments")
-                .Expanded(true)
+                .Expanded(false)
                 .Content(@<div style="padding: 10px;">
                               <div class="teamMate">
                                   @(Html.Kendo().Grid<UserUnapprovedComment>()
@@ -65,7 +116,7 @@
                                         .Pageable()
                                         .Sortable()
                                         .Scrollable()
-                                        .HtmlAttributes(new {style = "height:430px;"})
+                                        .HtmlAttributes(new { style = "height:430px;" })
                                         .DataSource(dataSource => dataSource
                                             .Ajax()
                                             .PageSize(20)
@@ -91,7 +142,7 @@
                                         .Pageable()
                                         .Sortable()
                                         .Scrollable()
-                                        .HtmlAttributes(new {style = "height:430px;"})
+                                        .HtmlAttributes(new { style = "height:430px;" })
                                         .DataSource(dataSource => dataSource
                                             .Ajax()
                                             .PageSize(20)
@@ -120,7 +171,7 @@
                                         .DataSource(dataSource => dataSource
                                             .Ajax()
                                             .PageSize(20)
-                                            .Read(read => read.Action("LotsByUsers", "Administration")) 
+                                            .Read(read => read.Action("LotsByUsers", "Administration"))
                                         ).AutoBind(true))
                               </div>
                           </div>);
@@ -144,7 +195,7 @@
                                         .DataSource(dataSource => dataSource
                                             .Ajax()
                                             .PageSize(20)
-                                            .Read(read => read.Action("GetUsersLotCount", "Administration")) 
+                                            .Read(read => read.Action("GetUsersLotCount", "Administration"))
                                         ).AutoBind(true))
                               </div>
                           </div>);

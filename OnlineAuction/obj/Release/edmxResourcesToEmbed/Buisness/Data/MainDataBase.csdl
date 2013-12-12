@@ -206,6 +206,8 @@
       <Parameter Name="userid" Mode="In" Type="Int32" />
       <Parameter Name="lotid" Mode="In" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="BannedLots" EntityType="MainDataBaseModel.BannedLot" />
+    <EntitySet Name="BannedUsers" EntityType="MainDataBaseModel.BannedUser" />
   </EntityContainer>
   <ComplexType Name="GetUsersWithBannedComments_Result">
     <Property Type="Int32" Name="ID" Nullable="false" />
@@ -1164,5 +1166,28 @@
     <Property Type="Int32" Name="CategoryID" Nullable="false" />
     <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="SubCategoryName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="BannedLot">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="LotName" />
+      <PropertyRef Name="ActualDate" />
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="LotName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="ActualDate" Nullable="false" Precision="3" />
+    <Property Type="String" Name="Username" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="BannedUser">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Username" />
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Username" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Phone" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

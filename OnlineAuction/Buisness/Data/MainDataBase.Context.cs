@@ -54,6 +54,8 @@ namespace OnlineAuction.Buisness.Data
         public DbSet<UserUnapprovedComment> UserUnapprovedComments { get; set; }
         public DbSet<ActiveUserInfo> ActiveUserInfos { get; set; }
         public DbSet<LotCategory> LotCategories { get; set; }
+        public DbSet<BannedLot> BannedLots { get; set; }
+        public DbSet<BannedUser> BannedUsers { get; set; }
     
         public virtual int AddBookmark(Nullable<int> userid, Nullable<int> lotid)
         {

@@ -97,6 +97,12 @@
     <Compile Include="Buisness\Data\ActiveUserInfo.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Buisness\Data\BannedLot.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buisness\Data\BannedUser.cs">
+      <DependentUpon>MainDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Buisness\Data\Bet.cs">
       <DependentUpon>MainDataBase.tt</DependentUpon>
     </Compile>
